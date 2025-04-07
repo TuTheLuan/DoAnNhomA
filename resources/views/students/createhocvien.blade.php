@@ -1,50 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2>Thêm Học Viên Mới</h2>
+<div class="container p-4 rounded" style="background-color: #e9f9fb; max-width: 500px;">
+    <h3 class="text-center text-danger fw-bold mb-4">Thêm Học Viên</h3>
 
-        <form action="{{ route('students.store') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="ma_sv">Mã SV:</label>
-                <input type="text" id="ma_sv" name="ma_sv" class="form-control" required>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form id="student-form" action="{{ route('students.store') }}" method="POST">
+        @csrf
+
+        <div class="mb-3">
+            <label for="ho_ten" class="form-label">Tên học viên</label>
+            <input type="text" name="ho_ten" id="ho_ten" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Giới tính</label><br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gioi_tinh" id="nam" value="Nam" required>
+                <label class="form-check-label" for="nam">Nam</label>
             </div>
-
-            <div class="form-group">
-                <label for="ho_ten">Họ Tên:</label>
-                <input type="text" id="ho_ten" name="ho_ten" class="form-control" required>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gioi_tinh" id="nu" value="Nữ">
+                <label class="form-check-label" for="nu">Nữ</label>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="gioi_tinh">Giới Tính:</label>
-                <select id="gioi_tinh" name="gioi_tinh" class="form-control" required>
-                    <option value="Nam">Nam</option>
-                    <option value="Nữ">Nữ</option>
-                    <option value="Khác">Khác</option>
-                </select>
-            </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" id="email" class="form-control" required>
+        </div>
 
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" class="form-control" required>
-            </div>
+        <div class="mb-3">
+            <label for="dia_chi" class="form-label">Địa chỉ</label>
+            <input type="text" name="dia_chi" id="dia_chi" class="form-control" required>
+        </div>
 
-            <div class="form-group">
-                <label for="dia_chi">Địa Chỉ:</label>
-                <input type="text" id="dia_chi" name="dia_chi" class="form-control" required>
-            </div>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success px-4">Thêm</button>
+            <a href="{{ route('students.index') }}" class="btn btn-danger px-4">Hủy</a>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-            <div class="form-group">
-                <label for="trang_thai">Trạng Thái:</label>
-                <select id="trang_thai" name="trang_thai" class="form-control" required>
-                    <option value="Đang học">Đang học</option>
-                    <option value="Tốt nghiệp">Tốt nghiệp</option>
-                    <option value="Tạm ngừng">Tạm ngừng</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-success">Lưu</button>
-        </form>
-    </div>
 @endsection

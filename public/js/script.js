@@ -1,26 +1,19 @@
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Trang danh sách học viên đã tải xong!");
 
-    // Tìm kiếm học viên
-    document.getElementById("search").addEventListener("keyup", function() {
-        let searchValue = this.value.toLowerCase();
-        document.querySelectorAll("tbody tr").forEach(row => {
-            let text = row.innerText.toLowerCase();
-            row.style.display = text.includes(searchValue) ? "" : "none";
-        });
-    });
-
-    // Xóa học viên
-    document.querySelectorAll(".delete-btn").forEach(button => {
-        button.addEventListener("click", function() {
-            let studentId = this.getAttribute("data-id");
-            if (confirm("Bạn có chắc chắn muốn xóa?")) {
-                fetch(`/students/${studentId}`, { method: "DELETE" })
-                .then(() => {
-                    this.closest("tr").remove();
-                    alert("Xóa thành công!");
-                })
-                .catch(err => alert("Lỗi khi xóa!"));
+    //Xác nhận thêm
+    document.getElementById("student-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        Swal.fire({
+            title: "Bạn có chắc chắn?",
+            text: "Bạn có muốn thêm học viên không?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "OK",
+            cancelButtonText: "Hủy"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                e.target.submit(); // Nếu OK thì submit form
             }
         });
     });
