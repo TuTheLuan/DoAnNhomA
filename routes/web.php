@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\KhoaHocController;
+use App\Http\Controllers\BaiHocController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +38,12 @@ Route::get('/teacher/khoahoc', [TeacherController::class, 'khoahoc'])->name('tea
 Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.themkhoahoc');
 Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.luukhoahoc');
 
+//Khóa học
+Route::get('/khoahoc/danhsach', [KhoaHocController::class, 'danhsach'])->name('khoahoc.danhsach');
+Route::get('/khoahoc/themkhoahoc', [KhoaHocController::class, 'themkhoahoc'])->name('khoahoc.themkhoahoc');
+
+//Bài học
+Route::get('/baihoc/danhsach', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
 Route::get('/', function () {
     return view('welcome');
 });
