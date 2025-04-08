@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +24,25 @@ Route::put('/students/{id}', [StudentController::class, 'update'])->name('studen
 
 Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
 
+Route::get('/students/home', [StudentController::class, 'home'])->name('students.home');
+
+Route::get('/students/khoahoc', [StudentController::class, 'khoahoc'])->name('students.khoahoc');
+
+Route::get('/students/khoahoccuatoi', [StudentController::class, 'khoahoccuatoi'])->name('students.khoahoccuatoi');
+
+// Giảng viên
+Route::get('/teacher/home', [TeacherController::class, 'home'])->name('teacher.home');
+Route::get('/teacher/khoahoc', [TeacherController::class, 'khoahoc'])->name('teacher.khoahoc');
+Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.themkhoahoc');
+Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.luukhoahoc');
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
+
+
+
+

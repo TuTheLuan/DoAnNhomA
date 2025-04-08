@@ -85,4 +85,19 @@ class StudentController extends Controller
 
         return view('students.list', compact('students'));
     }
+
+    public function home()
+    {
+        return view('students.home');
+    }
+
+    public function khoahoc()
+    {
+        return view('students.khoahoc');
+    }
+
+    public function myCourses()
+    {
+        return view('students.khoahoccuatoi');
+    }
 }
