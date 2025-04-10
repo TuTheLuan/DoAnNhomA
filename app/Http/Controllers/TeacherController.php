@@ -56,19 +56,14 @@ class TeacherController extends Controller
         return view('teacher.khoahoc');
     }
 
+    public function createCourse()
+    {
+        return view('teacher.themkhoahoc');
+    }
+
     public function storeCourse(Request $request)
     {
         // Xử lý logic thêm khóa học ở đây
         return redirect()->route('teacher.khoahoc')->with('success', 'Thêm khóa học thành công!');
-    }
-
-    public function diendan(Request $request)
-    {
-        return view('teacher.diendan');
-    }
-
-    public function themdiendan(Request $request)
-    {
-        return view('teacher.themdiendan');
     }
 }

@@ -100,9 +100,4 @@ class StudentController extends Controller
     {
         return view('students.khoahoccuatoi');
     }
-
-    public function diendan()
-    {
-        return view('students.diendan');
-    }
 }

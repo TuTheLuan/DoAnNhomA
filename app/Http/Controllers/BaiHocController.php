@@ -10,8 +10,8 @@ class BaiHocController extends Controller
     {
         return view('baihoc.danhsach');
     }
-    // public function themkhoahoc()
-    // {
-    //     return view('khoahoc.themkhoahoc');
-    // }
+    public function thembaihoc()
+    {
+        return view('baihoc.thembaihoc');
+    }
 }

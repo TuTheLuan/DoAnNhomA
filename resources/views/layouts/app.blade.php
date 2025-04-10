@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="{{ asset('js/script.js') }}" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
 </head>
 <body>
     <div class="container-fluid">
@@ -22,7 +24,6 @@
                     <li class="nav-item"><a href="#" class="nav-link">🏠 Home</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">📚 Học Viên</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">📖 Khóa Học</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">📰 Diễn đàn</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">📊 Thống Kê</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">🚪 Đăng Xuất</a></li>
                 </ul>

@@ -32,21 +32,35 @@ Route::get('/students/khoahoc', [StudentController::class, 'khoahoc'])->name('st
 
 Route::get('/students/khoahoccuatoi', [StudentController::class, 'khoahoccuatoi'])->name('students.khoahoccuatoi');
 
-Route::get('/students/diendan', [StudentController::class, 'diendan'])->name('students.diendan');
-
 // Giảng viên
 Route::get('/teacher/home', [TeacherController::class, 'home'])->name('teacher.home');
 Route::get('/teacher/khoahoc', [TeacherController::class, 'khoahoc'])->name('teacher.khoahoc');
+Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.themkhoahoc');
 Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.luukhoahoc');
-Route::get('/teacher/diendan', [TeacherController::class, 'diendan'])->name('teacher.diendan');
-Route::get('/teacher/themdiendan', [TeacherController::class, 'themdiendan'])->name('teacher.themdiendan');
 
 //Khóa học
 Route::get('/khoahoc/danhsach', [KhoaHocController::class, 'danhsach'])->name('khoahoc.danhsach');
 Route::get('/khoahoc/themkhoahoc', [KhoaHocController::class, 'themkhoahoc'])->name('khoahoc.themkhoahoc');
+Route::get('/khoahoc/danhsach', [KhoaHocController::class, 'index'])->name('khoahoc.index');
+
+Route::get('khoahoc/{id}/edit', [KhoaHocController::class, 'edit'])->name('khoahoc.edit');
+Route::delete('khoahoc/{id}', [KhoaHocController::class, 'destroy'])->name('khoahoc.destroy');
+
+Route::post('/khoahoc', [KhoaHocController::class, 'store'])->name('khoahoc.store');
+
+Route::put('khoahoc/{id}', [KhoaHocController::class, 'update'])->name('khoahoc.update');
 
 //Bài học
 Route::get('/baihoc/danhsach', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
+Route::get('/baihoc/thembaihoc', [BaiHocController::class, 'thembaihoc'])->name('baihoc.thembaihoc');
+Route::get('/lessons', [LessonController::class, 'index'])->name('lessons.index');
+Route::post('/lessons', [LessonController::class, 'store'])->name('lessons.store');
+
+
+
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });

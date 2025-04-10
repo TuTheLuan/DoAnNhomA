@@ -8,32 +8,49 @@
             <i class="bi bi-bookmark-check"></i> Khóa học của tôi
         </a>
     </div>
+    
+    <!-- Thanh tìm kiếm và bộ lọc -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Tìm kiếm khóa học...">
+                <button class="btn btn-primary" type="button">
+                    <i class="bi bi-search"></i> Tìm kiếm
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select">
+                <option selected>Lọc theo loại</option>
+                <!-- Nội dung -->
+            </select>
+        </div>
+    </div>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        @isset($courses)
-            @foreach($courses as $course)
-            <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <img src="{{ asset('images/course-placeholder.jpg') }}" class="card-img-top" alt="Ảnh khóa học" style="height: 180px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $course->ten_khoa_hoc }}</h5>
-                        <p class="card-text text-muted">
-                            <i class="bi bi-person"></i> Giảng viên: {{ $course->teacher->name }}
-                        </p>
-                    </div>
-                    <div class="card-footer bg-transparent">
-                        <a href="#" class="btn btn-outline-primary w-100">Xem chi tiết</a>
-                    </div>
-                </div>
+    <!-- Danh sách khóa học -->
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="alert alert-info">
+               <!-- Nội dung -->
             </div>
-            @endforeach
-        @else
-            <div class="col-12 text-center py-5">
-                <div class="alert alert-info">
-                    <i class="bi bi-info-circle"></i> Hiện không có khóa học nào
-                </div>
-            </div>
-        @endisset
+        </div>
+    </div>
+
+    <!-- Phân trang -->
+    <div class="d-flex justify-content-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Trước</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Tiếp</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
 @endsection

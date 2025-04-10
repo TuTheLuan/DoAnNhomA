@@ -10,23 +10,24 @@
         </h2>
 
         <!-- Nội dung biểu mẫu -->
-        <form>
+        <form action="{{ route('khoahoc.store') }}" method="POST">
+            @csrf
             <div class="row">
                 <!-- Bên trái -->
                 <div class="col-md-8">
                     <div class="mb-3">
                         <label for="ten-khoa-hoc" class="form-label fw-bold">Tên Khóa Học:</label>
-                        <input type="text" id="ten-khoa-hoc" class="form-control bg-light" placeholder="Nhập tên khóa học">
+                        <input type="text" name="ten" id="ten-khoa-hoc" class="form-control bg-light" placeholder="Nhập tên khóa học" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="giang-vien" class="form-label fw-bold">Tên Giảng Viên:</label>
-                        <input type="text" id="giang-vien" class="form-control bg-light" placeholder="Nhập tên giảng viên">
+                        <input type="text" name="giangvien" id="giang-vien" class="form-control bg-light" placeholder="Nhập tên giảng viên" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="so-bai-hoc" class="form-label fw-bold">Số Bài Học:</label>
-                        <input type="number" id="so-bai-hoc" class="form-control bg-light" placeholder="Nhập số bài học">
+                        <input type="number" name="sobaihoc" id="so-bai-hoc" class="form-control bg-light" placeholder="Nhập số bài học">
                     </div>
                 </div>
 
@@ -42,7 +43,7 @@
 
             <!-- Nút thao tác -->
             <div class="d-flex justify-content-center mt-4">
-                <button type="button" class="btn btn-danger me-3 px-4">Hủy</button>
+                <a href="{{ route('khoahoc.index') }}" class="btn btn-danger me-3 px-4">Hủy</a>
                 <button type="submit" class="btn btn-success px-4">Thêm</button>
             </div>
         </form>

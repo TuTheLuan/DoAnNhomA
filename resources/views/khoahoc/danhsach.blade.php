@@ -10,12 +10,15 @@
     </div>
 
     <!-- Search Bar -->
-    <div class="d-flex justify-content-between mb-3">
-        <input type="text" class="form-control me-2" placeholder="Search">
-        <div>
-            <button class="btn btn-primary me-2">
-                <i class="fas fa-plus"></i> THÊM MỚI
-            </button>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="flex-grow-1 me-2" style="max-width: 300px;">
+            <input type="text" class="form-control" placeholder="Tìm kiếm khóa học...">
+        </div>
+        <div class="d-flex">
+
+        <a href="{{ route('khoahoc.themkhoahoc') }}" class="btn btn-primary me-2">
+        <i class="fas fa-plus"></i> THÊM MỚI</a>
+
             <button class="btn btn-secondary">
                 <i class="fas fa-sync-alt"></i> TẢI LẠI DỮ LIỆU
             </button>
@@ -29,28 +32,35 @@
                 <th><u>Mã Khóa Học</u></th>
                 <th><u>Khóa Học</u></th>
                 <th><u>Giảng Viên</u></th>
-                <th></th>
+                <th><u>Số Bài HọcHọc</u></th>
+                <th><u>Hành Động</u></th>
             </tr>
         </thead>
         <tbody>
+            @foreach($khoahocs as $khoahoc)
             <tr>
-                <td>CNTT01</td>
-                <td>Khóa học ngôn ngữ AI</td>
-                <td></td>
+                <td>{{ $khoahoc->ma }}</td>
+                <td>{{ $khoahoc->ten }}</td>
+                <td>{{ $khoahoc->giangvien }}</td>
+                <td>{{ $khoahoc->sobaihoc }}</td>
                 <td>
-                    <i class="fas fa-pen text-dark me-2" style="cursor: pointer;"></i>
-                    <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
+                    <!-- Sửa -->
+                    <a href="{{ route('khoahoc.edit', $khoahoc->id) }}" title="Chỉnh sửa khóa học">
+                        <i class="fas fa-pen text-primary me-3" style="cursor: pointer;"></i>
+                    </a>
+
+                    <!-- Xóa -->
+                    <form action="{{ route('khoahoc.destroy', $khoahoc->id) }}" method="POST" class="d-inline"
+                          onsubmit="return confirm('Bạn có chắc chắn muốn xóa khóa học này?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn p-0" style="border: none; background: none;" title="Xóa khóa học">
+                            <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
-            <tr>
-                <td>CNTT02</td>
-                <td>Khóa học lập trình web</td>
-                <td>Huỳnh Thái Quốc</td>
-                <td>
-                    <i class="fas fa-pen text-dark me-2" style="cursor: pointer;"></i>
-                    <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
-                </td>
-            </tr>
+            @endforeach
         </tbody>
     </table>
 
