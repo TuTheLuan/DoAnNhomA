@@ -3,32 +3,62 @@
 @section('content')
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Khóa học của tôi</h1>
-        <a href="{{ route('students.khoahoc') }}" class="btn btn-outline-primary">
-            <i class="bi bi-arrow-left"></i> Quay lại danh sách khóa học
-        </a>
+        <h1>Danh sách khóa học mở</h1>
+        <div class="btn-group">
+            <a href="{{ route('students.khoahoc') }}" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left"></i> Quay lại
+            </a>
+        </div>
     </div>
 
     <div class="card">
         <div class="card-body">
-            <div class="alert alert-info">
-                <i class="bi bi-info-circle"></i> Danh sách các khóa học bạn đã đăng ký sẽ hiển thị tại đây
+            @if($courses->count() > 0)
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach($courses as $course)
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <img src="{{ asset('images/course-placeholder.jpg') }}" class="card-img-top" alt="Ảnh khóa học" style="height: 180px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $course->ten_khoa_hoc }}</h5>
+                            <p class="card-text text-muted">
+                                <i class="bi bi-person"></i> Giảng viên: {{ $course->teacher->name }}
+                            </p>
+                            <p class="card-text text-muted">
+                                <i class="bi bi-book"></i> Mã khóa học: {{ $course->ma_khoa_hoc }}
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <a href="#" class="btn btn-outline-primary w-100">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+                <!-- Card mẫu thêm vào -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <img src="{{ asset('images/course-placeholder.jpg') }}" class="card-img-top" alt="Ảnh khóa học" style="height: 180px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">Lập trình Python cơ bản</h5>
+                            <p class="card-text text-muted">
+                                <i class="bi bi-person"></i> Giảng viên: Nguyễn Văn C
+                            </p>
+                            <p class="card-text text-muted">
+                                <i class="bi bi-book"></i> Mã khóa học: KH003
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <a href="#" class="btn btn-outline-primary w-100">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <!-- Có thể thêm bảng hiển thị khóa học sau này -->
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Tên khóa học</th>
-                        <th>Ngày đăng ký</th>
-                        <th>Tiến độ</th>
-                        <th>Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dữ liệu khóa học sẽ được thêm sau -->
-                </tbody>
-            </table>
+            @else
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> Hiện không có khóa học nào mở
+            </div>
+            @endif
         </div>
     </div>
 </div>

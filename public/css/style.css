@@ -44,3 +44,41 @@ body {
     justify-content: center;
     margin-top: 20px;
 }
+
+/* Card khóa học */
+.card {
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #2c3e50;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.card-footer {
+    padding: 1rem 1.5rem;
+    background-color: rgba(0, 0, 0, 0.03);
+}

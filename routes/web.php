@@ -32,11 +32,14 @@ Route::get('/students/khoahoc', [StudentController::class, 'khoahoc'])->name('st
 
 Route::get('/students/khoahoccuatoi', [StudentController::class, 'khoahoccuatoi'])->name('students.khoahoccuatoi');
 
+Route::get('/students/diendan', [StudentController::class, 'diendan'])->name('students.diendan');
+
 // Giảng viên
 Route::get('/teacher/home', [TeacherController::class, 'home'])->name('teacher.home');
 Route::get('/teacher/khoahoc', [TeacherController::class, 'khoahoc'])->name('teacher.khoahoc');
-Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.themkhoahoc');
 Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.luukhoahoc');
+Route::get('/teacher/diendan', [TeacherController::class, 'diendan'])->name('teacher.diendan');
+Route::get('/teacher/themdiendan', [TeacherController::class, 'themdiendan'])->name('teacher.themdiendan');
 
 //Khóa học
 Route::get('/khoahoc/danhsach', [KhoaHocController::class, 'danhsach'])->name('khoahoc.danhsach');
