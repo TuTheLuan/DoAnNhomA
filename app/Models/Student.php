@@ -15,7 +15,6 @@ class Student extends Model
         'gioi_tinh',
         'email',
         'dia_chi',
-        'trang_thai',
     ];
 
     public $timestamps = true;

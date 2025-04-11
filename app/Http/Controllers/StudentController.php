@@ -9,9 +9,11 @@ class StudentController extends Controller
      // Hiển thị form thêm học viên
      public function create()
      {
-         return view('students.createhocvien'); // Phải trùng với tên file blade
+         return view('students.createhocvien');
      }
      
+
+     //Xử lý sự kiện thêm học viên
      public function store(Request $request)
      {
          $request->validate([
@@ -32,7 +34,7 @@ class StudentController extends Controller
           
          ]);
      
-         return redirect()->route('students.index')->with('success', 'Thêm học viên thành công!');
+         return redirect()->route('students.index');
      }
 
      // Hiển thị form sửa

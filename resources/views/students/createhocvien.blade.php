@@ -50,6 +50,7 @@
         </div>
     </form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<!-- Dùng thư viện SweetAlert2 để hiện một hộp thoại xác nhận -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
