@@ -10,7 +10,7 @@
         </h2>
 
         <!-- Nội dung biểu mẫu -->
-        <form action="{{ route('khoahoc.store') }}" method="POST">
+        <form action="{{ route('khoahoc.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <!-- Bên trái -->
@@ -32,12 +32,9 @@
                 </div>
 
                 <!-- Bên phải -->
-                <div class="col-md-4 text-center bg-light rounded p-4">
-                    <i class="fas fa-image fa-3x mb-3 text-secondary"></i>
-                    <div>
-                        <a href="#" class="d-block text-primary fw-bold mb-2 text-decoration-underline">Tải tệp lên</a>
-                        <p class="mb-0">Upload ảnh nền khóa học</p>
-                    </div>
+                <div class="mb-3">
+                    <label for="anh" class="form-label">Ảnh Khóa Học</label>
+                    <input type="file" class="form-control" name="anh" accept="image/*">
                 </div>
             </div>
 
