@@ -66,4 +66,5 @@ class TeacherController extends Controller
         // Xử lý logic thêm khóa học ở đây
         return redirect()->route('teacher.khoahoc')->with('success', 'Thêm khóa học thành công!');
     }
+
 }

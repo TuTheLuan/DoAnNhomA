@@ -11,7 +11,32 @@
                     Hiển thị diễn đàn
                 </div>
                 <div class="card-body">
-                    <!-- Nội dung diễn đàn sẽ được thêm sau -->
+                    <div class="row">
+                        @foreach($diendans as $diendan)
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                @if($diendan->background_image)
+                                <img src="{{ asset('storage/' . $diendan->background_image) }}" class="card-img-top" alt="Ảnh bìa diễn đàn" style="height: 150px; object-fit: cover;">
+                                @else
+                                <div class="bg-secondary text-white text-center p-4" style="height: 150px;">
+                                    <i class="fas fa-image fa-3x"></i>
+                                </div>
+                                @endif
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $diendan->ten_dien_dan }}</h5>
+                                    <p class="card-text">
+                                        <i class="fas fa-chalkboard-teacher"></i> {{ $diendan->giangVien->name }}
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-white">
+                                    <a href="{{ route('diendan.show', $diendan->id) }}" class="btn btn-primary btn-block">
+                                        <i class="fas fa-sign-in-alt"></i> Tham gia
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
