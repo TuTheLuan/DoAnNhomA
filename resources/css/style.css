@@ -1,0 +1,34 @@
+/* Đảm bảo chữ trong ô input căn lề trái */
+.form-control {
+    text-align: left !important;
+    height: 40px !important; /* Đảm bảo chiều cao */
+    line-height: 40px !important;
+}
+
+/* Container chứa ô nhập mật khẩu và biểu tượng con mắt */
+.password-container {
+    display: flex; /* Sử dụng flex để căn chỉnh cùng hàng */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    width: 100%; /* Đảm bảo container chiếm toàn bộ chiều rộng */
+}
+
+/* Ô nhập mật khẩu */
+.password-container input {
+    flex: 1; /* Ô input chiếm phần lớn không gian */
+    margin-right: 10px; /* Khoảng cách giữa ô input và con mắt */
+    width: calc(100% - 40px); /* Giảm chiều rộng ô input để chứa con mắt */
+}
+
+/* Biểu tượng con mắt */
+.password-container .eye-icon {
+    cursor: pointer;
+    color: #6c757d; /* Màu xám cho icon */
+    font-size: 0.9rem !important; /* Kích thước icon */
+    width: 30px; /* Đảm bảo con mắt có chiều rộng cố định */
+    text-align: center; /* Căn giữa icon */
+}
+
+/* Giảm border-radius để tránh ảnh hưởng đến layout */
+.form-control.rounded-pill {
+    border-radius: 20px !important; /* Giảm bo góc */
+}

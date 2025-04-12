@@ -5,6 +5,10 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\KhoaHocController;
 use App\Http\Controllers\BaiHocController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\ForgotPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,17 +61,27 @@ Route::get('/lessons', [LessonController::class, 'index'])->name('lessons.index'
 Route::post('/lessons', [LessonController::class, 'store'])->name('lessons.store');
 
 
+// Login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// Register
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+
+// Quên mật khẩu
+Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+// Setting
+Route::get('/settings', [SettingsController::class, 'edit'])->name('settings.edit');
+Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
 
 
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-
-
-
-
-
-

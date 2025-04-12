@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.auth')
+
+@section('title', 'Đăng Nhập')
 
 @section('content')
 <div class="container my-5">
@@ -13,8 +15,7 @@
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Tên người dùng</label>
-                    <input type="text" name="username" id="username" class="form-control rounded-pill shadow-sm text-center" value="{{ old('username') }}" required autocomplete="username" autofocus>
-                    <small id="username-hint" class="text-muted d-none mt-1">Tên người dùng phải từ 6-50 ký tự, không chứa ký tự đặc biệt</small>
+                    <input type="text" name="username" id="username" class="form-control rounded-pill shadow-sm" value="{{ old('username') }}" required autocomplete="username" autofocus>
                     @error('username')
                         <div class="text-danger mt-1">{{ $message }}</div>
                     @enderror
@@ -22,10 +23,9 @@
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Mật khẩu</label>
-                    
                     <div class="password-container">
-                        <input type="password" name="password" id="password" class="form-control rounded-pill shadow-sm text-center" required>
-                        <i class="fas fa-eye eye-icon"></i>
+                        <input type="password" name="password" id="password" class="form-control rounded-pill shadow-sm" required>
+                        <span class="eye-icon"><i class="fas fa-eye"></i></span>
                     </div>
                     @error('password')
                         <div class="text-danger mt-1">{{ $message }}</div>
@@ -34,8 +34,9 @@
 
                 <div class="mb-3 text-start">
                     <a href="{{ route('password.request') }}" class="text-primary text-decoration-none">Bạn quên mật khẩu?</a>
+                </div>
 
-                <button type="submit" class="btn btn-success d-block mx-auto mt-3 rounded-pill">
+                <button href="{{ route('students.home') }}" type="submit" class="btn btn-success d-block mx-auto mt-3 rounded-pill">
                     <i class="fas fa-arrow-right"></i>
                 </button>
 
@@ -46,6 +47,7 @@
         </div>
     </div>
 </div>
+@endsection
 
 @section('scripts')
 <script>
@@ -71,6 +73,13 @@
     document.querySelectorAll('input').forEach(input => {
         input.addEventListener('focus', function() {
             showHint(this);
+        });
+    });
+
+    document.querySelectorAll('.eye-icon').forEach(icon => {
+        icon.addEventListener('click', function() {
+            const fieldId = this.previousElementSibling.id;
+            togglePassword(fieldId);
         });
     });
 </script>

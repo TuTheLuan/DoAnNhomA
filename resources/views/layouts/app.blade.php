@@ -21,9 +21,9 @@
                     <p>Admin 1</p>
                 </div>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a href="#" class="nav-link">🏠 Home</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">📚 Học Viên</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">📖 Khóa Học</a></li>
+                    <li class="nav-item"><a href="{{ route('students.home') }}" class="nav-link">🏠 Home</a></li>
+                    <li class="nav-item"><a href="{{ route('students.index') }}" class="nav-link">📚 Học Viên</a></li>
+                    <li class="nav-item"><a href="{{ route('students.khoahoc') }}" class="nav-link">📖 Khóa Học</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">📊 Thống Kê</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">🚪 Đăng Xuất</a></li>
                 </ul>
