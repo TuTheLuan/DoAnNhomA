@@ -17,9 +17,10 @@ class KhoaHocController extends Controller
     }
     public function index()
     {
-        $khoahocs = KhoaHoc::all(); // Lấy tất cả khóa học từ database
-        return view('khoahoc.danhsach', compact('khoahocs')); // Truyền biến sang view
+        $khoahoctb = KhoaHoc::all(); 
+        return view('khoahoc.danhsach', compact('khoahoctb')); 
     }
+
 
     public function store(Request $request)
     {
@@ -27,28 +28,35 @@ class KhoaHocController extends Controller
             'ten' => 'required|string|max:255',
             'giangvien' => 'required|string|max:255',
             'sobaihoc' => 'nullable|integer',
+            'anh' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // validate ảnh
         ]);
 
-        // Lấy mã khóa học cuối cùng
+        // Xử lý mã KH
         $lastKhoaHoc = KhoaHoc::orderBy('id', 'desc')->first();
+        $newCode = $lastKhoaHoc && $lastKhoaHoc->ma
+            ? 'KH' . str_pad((int)substr($lastKhoaHoc->ma, 2) + 1, 3, '0', STR_PAD_LEFT)
+            : 'KH001';
 
-        if ($lastKhoaHoc && $lastKhoaHoc->ma) {
-            $lastCode = (int)substr($lastKhoaHoc->ma, 2); // bỏ 'KH'
-            $newCode = 'KH' . str_pad($lastCode + 1, 3, '0', STR_PAD_LEFT);
-        } else {
-            $newCode = 'KH001';
+        // Xử lý ảnh
+        $imageName = null;
+        if ($request->hasFile('anh')) {
+            $image = $request->file('anh');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images'), $imageName);
         }
 
-        // Tạo khóa học mới
+        // Tạo khóa học
         KhoaHoc::create([
-            'ma' => $newCode, // ✅ đúng với tên cột trong DB
+            'ma' => $newCode,
             'ten' => $request->ten,
             'giangvien' => $request->giangvien,
             'sobaihoc' => $request->sobaihoc,
+            'anh' => $imageName, // lưu tên ảnh
         ]);
 
         return redirect()->route('khoahoc.index')->with('success', 'Thêm khóa học thành công!');
     }
+
 
     public function update(Request $request, $id)
     {

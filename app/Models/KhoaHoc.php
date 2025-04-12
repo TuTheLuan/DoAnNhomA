@@ -16,5 +16,6 @@ class KhoaHoc extends Model
         'ten',
         'giangvien',
         'sobaihoc',
+        'anh',
     ];
 }
