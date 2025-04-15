@@ -26,7 +26,14 @@
                     <li class="nav-item"><a href="<?php echo e(route('students.index')); ?>" class="nav-link">📚 Học Viên</a></li>
                     <li class="nav-item"><a href="<?php echo e(route('students.khoahoc')); ?>" class="nav-link">📖 Khóa Học</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">📊 Thống Kê</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">🚪 Đăng Xuất</a></li>
+                    <li class="nav-item">
+                        <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                            <?php echo csrf_field(); ?>
+                        </form>
+                        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            🚪 Đăng Xuất
+                        </a>
+                    </li>
                 </ul>
             </div>
 

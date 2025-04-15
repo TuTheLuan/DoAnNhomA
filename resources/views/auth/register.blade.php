@@ -15,7 +15,7 @@
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Tên đăng nhập</label>
-                    <input type="text" name="username" id="username" class="form-control rounded-pill shadow-sm" value="{{ old('username') }}" required>
+<input type="text" name="username" id="username" class="form-control rounded-start shadow-sm" value="{{ old('username') }}" required>
                     @error('username')
                         <div class="text-danger mt-1">{{ $message }}</div>
                     @enderror
@@ -23,32 +23,36 @@
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" id="email" class="form-control rounded-pill shadow-sm" value="{{ old('email') }}" required>
+<input type="email" name="email" id="email" class="form-control rounded-start shadow-sm" value="{{ old('email') }}" required>
                     @error('email')
                         <div class="text-danger mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="password" class="form-label">Mật khẩu</label>
-                    <div class="password-container">
-                        <input type="password" name="password" id="password" class="form-control rounded-pill shadow-sm" required>
-                        <span class="eye-icon"><i class="fas fa-eye"></i></span>
-                    </div>
-                    @error('password')
-                        <div class="text-danger mt-1">{{ $message }}</div>
-                    @enderror
-                </div>
+<div class="mb-3">
+    <label for="password" class="form-label">Mật khẩu</label>
+    <div class="input-group">
+        <input type="password" name="password" id="password" class="form-control rounded-start" required>
+        <span class="input-group-text bg-light eye-container">
+            <i class="fas fa-eye toggle-password" data-target="password"></i>
+        </span>
+    </div>
+    @error('password')
+        <div class="text-danger mt-1">{{ $message }}</div>
+    @enderror
+</div>
 
-                <div class="mb-3">
-                    <label for="password_confirmation" class="form-label">Xác nhận mật khẩu</label>
-                    <div class="password-container">
-                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control rounded-pill shadow-sm" required>
-                        <span class="eye-icon"><i class="fas fa-eye"></i></span>
-                    </div>
-                </div>
+<div class="mb-3">
+    <label for="password_confirmation" class="form-label">Xác nhận mật khẩu</label>
+    <div class="input-group">
+        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control rounded-start" required>
+        <span class="input-group-text bg-light eye-container">
+            <i class="fas fa-eye toggle-password" data-target="password_confirmation"></i>
+        </span>
+    </div>
+</div>
 
-                <button href="{{ route('login') }}" type="submit" class="btn btn-success d-block mx-auto mt-3 rounded-pill">
+                 <button href="{{ route('login') }}" type="submit" class="btn btn-success d-block mx-auto mt-3 rounded-pill">
                     Đăng Ký
                 </button>
             </form>
@@ -65,7 +69,7 @@
 <script>
     function togglePassword(fieldId) {
         const field = document.getElementById(fieldId);
-        const icon = field.nextElementSibling.querySelector('i');
+        const icon = document.querySelector(`.toggle-password[data-target="${fieldId}"]`);
         if (field.type === 'password') {
             field.type = 'text';
             icon.classList.remove('fa-eye');
@@ -77,9 +81,9 @@
         }
     }
 
-    document.querySelectorAll('.eye-icon').forEach(icon => {
+    document.querySelectorAll('.toggle-password').forEach(icon => {
         icon.addEventListener('click', function() {
-            const fieldId = this.previousElementSibling.id;
+            const fieldId = this.getAttribute('data-target');
             togglePassword(fieldId);
         });
     });

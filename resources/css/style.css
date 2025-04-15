@@ -3,32 +3,41 @@
     text-align: left !important;
     height: 40px !important; /* Đảm bảo chiều cao */
     line-height: 40px !important;
+    padding-right: 40px !important; /* Tạo không gian cho icon */
+
 }
 
-/* Container chứa ô nhập mật khẩu và biểu tượng con mắt */
-.password-container {
-    display: flex; /* Sử dụng flex để căn chỉnh cùng hàng */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    width: 100%; /* Đảm bảo container chiếm toàn bộ chiều rộng */
+/* Thiết lập container cho ô mật khẩu */
+.password-field {
+    position: relative;
+    width: 100%;
 }
 
-/* Ô nhập mật khẩu */
-.password-container input {
-    flex: 1; /* Ô input chiếm phần lớn không gian */
-    margin-right: 10px; /* Khoảng cách giữa ô input và con mắt */
-    width: calc(100% - 40px); /* Giảm chiều rộng ô input để chứa con mắt */
+/* Thiết lập nút con mắt */
+.eye-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #f8f9fa;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
 }
 
 /* Biểu tượng con mắt */
-.password-container .eye-icon {
-    cursor: pointer;
-    color: #6c757d; /* Màu xám cho icon */
-    font-size: 0.9rem !important; /* Kích thước icon */
-    width: 30px; /* Đảm bảo con mắt có chiều rộng cố định */
-    text-align: center; /* Căn giữa icon */
+.eye-button i {
+    color: #6c757d;
+    font-size: 0.9rem;
 }
 
 /* Giảm border-radius để tránh ảnh hưởng đến layout */
 .form-control.rounded-pill {
-    border-radius: 20px !important; /* Giảm bo góc */
+    border-radius: 50px !important; /* Bo góc đầy đủ */
 }

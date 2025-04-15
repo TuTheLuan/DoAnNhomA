@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'Đăng Ký'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -15,7 +13,7 @@
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Tên đăng nhập</label>
-                    <input type="text" name="username" id="username" class="form-control rounded-pill shadow-sm" value="<?php echo e(old('username')); ?>" required>
+<input type="text" name="username" id="username" class="form-control rounded-start shadow-sm" value="<?php echo e(old('username')); ?>" required>
                     <?php $__errorArgs = ['username'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -30,7 +28,7 @@ unset($__errorArgs, $__bag); ?>
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" id="email" class="form-control rounded-pill shadow-sm" value="<?php echo e(old('email')); ?>" required>
+<input type="email" name="email" id="email" class="form-control rounded-start shadow-sm" value="<?php echo e(old('email')); ?>" required>
                     <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -43,33 +41,37 @@ endif;
 unset($__errorArgs, $__bag); ?>
                 </div>
 
-                <div class="mb-3">
-                    <label for="password" class="form-label">Mật khẩu</label>
-                    <div class="password-container">
-                        <input type="password" name="password" id="password" class="form-control rounded-pill shadow-sm" required>
-                        <span class="eye-icon"><i class="fas fa-eye"></i></span>
-                    </div>
-                    <?php $__errorArgs = ['password'];
+<div class="mb-3">
+    <label for="password" class="form-label">Mật khẩu</label>
+    <div class="input-group">
+        <input type="password" name="password" id="password" class="form-control rounded-start" required>
+        <span class="input-group-text bg-light eye-container">
+            <i class="fas fa-eye toggle-password" data-target="password"></i>
+        </span>
+    </div>
+    <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                        <div class="text-danger mt-1"><?php echo e($message); ?></div>
-                    <?php unset($message);
+        <div class="text-danger mt-1"><?php echo e($message); ?></div>
+    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                </div>
+</div>
 
-                <div class="mb-3">
-                    <label for="password_confirmation" class="form-label">Xác nhận mật khẩu</label>
-                    <div class="password-container">
-                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control rounded-pill shadow-sm" required>
-                        <span class="eye-icon"><i class="fas fa-eye"></i></span>
-                    </div>
-                </div>
+<div class="mb-3">
+    <label for="password_confirmation" class="form-label">Xác nhận mật khẩu</label>
+    <div class="input-group">
+        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control rounded-start" required>
+        <span class="input-group-text bg-light eye-container">
+            <i class="fas fa-eye toggle-password" data-target="password_confirmation"></i>
+        </span>
+    </div>
+</div>
 
-                <button href="<?php echo e(route('login')); ?>" type="submit" class="btn btn-success d-block mx-auto mt-3 rounded-pill">
+                 <button href="<?php echo e(route('login')); ?>" type="submit" class="btn btn-success d-block mx-auto mt-3 rounded-pill">
                     Đăng Ký
                 </button>
             </form>
@@ -86,7 +88,7 @@ unset($__errorArgs, $__bag); ?>
 <script>
     function togglePassword(fieldId) {
         const field = document.getElementById(fieldId);
-        const icon = field.nextElementSibling.querySelector('i');
+        const icon = document.querySelector(`.toggle-password[data-target="${fieldId}"]`);
         if (field.type === 'password') {
             field.type = 'text';
             icon.classList.remove('fa-eye');
@@ -98,12 +100,13 @@ unset($__errorArgs, $__bag); ?>
         }
     }
 
-    document.querySelectorAll('.eye-icon').forEach(icon => {
+    document.querySelectorAll('.toggle-password').forEach(icon => {
         icon.addEventListener('click', function() {
-            const fieldId = this.previousElementSibling.id;
+            const fieldId = this.getAttribute('data-target');
             togglePassword(fieldId);
         });
     });
 </script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.auth', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\DoAnNhomA\resources\views/auth/register.blade.php ENDPATH**/ ?>

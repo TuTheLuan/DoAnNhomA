@@ -4605,3 +4605,97 @@ Did you mean one of these?
 #47 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('D:\\\\DoAnNhomA\\\\pu...')
 #48 {main}
 "} 
+[2025-04-15 05:33:58] local.ERROR: Trait "Illuminate\Foundation\Auth\SendsPasswordResetEmails" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"Illuminate\\Foundation\\Auth\\SendsPasswordResetEmails\" not found at D:\\DoAnNhomA\\app\\Http\\Controllers\\ForgotPasswordController.php:8)
+[stacktrace]
+#0 {main}
+"} 
+[2025-04-15 06:55:42] local.ERROR: include(D:\DoAnNhomA\app\Http\Controllers\LoginController.php): Failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): include(D:\\DoAnNhomA\\app\\Http\\Controllers\\LoginController.php): Failed to open stream: No such file or directory at D:\\DoAnNhomA\\vendor\\composer\\ClassLoader.php:576)
+[stacktrace]
+#0 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'include(D:\\\\DoAn...', 'D:\\\\DoAnNhomA\\\\ve...', 576)
+#1 D:\\DoAnNhomA\\vendor\\composer\\ClassLoader.php(576): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(2, 'include(D:\\\\DoAn...', 'D:\\\\DoAnNhomA\\\\ve...', 576)
+#2 D:\\DoAnNhomA\\vendor\\composer\\ClassLoader.php(576): include('D:\\\\DoAnNhomA\\\\ve...')
+#3 D:\\DoAnNhomA\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('D:\\\\DoAnNhomA\\\\ve...')
+#4 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Http\\\\Contro...')
+#5 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(1096): is_a('App\\\\Http\\\\Contro...', 'Illuminate\\\\Rout...', true)
+#6 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(1035): Illuminate\\Routing\\Route->controllerMiddleware()
+#7 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(818): Illuminate\\Routing\\Route->gatherMiddleware()
+#8 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(800): Illuminate\\Routing\\Router->gatherRouteMiddleware(Object(Illuminate\\Routing\\Route))
+#9 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(784): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#10 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(748): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#11 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(737): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#12 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(200): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#13 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(144): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#14 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#15 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#16 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#17 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#19 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#20 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#21 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#22 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(99): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#25 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(175): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#30 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#31 D:\\DoAnNhomA\\public\\index.php(51): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#32 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('D:\\\\DoAnNhomA\\\\pu...')
+#33 {main}
+"} 
+[2025-04-15 06:58:06] local.ERROR: include(D:\DoAnNhomA\vendor\composer/../../app/Http/Controllers/LoginController.php): Failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): include(D:\\DoAnNhomA\\vendor\\composer/../../app/Http/Controllers/LoginController.php): Failed to open stream: No such file or directory at D:\\DoAnNhomA\\vendor\\composer\\ClassLoader.php:576)
+[stacktrace]
+#0 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(255): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'include(D:\\\\DoAn...', 'D:\\\\DoAnNhomA\\\\ve...', 576)
+#1 D:\\DoAnNhomA\\vendor\\composer\\ClassLoader.php(576): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(2, 'include(D:\\\\DoAn...', 'D:\\\\DoAnNhomA\\\\ve...', 576)
+#2 D:\\DoAnNhomA\\vendor\\composer\\ClassLoader.php(576): include('D:\\\\DoAnNhomA\\\\ve...')
+#3 D:\\DoAnNhomA\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('D:\\\\DoAnNhomA\\\\ve...')
+#4 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('App\\\\Http\\\\Contro...')
+#5 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(1096): is_a('App\\\\Http\\\\Contro...', 'Illuminate\\\\Rout...', true)
+#6 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(1035): Illuminate\\Routing\\Route->controllerMiddleware()
+#7 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(818): Illuminate\\Routing\\Route->gatherMiddleware()
+#8 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(800): Illuminate\\Routing\\Router->gatherRouteMiddleware(Object(Illuminate\\Routing\\Route))
+#9 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(784): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#10 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(748): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#11 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(737): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#12 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(200): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#13 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(144): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#14 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#15 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#16 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#17 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#19 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#20 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#21 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#22 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(99): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#25 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(175): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#30 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(144): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#31 D:\\DoAnNhomA\\public\\index.php(51): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#32 D:\\DoAnNhomA\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('D:\\\\DoAnNhomA\\\\pu...')
+#33 {main}
+"} 
+[2025-04-15 07:00:09] local.ERROR: Trait "Illuminate\Foundation\Auth\SendsPasswordResetEmails" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"Illuminate\\Foundation\\Auth\\SendsPasswordResetEmails\" not found at D:\\DoAnNhomA\\app\\Http\\Controllers\\ForgotPasswordController.php:8)
+[stacktrace]
+#0 {main}
+"} 
+[2025-04-15 07:03:15] local.ERROR: Trait "Illuminate\Foundation\Auth\SendsPasswordResetEmails" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"Illuminate\\Foundation\\Auth\\SendsPasswordResetEmails\" not found at D:\\DoAnNhomA\\app\\Http\\Controllers\\ForgotPasswordController.php:8)
+[stacktrace]
+#0 {main}
+"} 
+[2025-04-15 07:03:30] local.ERROR: Trait "Illuminate\Foundation\Auth\SendsPasswordResetEmails" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"Illuminate\\Foundation\\Auth\\SendsPasswordResetEmails\" not found at D:\\DoAnNhomA\\app\\Http\\Controllers\\ForgotPasswordController.php:8)
+[stacktrace]
+#0 {main}
+"} 
+[2025-04-15 07:05:05] local.ERROR: Trait "Illuminate\Foundation\Auth\SendsPasswordResetEmails" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"Illuminate\\Foundation\\Auth\\SendsPasswordResetEmails\" not found at D:\\DoAnNhomA\\app\\Http\\Controllers\\ForgotPasswordController.php:8)
+[stacktrace]
+#0 {main}
+"} 

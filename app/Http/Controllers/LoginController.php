@@ -13,6 +13,14 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login')->with('success', 'Đăng xuất thành công!');
+    }
+
     public function showLoginForm()
     {
         return view('auth.login');
@@ -40,7 +48,7 @@ class LoginController extends Controller
         // Thử đăng nhập
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate(); // Tái tạo session để tăng bảo mật
-            return redirect()->intended('dashboard'); 
+            return redirect()->route('students.home'); 
         }
 
         // Nếu đăng nhập thất bại, trả về lỗi
