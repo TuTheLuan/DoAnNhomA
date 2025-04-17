@@ -51,12 +51,15 @@ Route::post('/khoahoc', [KhoaHocController::class, 'store'])->name('khoahoc.stor
 Route::put('khoahoc/{id}', [KhoaHocController::class, 'update'])->name('khoahoc.update');
 
 //Bài học
-// hiển thị danh sách bài học theo khóa học
+// Danh sách bài học theo khóa học
 Route::get('/baihoc/danhsach/{id}', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
-Route::get('/baihoc/danhsach', [BaiHocController::class, 'danhsachChung'])->name('baihoc.tatca');
-Route::get('/baihoc/thembaihoc', [BaiHocController::class, 'thembaihoc'])->name('baihoc.thembaihoc');
-Route::get('/baihoc/store', [BaiHocController::class, 'index'])->name('baihoc.index');
+
+// Form thêm bài học cho khóa học có ID
+Route::get('/baihoc/them/{id}', [BaiHocController::class, 'thembaihoc'])->name('baihoc.thembaihoc');
+
+// Lưu bài học vào DB (sau khi submit form)
 Route::post('/baihoc/store', [BaiHocController::class, 'store'])->name('baihoc.store');
+
 
 
 

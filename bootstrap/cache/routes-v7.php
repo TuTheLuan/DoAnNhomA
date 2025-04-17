@@ -102,7 +102,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::ps71amCcpvUDjwHq',
+            '_route' => 'generated::G1lGQ6cX4wuZYh5C',
           ),
           1 => NULL,
           2 => 
@@ -310,66 +310,9 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/baihoc/danhsach' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'baihoc.tatca',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      '/baihoc/thembaihoc' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'baihoc.thembaihoc',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
       '/baihoc/store' => 
       array (
         0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'baihoc.index',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-        1 => 
         array (
           0 => 
           array (
@@ -392,7 +335,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::6CQW6RvFxUYzCYTu',
+            '_route' => 'generated::VFvJX6W1wPcrCwDF',
           ),
           1 => NULL,
           2 => 
@@ -409,7 +352,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/students/(?|([^/]++)(?|/edit(*:36)|(*:43)|(*:50))|home(*:62)|khoahoc(?|(*:79)|cuatoi(*:92)))|/khoahoc/([^/]++)(?|/edit(*:126)|(*:134))|/baihoc/danhsach/([^/]++)(*:168))/?$}sDu',
+      0 => '{^(?|/students/(?|([^/]++)(?|/edit(*:36)|(*:43)|(*:50))|home(*:62)|khoahoc(?|(*:79)|cuatoi(*:92)))|/khoahoc/([^/]++)(?|/edit(*:126)|(*:134))|/baihoc/(?|danhsach/([^/]++)(*:171)|them/([^/]++)(*:192)))/?$}sDu',
     ),
     3 => 
     array (
@@ -610,13 +553,36 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      168 => 
+      171 => 
       array (
         0 => 
         array (
           0 => 
           array (
             '_route' => 'baihoc.danhsach',
+          ),
+          1 => 
+          array (
+            0 => 'id',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      192 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'baihoc.thembaihoc',
           ),
           1 => 
           array (
@@ -794,7 +760,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::ps71amCcpvUDjwHq' => 
+    'generated::G1lGQ6cX4wuZYh5C' => 
     array (
       'methods' => 
       array (
@@ -817,7 +783,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::ps71amCcpvUDjwHq',
+        'as' => 'generated::G1lGQ6cX4wuZYh5C',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1566,43 +1532,6 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'baihoc.tatca' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'baihoc/danhsach',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'uses' => 'App\\Http\\Controllers\\BaiHocController@danhsachChung',
-        'controller' => 'App\\Http\\Controllers\\BaiHocController@danhsachChung',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'baihoc.tatca',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
     'baihoc.thembaihoc' => 
     array (
       'methods' => 
@@ -1610,7 +1539,7 @@ app('router')->setCompiledRoutes(
         0 => 'GET',
         1 => 'HEAD',
       ),
-      'uri' => 'baihoc/thembaihoc',
+      'uri' => 'baihoc/them/{id}',
       'action' => 
       array (
         'middleware' => 
@@ -1625,43 +1554,6 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'baihoc.thembaihoc',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'baihoc.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'baihoc/store',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'uses' => 'App\\Http\\Controllers\\BaiHocController@index',
-        'controller' => 'App\\Http\\Controllers\\BaiHocController@index',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'baihoc.index',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1713,7 +1605,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::6CQW6RvFxUYzCYTu' => 
+    'generated::VFvJX6W1wPcrCwDF' => 
     array (
       'methods' => 
       array (
@@ -1729,13 +1621,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:43:"function () {
     return view(\'welcome\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000053f0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000053d0000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::6CQW6RvFxUYzCYTu',
+        'as' => 'generated::VFvJX6W1wPcrCwDF',
       ),
       'fallback' => false,
       'defaults' => 

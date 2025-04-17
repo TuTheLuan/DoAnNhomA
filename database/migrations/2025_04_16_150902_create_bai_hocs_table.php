@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('bai_hocs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('khoahoc_id'); // <== thêm dòng này
-            $table->integer('so'); // Số bài học
+            $table->unsignedBigInteger('khoahoc_id'); // ID khóa học liên kết
+            $table->integer('so'); // Số thứ tự bài học
             $table->string('tieude'); // Tiêu đề bài học
-            $table->string('file')->nullable(); // Tài liệu đính kèm
+            $table->string('file')->nullable(); // Tài liệu đính kèm (nếu có)
             $table->timestamps();
 
-            // Nếu muốn ràng buộc foreign key:
-            // $table->foreign('khoahoc_id')->references('id')->on('khoa_hocs')->onDelete('cascade');
+            // Ràng buộc khóa ngoại
+            $table->foreign('khoahoc_id')
+                  ->references('id')
+                  ->on('khoa_hocs')
+                  ->onDelete('cascade'); // Xóa khóa học thì xóa luôn bài học
         });
     }
 

@@ -197,7 +197,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\storage\\framework/cache/data',
+        'path' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -370,13 +370,13 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\storage\\app',
+        'root' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\storage\\app',
         'throw' => false,
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\storage\\app/public',
+        'root' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
         'throw' => false,
@@ -396,7 +396,7 @@
     ),
     'links' => 
     array (
-      'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\public\\storage' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\storage\\app/public',
+      'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\public\\storage' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -435,13 +435,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\storage\\logs/laravel.log',
+        'path' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\storage\\logs/laravel.log',
+        'path' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -493,7 +493,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\storage\\logs/laravel.log',
+        'path' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -559,7 +559,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\resources\\views/vendor/mail',
+        0 => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -666,7 +666,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\storage\\framework/sessions',
+    'files' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -686,9 +686,9 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\resources\\views',
+      0 => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\resources\\views',
     ),
-    'compiled' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2\\storage\\framework\\views',
+    'compiled' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan\\storage\\framework\\views',
   ),
   'flare' => 
   array (
@@ -774,7 +774,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA2_ver0.2',
+    'remote_sites_path' => 'D:\\LTrinh_BackEnd2\\DoAnNhomA_BrNgoan',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',

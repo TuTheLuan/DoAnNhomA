@@ -11,5 +11,5 @@ class BaiHoc extends Model
 
     protected $table = 'bai_hocs';
 
-    protected $fillable = ['so', 'tieude', 'file'];
+    protected $fillable = ['so', 'tieude', 'file', 'khoahoc_id'];
 }

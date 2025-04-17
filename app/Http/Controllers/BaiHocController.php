@@ -13,7 +13,7 @@ class BaiHocController extends Controller
         $request->validate([
             'so' => 'required|integer',
             'tieude' => 'required|string|max:255',
-            'khoahoc_id' => 'required|exists:khoa_hocs,id', // kiểm tra ID khóa học có tồn tại
+            'khoahoc_id' => 'required|exists:khoahoctb,id', // kiểm tra ID khóa học có tồn tại
             'file' => 'nullable|file|mimes:pdf,docx,ppt,txt|max:2048',
         ]);
 
@@ -22,7 +22,7 @@ class BaiHocController extends Controller
             $filePath = $request->file('file')->store('baihoc_files', 'public');
         }
 
-        BaiHoc::create([
+        BaiHoc::create([        
             'so' => $request->so,
             'tieude' => $request->tieude,
             'khoahoc_id' => $request->khoahoc_id, // thêm khóa học ID vào
@@ -38,11 +38,15 @@ class BaiHocController extends Controller
         $khoahoc = KhoaHoc::findOrFail($id);
         $baihocs = BaiHoc::where('khoahoc_id', $id)->get();
 
-        return view('baihoc.danhsach', compact('khoahoc', 'baihocs'));
+        return view('baihoc.danhsach', compact('baihocs', 'khoahoc'));
     }
 
-    public function thembaihoc()
+
+
+    public function thembaihoc($id)
     {
-        return view('baihoc.thembaihoc');
+        $khoahoc = KhoaHoc::findOrFail($id);
+        return view('baihoc.thembaihoc', compact('khoahoc'));
     }
+
 }
