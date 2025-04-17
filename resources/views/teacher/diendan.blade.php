@@ -12,7 +12,7 @@
                     <i class="bi bi-plus-circle"></i> Thêm diễn đàn mới
                 </a>
             </div>
-            
+
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead class="table-light">
@@ -30,10 +30,14 @@
                             <td>{{ $diendan->ma_dien_dan }}</td>
                             <td>{{ $diendan->ten_dien_dan }}</td>
                             <td>
-                                @if($diendan->images)
-                                    @foreach(json_decode($diendan->images) as $image)
-                                        <img src="{{ asset('storage/'.$image) }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
-                                    @endforeach
+                                {{-- Ảnh nền chính --}}
+                                @if($diendan->background_image)
+                                    <img src="{{ asset('storage/' . $diendan->background_image) }}"
+                                        class="img-thumbnail"
+                                        style="width: 60px; height: 60px; object-fit: cover;"
+                                        alt="Ảnh diễn đàn">
+                                @else
+                                    <span class="text-muted">Không có ảnh</span>
                                 @endif
                             </td>
                             <td>
@@ -58,6 +62,7 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
 </div>

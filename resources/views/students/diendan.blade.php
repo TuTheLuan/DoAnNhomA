@@ -22,11 +22,8 @@
                                     <i class="fas fa-image fa-3x"></i>
                                 </div>
                                 @endif
-                                <div class="card-body">
+                                <div class="card-body" style="text-align: center;">
                                     <h5 class="card-title">{{ $diendan->ten_dien_dan }}</h5>
-                                    <p class="card-text">
-                                        <i class="fas fa-chalkboard-teacher"></i> {{ $diendan->giangVien->name }}
-                                    </p>
                                 </div>
                                 <div class="card-footer bg-white">
                                     <a href="{{ route('diendan.show', $diendan->id) }}" class="btn btn-primary btn-block">

@@ -14,6 +14,12 @@ class DiendanController extends Controller
         return view('teacher.diendan', compact('diendans'));
     }
 
+    public function indexForStudents()
+    {
+        $diendans = Diendan::all();
+        return view('students.diendan', compact('diendans'));
+    }
+
     public function create()
     {
         return view('teacher.themdiendan');
@@ -93,5 +99,10 @@ class DiendanController extends Controller
         $diendan->delete();
 
         return redirect()->route('diendan.index')->with('success', 'Xóa diễn đàn thành công!');
+    }
+    public function show($id)
+    {
+        $diendan = Diendan::findOrFail($id);
+        return view('students.diendan_show', compact('diendan'));
     }
 }

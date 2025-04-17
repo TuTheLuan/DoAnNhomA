@@ -39,15 +39,18 @@ Route::get('/teacher/khoahoc', [TeacherController::class, 'khoahoc'])->name('tea
 Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.themkhoahoc');
 Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.luukhoahoc');
 
-// Diễn đàn
-Route::prefix('teacher')->group(function () {
-    Route::get('/diendan', [DiendanController::class, 'index'])->name('diendan.index');
-    Route::get('/themdiendan', [DiendanController::class, 'create'])->name('diendan.create');
-    Route::post('/themdiendan', [DiendanController::class, 'store'])->name('diendan.store');
-    Route::get('/diendan/{id}/edit', [DiendanController::class, 'edit'])->name('diendan.edit');
-    Route::put('/diendan/{id}', [DiendanController::class, 'update'])->name('diendan.update');
-    Route::delete('/diendan/{id}', [DiendanController::class, 'destroy'])->name('diendan.destroy');
-});
+//Diễn đàn
+Route::get('teacher/diendan', [DiendanController::class, 'index'])->name('diendan.index');
+
+Route::get('students/diendan/{id}', [DiendanController::class, 'show'])->name('diendan.show');
+Route::get('students/diendan', [DiendanController::class, 'indexForStudents'])->name('diendan.index.students');
+
+Route::get('teacher/themdiendan', [DiendanController::class, 'create'])->name('diendan.create');
+Route::post('teacher/themdiendan', [DiendanController::class, 'store'])->name('diendan.store');
+Route::get('teacher/diendan/{id}/edit', [DiendanController::class, 'edit'])->name('diendan.edit');
+Route::put('teacher/diendan/{id}', [DiendanController::class, 'update'])->name('diendan.update');
+Route::delete('teacher/diendan/{id}', [DiendanController::class, 'destroy'])->name('diendan.destroy');
+
 //Khóa học
 Route::get('/khoahoc/danhsach', [KhoaHocController::class, 'danhsach'])->name('khoahoc.danhsach');
 Route::get('/khoahoc/themkhoahoc', [KhoaHocController::class, 'themkhoahoc'])->name('khoahoc.themkhoahoc');
