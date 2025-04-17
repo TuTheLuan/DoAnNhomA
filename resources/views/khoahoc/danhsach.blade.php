@@ -45,35 +45,44 @@
         </thead>
         <tbody>
         @foreach($khoahoctb as $khoahoc)
-        <tr>
-            <td>{{ $khoahoc->ma }}</td>
-            <td>{{ $khoahoc->ten }}</td>
-            <td>{{ $khoahoc->giangvien }}</td>
-            <td>{{ $khoahoc->sobaihoc }}</td>
-            <td>
-                @if($khoahoc->anh)
-                    <img src="{{ asset('images/' . $khoahoc->anh) }}" alt="Ảnh khóa học" width="80" height="60" style="object-fit: cover;">
-                @else
-                    <span class="text-muted">Không có ảnh</span>
-                @endif
-            </td>
-            <td>
-                <!-- Sửa -->
-                <a href="{{ route('khoahoc.edit', $khoahoc->id) }}" title="Chỉnh sửa khóa học">
-                    <i class="fas fa-pen text-primary me-3" style="cursor: pointer;"></i>
-                </a>
-                <!-- Xóa -->
-                <form action="{{ route('khoahoc.destroy', $khoahoc->id) }}" method="POST" class="d-inline"
-                    onsubmit="return confirm('Bạn có chắc chắn muốn xóa khóa học này?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn p-0" style="border: none; background: none;" title="Xóa khóa học">
-                        <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
-                    </button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
+    <tr>
+        <!-- Click vào mã sẽ dẫn đến danh sách bài học -->
+        <td>
+            <a href="{{ route('baihoc.danhsach', ['id' => $khoahoc->id]) }}" title="Xem bài học của {{ $khoahoc->ten }}">
+                {{ $khoahoc->ma }}
+            </a>
+        </td>
+        
+        <td>{{ $khoahoc->ten }}</td>
+        <td>{{ $khoahoc->giangvien }}</td>
+        <td>{{ $khoahoc->sobaihoc }}</td>
+
+        <td>
+            @if($khoahoc->anh)
+                <img src="{{ asset('images/' . $khoahoc->anh) }}" alt="Ảnh khóa học" width="80" height="60" style="object-fit: cover;">
+            @else
+                <span class="text-muted">Không có ảnh</span>
+            @endif
+        </td>
+
+        <td>
+            <!-- Sửa -->
+            <a href="{{ route('khoahoc.edit', $khoahoc->id) }}" title="Chỉnh sửa khóa học">
+                <i class="fas fa-pen text-primary me-3" style="cursor: pointer;"></i>
+            </a>
+
+            <!-- Xóa -->
+            <form action="{{ route('khoahoc.destroy', $khoahoc->id) }}" method="POST" class="d-inline"
+                onsubmit="return confirm('Bạn có chắc chắn muốn xóa khóa học này?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn p-0" style="border: none; background: none;" title="Xóa khóa học">
+                    <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
+                </button>
+            </form>
+        </td>
+    </tr>
+    @endforeach
 
         </tbody>
     </table>

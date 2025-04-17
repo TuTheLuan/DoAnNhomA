@@ -62,14 +62,28 @@ class KhoaHocController extends Controller
     {
         $khoahoc = KhoaHoc::findOrFail($id);
 
-        $khoahoc->update([
-            'ten' => $request->ten,
-            'giangvien' => $request->giangvien,
-            'sobaihoc' => $request->sobaihoc,
-        ]);
+        // Cập nhật thông tin cơ bản
+        $khoahoc->ten = $request->ten;
+        $khoahoc->giangvien = $request->giangvien;
+        $khoahoc->sobaihoc = $request->sobaihoc;
+
+        // Nếu có upload ảnh mới
+        if ($request->hasFile('anh')) {
+            $file = $request->file('anh');
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            // Di chuyển ảnh vào thư mục public/images
+            $file->move(public_path('images'), $filename);
+
+            // Cập nhật tên file ảnh vào DB
+            $khoahoc->anh = $filename;
+        }
+
+        $khoahoc->save();
 
         return redirect()->route('khoahoc.index')->with('success', 'Cập nhật khóa học thành công!');
     }
+
 
 
     public function edit($id)

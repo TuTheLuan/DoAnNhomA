@@ -11,7 +11,9 @@
             </div>
 
             <div class="mt-3 d-flex gap-3">
-                <button class="btn btn-success">Thêm Bài Học</button>
+            <a href="{{ route('baihoc.thembaihoc') }}" class="btn btn-success">
+                Thêm Bài Học
+            </a>
                 <button class="btn btn-danger">Xóa Bài Học</button>
             </div>
         </div>

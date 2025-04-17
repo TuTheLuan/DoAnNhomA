@@ -51,10 +51,13 @@ Route::post('/khoahoc', [KhoaHocController::class, 'store'])->name('khoahoc.stor
 Route::put('khoahoc/{id}', [KhoaHocController::class, 'update'])->name('khoahoc.update');
 
 //Bài học
-Route::get('/baihoc/danhsach', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
+// hiển thị danh sách bài học theo khóa học
+Route::get('/baihoc/danhsach/{id}', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
+Route::get('/baihoc/danhsach', [BaiHocController::class, 'danhsachChung'])->name('baihoc.tatca');
 Route::get('/baihoc/thembaihoc', [BaiHocController::class, 'thembaihoc'])->name('baihoc.thembaihoc');
-Route::get('/lessons', [LessonController::class, 'index'])->name('lessons.index');
-Route::post('/lessons', [LessonController::class, 'store'])->name('lessons.store');
+Route::get('/baihoc/store', [BaiHocController::class, 'index'])->name('baihoc.index');
+Route::post('/baihoc/store', [BaiHocController::class, 'store'])->name('baihoc.store');
+
 
 
 

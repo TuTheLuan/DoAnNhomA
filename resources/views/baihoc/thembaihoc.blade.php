@@ -4,7 +4,7 @@
 <div class="container mt-4" style="max-width: 600px;">
     <h3 class="text-center text-danger mb-4" style="text-shadow: 1px 1px 2px gray;">Thêm Bài Học</h3>
 
-    <form action="{{ route('lessons.store') }}" method="POST" enctype="multipart/form-data" class="bg-light p-4 rounded shadow-sm">
+    <form action="{{ route('baihoc.store') }}" method="POST" enctype="multipart/form-data" class="bg-light p-4 rounded shadow-sm">
         @csrf
         <div class="mb-3">
             <label for="lesson_number" class="form-label">Bài học số:</label>
@@ -27,7 +27,7 @@
         </div>
 
         <div class="d-flex justify-content-between">
-            <a href="{{ route('lessons.index') }}" class="btn btn-danger">Hủy</a>
+            <a href="{{ route('baihoc.index') }}" class="btn btn-danger">Hủy</a>
             <button type="submit" class="btn btn-success">Thêm</button>
         </div>
     </form>
