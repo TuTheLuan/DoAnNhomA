@@ -15,15 +15,15 @@
                     <label for="username" class="form-label">Tên đăng nhập</label>
                     <input type="text" name="username" id="username" class="form-control rounded-start shadow-sm" value="<?php echo e(old('username')); ?>" required>
                     <?php $__errorArgs = ['username'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                        <div class="text-danger mt-1"><?php echo e($message); ?></div>
-                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                    $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+                    if ($__bag->has($__errorArgs[0])) :
+                    if (isset($message)) { $__messageOriginal = $message; }
+                    $message = $__bag->first($__errorArgs[0]); ?>
+                                            <div class="text-danger mt-1"><?php echo e($message); ?></div>
+                                        <?php unset($message);
+                    if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+                    endif;
+                    unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <div class="mb-3">

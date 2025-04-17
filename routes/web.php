@@ -71,17 +71,22 @@ Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->na
 Route::post('/register', [RegisterController::class, 'register']);
 
 // Quên mật khẩu
-Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+// Custom luồng gửi mã 6 số → xác minh → đổi mật khẩu
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetCode'])->name('password.email');
+
+Route::get('/verify-token', [ForgotPasswordController::class, 'showVerifyForm'])->name('password.verify');
+Route::post('/verify-token', [ForgotPasswordController::class, 'verifyToken']);
+
+Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset.custom');
+Route::post('/reset-password', [ForgotPasswordController::class, 'updatePassword'])->name('password.update.custom');
+
 
 // Setting
 Route::get('/settings', [SettingsController::class, 'edit'])->name('settings.edit');
 Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
 
 
-
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
