@@ -64,8 +64,14 @@
                 <a href="{{ route('baihoc.thembaihoc', ['id' => $khoahoc->id]) }}" class="btn btn-success">
                     Thêm Bài Học
                 </a>
-                <button class="btn btn-danger">Xóa Bài Học</button>
+
+                <form action="{{ route('baihoc.xoaAll', $khoahoc->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa tất cả bài học của khóa học này?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Xóa Bài Học</button>
+                </form>
             </div>
+
         </div>
 
         <div class="col-md-4 text-center">

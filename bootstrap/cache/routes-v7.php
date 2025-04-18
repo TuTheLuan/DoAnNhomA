@@ -102,7 +102,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::aAnnDSDQd9hiv1cj',
+            '_route' => 'generated::zOFVwhuc29vzwR9e',
           ),
           1 => NULL,
           2 => 
@@ -335,7 +335,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::RbHaNESi9m9px9LO',
+            '_route' => 'generated::1QxzW9fBanOi9JUt',
           ),
           1 => NULL,
           2 => 
@@ -352,7 +352,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/students/(?|([^/]++)(?|/edit(*:36)|(*:43)|(*:50))|home(*:62)|khoahoc(?|(*:79)|cuatoi(*:92)))|/khoahoc/([^/]++)(?|/edit(*:126)|(*:134))|/baihoc/(?|danhsach/([^/]++)(*:171)|them/([^/]++)(*:192)))/?$}sDu',
+      0 => '{^(?|/students/(?|([^/]++)(?|/edit(*:36)|(*:43)|(*:50))|home(*:62)|khoahoc(?|(*:79)|cuatoi(*:92)))|/khoahoc/([^/]++)(?|/edit(*:126)|(*:134))|/baihoc/(?|danhsach/([^/]++)(*:171)|them/([^/]++)(*:192)|xoa/([^/]++)(*:212)))/?$}sDu',
     ),
     3 => 
     array (
@@ -598,6 +598,28 @@ app('router')->setCompiledRoutes(
           5 => true,
           6 => NULL,
         ),
+      ),
+      212 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'baihoc.xoaAll',
+          ),
+          1 => 
+          array (
+            0 => 'khoahoc_id',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
         1 => 
         array (
           0 => NULL,
@@ -760,7 +782,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::aAnnDSDQd9hiv1cj' => 
+    'generated::zOFVwhuc29vzwR9e' => 
     array (
       'methods' => 
       array (
@@ -783,7 +805,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::aAnnDSDQd9hiv1cj',
+        'as' => 'generated::zOFVwhuc29vzwR9e',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1605,7 +1627,43 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::RbHaNESi9m9px9LO' => 
+    'baihoc.xoaAll' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'baihoc/xoa/{khoahoc_id}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\BaiHocController@destroyAll',
+        'controller' => 'App\\Http\\Controllers\\BaiHocController@destroyAll',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'baihoc.xoaAll',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::1QxzW9fBanOi9JUt' => 
     array (
       'methods' => 
       array (
@@ -1621,13 +1679,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:43:"function () {
     return view(\'welcome\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000053d0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000053e0000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::RbHaNESi9m9px9LO',
+        'as' => 'generated::1QxzW9fBanOi9JUt',
       ),
       'fallback' => false,
       'defaults' => 

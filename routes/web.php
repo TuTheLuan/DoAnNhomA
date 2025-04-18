@@ -59,6 +59,8 @@ Route::get('/baihoc/them/{id}', [BaiHocController::class, 'thembaihoc'])->name('
 
 // Lưu bài học vào DB (sau khi submit form)
 Route::post('/baihoc/store', [BaiHocController::class, 'store'])->name('baihoc.store');
+Route::delete('/baihoc/xoa/{khoahoc_id}', [BaiHocController::class, 'destroyAll'])->name('baihoc.xoaAll');
+
 
 
 

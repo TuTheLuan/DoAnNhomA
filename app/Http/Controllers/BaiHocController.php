@@ -57,5 +57,19 @@ class BaiHocController extends Controller
         $khoahoc = KhoaHoc::findOrFail($id);
         return view('baihoc.thembaihoc', compact('khoahoc'));
     }
+    public function destroyAll($khoahoc_id)
+    {
+        // Lấy tất cả bài học thuộc khóa học
+        $baihocs = BaiHoc::where('khoahoc_id', $khoahoc_id)->get();
+
+        foreach ($baihocs as $baihoc) {
+            // Xóa tài liệu liên quan nếu có
+            TaiLieuBaiHoc::where('baihoc_id', $baihoc->id)->delete();
+            $baihoc->delete();
+        }
+
+        return redirect()->route('baihoc.danhsach', $khoahoc_id)->with('success', 'Đã xóa tất cả bài học');
+    }
+
 
 }
