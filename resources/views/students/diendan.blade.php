@@ -24,6 +24,7 @@
                                 @endif
                                 <div class="card-body" style="text-align: center;">
                                     <h5 class="card-title">{{ $diendan->ten_dien_dan }}</h5>
+                                    <p class="card-text text-muted">Giảng viên: {{ $diendan->ten_giang_vien }}</p>
                                 </div>
                                 <div class="card-footer bg-white">
                                     <a href="{{ route('diendan.show', $diendan->id) }}" class="btn btn-primary btn-block">

@@ -30,6 +30,7 @@ class DiendanController extends Controller
         $request->validate([
             'ten_dien_dan' => 'required|string|max:255',
             'loai_thao_luan' => 'required|in:public,anonymous',
+            'ten_giang_vien' => 'required|string|max:255',
             'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
@@ -61,6 +62,7 @@ class DiendanController extends Controller
                 'ma_dien_dan' => $newCode,
                 'ten_dien_dan' => $request->ten_dien_dan,
                 'loai_thao_luan' => $request->loai_thao_luan,
+                'ten_giang_vien' => $request->ten_giang_vien,
                 'background_image' => $backgroundImagePath,
                 'images' => !empty($imagePaths) ? json_encode($imagePaths) : null,
                 'ngay_tao' => now()
@@ -85,9 +87,16 @@ class DiendanController extends Controller
     {
         $diendan = Diendan::findOrFail($id);
 
+        $request->validate([
+            'ten_dien_dan' => 'required|string|max:255',
+            'loai_thao_luan' => 'required|in:public,anonymous',
+            'ten_giang_vien' => 'required|string|max:255',
+        ]);
+
         $diendan->update([
             'ten_dien_dan' => $request->ten_dien_dan,
-            'loai_thao_luan' => $request->loai_thao_luan
+            'loai_thao_luan' => $request->loai_thao_luan,
+            'ten_giang_vien' => $request->ten_giang_vien,
         ]);
 
         return redirect()->route('diendan.index')->with('success', 'Cập nhật diễn đàn thành công!');

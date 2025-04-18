@@ -19,6 +19,7 @@
                         <tr>
                             <th>Mã diễn đàn</th>
                             <th>Tiêu đề</th>
+                            <th>Tên giảng viên</th>
                             <th>Ảnh</th>
                             <th>Trạng thái</th>
                             <th>Thao tác</th>
@@ -29,6 +30,7 @@
                         <tr>
                             <td>{{ $diendan->ma_dien_dan }}</td>
                             <td>{{ $diendan->ten_dien_dan }}</td>
+                            <td>{{ $diendan->ten_giang_vien }}</td>
                             <td>
                                 {{-- Ảnh nền chính --}}
                                 @if($diendan->background_image)

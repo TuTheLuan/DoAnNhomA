@@ -20,6 +20,7 @@ class Diendan extends Model
         'loai_thao_luan',
         'background_image',
         'images',
-        'ngay_tao'
+        'ngay_tao',
+        'ten_giang_vien'
     ];
 }

@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('ten_dien_dan');
             $table->enum('loai_thao_luan', ['public', 'anonymous'])->default('public');
             $table->date('ngay_tao');
+            $table->string('ten_giang_vien');
             $table->string('background_image')->nullable();
             $table->json('images')->nullable(); // Thêm trường lưu nhiều ảnh dạng JSON
             $table->timestamps();
