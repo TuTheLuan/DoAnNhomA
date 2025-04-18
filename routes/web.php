@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\DiendanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,6 +42,19 @@ Route::get('/teacher/home', [TeacherController::class, 'home'])->name('teacher.h
 Route::get('/teacher/khoahoc', [TeacherController::class, 'khoahoc'])->name('teacher.khoahoc');
 Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.themkhoahoc');
 Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.luukhoahoc');
+
+//Diễn đàn
+Route::get('teacher/diendan', [DiendanController::class, 'index'])->name('diendan.index');
+
+Route::get('students/diendan/{id}', [DiendanController::class, 'show'])->name('diendan.show');
+Route::get('students/diendan', [DiendanController::class, 'indexForStudents'])->name('diendan.index.students');
+
+Route::get('teacher/themdiendan', [DiendanController::class, 'create'])->name('diendan.create');
+Route::post('teacher/themdiendan', [DiendanController::class, 'store'])->name('diendan.store');
+Route::get('teacher/diendan/{id}/edit', [DiendanController::class, 'edit'])->name('diendan.edit');
+Route::put('teacher/diendan/{id}', [DiendanController::class, 'update'])->name('diendan.update');
+Route::delete('teacher/diendan/{id}', [DiendanController::class, 'destroy'])->name('diendan.destroy');
+
 
 //Khóa học
 Route::get('/khoahoc/danhsach', [KhoaHocController::class, 'danhsach'])->name('khoahoc.danhsach');
