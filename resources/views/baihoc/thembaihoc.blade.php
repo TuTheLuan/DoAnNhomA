@@ -33,14 +33,14 @@
         </div>
 
         <div class="mb-4">
-            <label for="file" class="form-label">Tài liệu bài học:</label>
+            <label for="files" class="form-label">Tài liệu bài học:</label>
             <div class="input-group">
-                <input type="file" class="form-control" name="file" id="file">
+                <input type="file" class="form-control" name="files[]" id="files" multiple>
                 <span class="input-group-text bg-white">
                     <img src="{{ asset('images/upload-icon.png') }}" alt="upload" style="height: 20px;">
                 </span>
             </div>
-            <small class="text-muted">Chấp nhận file PDF, Word, PowerPoint, TXT. Tối đa 2MB.</small>
+            <small class="text-muted">Bạn có thể chọn nhiều file: PDF, Word, PowerPoint, TXT. Tối đa mỗi file 2MB.</small>
         </div>
 
         <div class="d-flex justify-content-between">

@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('khoahoctb', function (Blueprint $table) {
-            $table->string('anh')->nullable()->after('giangvien');
+        Schema::create('tai_lieu_baihoc', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('baihoc_id')->constrained('bai_hocs')->onDelete('cascade'); // sửa tại đây
+            $table->string('file');
+            $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('khoahoctb', function (Blueprint $table) {
-            $table->dropColumn('anh');
-        });
+        Schema::dropIfExists('tai_lieu_baihoc');
     }
 };

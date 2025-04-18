@@ -18,13 +18,11 @@ return new class extends Migration
             $table->string('tieude'); // Tiêu đề bài học
             $table->string('file')->nullable(); // Tài liệu đính kèm (nếu có)
             $table->timestamps();
-
+        
             // Ràng buộc khóa ngoại
-            $table->foreign('khoahoc_id')
-                  ->references('id')
-                  ->on('khoa_hocs')
-                  ->onDelete('cascade'); // Xóa khóa học thì xóa luôn bài học
+            $table->foreign('khoahoc_id')->references('id')->on('khoahoctb')->onDelete('cascade');
         });
+        
     }
 
     /**

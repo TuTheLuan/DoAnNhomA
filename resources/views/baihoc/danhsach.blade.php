@@ -16,17 +16,41 @@
                             <span>&#9660;</span>
                         </div>
                         <div class="lesson-content">
-                            @if ($baihoc->file)
+                        @if ($baihoc->tailieu->count())
+                            @foreach ($baihoc->tailieu as $tailieu)
+                                @php
+                                    $extension = strtolower(pathinfo($tailieu->file, PATHINFO_EXTENSION));
+                                    switch ($extension) {
+                                        case 'doc':
+                                        case 'docx':
+                                            $icon = asset('icons/word-icon.png');
+                                            break;
+                                        case 'pdf':
+                                            $icon = asset('icons/pdf-icon.png');
+                                            break;
+                                        case 'ppt':
+                                        case 'pptx':
+                                            $icon = asset('icons/ppt-icon.png');
+                                            break;
+                                        case 'txt':
+                                            $icon = asset('icons/txt-icon.png');
+                                            break;
+                                        default:
+                                            $icon = asset('icons/file-icon.png');
+                                    }
+                                @endphp
+
                                 <div class="file-item">
-                                    <img src="{{ asset('images/doc.png') }}" alt="file icon">
-                                    <a href="{{ asset('storage/' . $baihoc->file) }}" target="_blank">
+                                    <img src="{{ $icon }}" alt="file icon">
+                                    <a href="{{ asset('storage/' . $tailieu->file) }}" target="_blank">
                                         Xem tài liệu
                                     </a>
                                     <span class="delete">x</span>
                                 </div>
-                            @else
-                                <p>Chưa có tài liệu.</p>
-                            @endif
+                            @endforeach
+                        @else
+                            <p>Chưa có tài liệu.</p>
+                        @endif
 
                             <button class="edit-btn">Chỉnh sửa</button>
                         </div>

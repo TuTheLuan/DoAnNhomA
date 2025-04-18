@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\KhoaHoc;
 use App\Models\BaiHoc;
+use App\Models\TaiLieuBaiHoc;
 
 class BaiHocController extends Controller
 {
@@ -13,25 +14,33 @@ class BaiHocController extends Controller
         $request->validate([
             'so' => 'required|integer',
             'tieude' => 'required|string|max:255',
-            'khoahoc_id' => 'required|exists:khoahoctb,id', // kiểm tra ID khóa học có tồn tại
-            'file' => 'nullable|file|mimes:pdf,docx,ppt,txt|max:2048',
+            'khoahoc_id' => 'required|exists:khoahoctb,id',
+            'files.*' => 'nullable|file|mimes:pdf,docx,ppt,txt|max:2048',
         ]);
 
-        $filePath = null;
-        if ($request->hasFile('file')) {
-            $filePath = $request->file('file')->store('baihoc_files', 'public');
-        }
-
-        BaiHoc::create([        
+        // Tạo bài học trước
+        $baihoc = BaiHoc::create([
             'so' => $request->so,
             'tieude' => $request->tieude,
-            'khoahoc_id' => $request->khoahoc_id, // thêm khóa học ID vào
-            'file' => $filePath,
+            'khoahoc_id' => $request->khoahoc_id,
         ]);
+
+        // Nếu có file thì lưu
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $path = $file->store('tailieu', 'public');
+                TaiLieuBaiHoc::create([
+                    'baihoc_id' => $baihoc->id,
+                    'file' => $path,
+                ]);
+            }
+        }
 
         return redirect()->route('baihoc.danhsach', $request->khoahoc_id)
                         ->with('success', 'Thêm bài học thành công!');
     }
+
+
 
     public function danhsach($id)
     {
