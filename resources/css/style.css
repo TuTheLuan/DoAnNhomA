@@ -1,0 +1,43 @@
+/* Đảm bảo chữ trong ô input căn lề trái */
+.form-control {
+    text-align: left !important;
+    height: 40px !important; /* Đảm bảo chiều cao */
+    line-height: 40px !important;
+    padding-right: 40px !important; /* Tạo không gian cho icon */
+
+}
+
+/* Thiết lập container cho ô mật khẩu */
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+/* Thiết lập nút con mắt */
+.eye-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #f8f9fa;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Biểu tượng con mắt */
+.eye-button i {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Giảm border-radius để tránh ảnh hưởng đến layout */
+.form-control.rounded-pill {
+    border-radius: 50px !important; /* Bo góc đầy đủ */
+}
