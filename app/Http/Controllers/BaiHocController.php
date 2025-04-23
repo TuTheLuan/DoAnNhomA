@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\KhoaHoc;
 use App\Models\BaiHoc;
@@ -15,30 +16,38 @@ class BaiHocController extends Controller
             'so' => 'required|integer',
             'tieude' => 'required|string|max:255',
             'khoahoc_id' => 'required|exists:khoahoctb,id',
-            'files.*' => 'nullable|file|mimes:pdf,docx,ppt,txt|max:2048',
+            'files' => 'nullable',
+            'files.*' => 'nullable|file|mimes:pdf,docx,doc,ppt,pptx,txt|max:2048',
         ]);
 
-        // Tạo bài học trước
+        // Tạo bài học
         $baihoc = BaiHoc::create([
             'so' => $request->so,
             'tieude' => $request->tieude,
             'khoahoc_id' => $request->khoahoc_id,
         ]);
 
-        // Nếu có file thì lưu
+        // Lưu từng file
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                $path = $file->store('tailieu', 'public');
-                TaiLieuBaiHoc::create([
-                    'baihoc_id' => $baihoc->id,
-                    'file' => $path,
-                ]);
+                if ($file->isValid()) {
+                    $filename = time() . '_' . $file->getClientOriginalName();
+                    $path = $file->storeAs('tailieu', $filename, 'public');
+
+                    TaiLieuBaiHoc::create([
+                        'baihoc_id' => $baihoc->id,
+                        'file' => $path,
+                    ]);
+                }
             }
         }
 
-        return redirect()->route('baihoc.danhsach', $request->khoahoc_id)
-                        ->with('success', 'Thêm bài học thành công!');
+        return redirect()
+            ->route('baihoc.danhsach', $request->khoahoc_id)
+            ->with('success', 'Thêm bài học thành công!');
     }
+
+
 
 
 
@@ -57,19 +66,22 @@ class BaiHocController extends Controller
         $khoahoc = KhoaHoc::findOrFail($id);
         return view('baihoc.thembaihoc', compact('khoahoc'));
     }
-    public function destroyAll($khoahoc_id)
+    public function destroy($id)
     {
-        // Lấy tất cả bài học thuộc khóa học
-        $baihocs = BaiHoc::where('khoahoc_id', $khoahoc_id)->get();
+        $baihoc = BaiHoc::findOrFail($id);
 
-        foreach ($baihocs as $baihoc) {
-            // Xóa tài liệu liên quan nếu có
-            TaiLieuBaiHoc::where('baihoc_id', $baihoc->id)->delete();
-            $baihoc->delete();
+        // Xóa tài liệu trước
+        foreach ($baihoc->tailieu as $file) {
+            Storage::disk('public')->delete($file->file);
+            $file->delete();
         }
 
-        return redirect()->route('baihoc.danhsach', $khoahoc_id)->with('success', 'Đã xóa tất cả bài học');
+        // Xóa bài học
+        $baihoc->delete();
+
+        return back()->with('success', 'Đã xóa bài học thành công!');
     }
+
 
 
 }

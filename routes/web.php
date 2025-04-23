@@ -5,6 +5,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\KhoaHocController;
 use App\Http\Controllers\BaiHocController;
+use App\Http\Controllers\TaiLieuBaiHocController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,7 +60,14 @@ Route::get('/baihoc/them/{id}', [BaiHocController::class, 'thembaihoc'])->name('
 
 // Lưu bài học vào DB (sau khi submit form)
 Route::post('/baihoc/store', [BaiHocController::class, 'store'])->name('baihoc.store');
-Route::delete('/baihoc/xoa/{khoahoc_id}', [BaiHocController::class, 'destroyAll'])->name('baihoc.xoaAll');
+
+
+Route::get('/baihoc/sua/{id}', [BaiHocController::class, 'edit'])->name('baihoc.edit');
+Route::delete('/baihoc/xoa/{id}', [BaiHocController::class, 'destroy'])->name('baihoc.destroy');
+
+//Tài liệu
+Route::delete('/tailieu/{id}', [TaiLieuBaiHocController::class, 'destroy'])->name('tailieu.destroy');
+
 
 
 

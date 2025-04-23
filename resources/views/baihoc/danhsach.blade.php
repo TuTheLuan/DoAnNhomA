@@ -16,43 +16,57 @@
                             <span>&#9660;</span>
                         </div>
                         <div class="lesson-content">
-                        @if ($baihoc->tailieu->count())
-                            @foreach ($baihoc->tailieu as $tailieu)
-                                @php
-                                    $extension = strtolower(pathinfo($tailieu->file, PATHINFO_EXTENSION));
-                                    switch ($extension) {
-                                        case 'doc':
-                                        case 'docx':
-                                            $icon = asset('icons/word-icon.png');
-                                            break;
-                                        case 'pdf':
-                                            $icon = asset('icons/pdf-icon.png');
-                                            break;
-                                        case 'ppt':
-                                        case 'pptx':
-                                            $icon = asset('icons/ppt-icon.png');
-                                            break;
-                                        case 'txt':
-                                            $icon = asset('icons/txt-icon.png');
-                                            break;
-                                        default:
-                                            $icon = asset('icons/file-icon.png');
-                                    }
-                                @endphp
+                            @if ($baihoc->tailieu->count())
+                                @foreach ($baihoc->tailieu as $tailieu)
+                                    @php
+                                        $extension = strtolower(pathinfo($tailieu->file, PATHINFO_EXTENSION));
+                                        switch ($extension) {
+                                            case 'doc':
+                                            case 'docx':
+                                                $icon = asset('icons/word-icon.png');
+                                                break;
+                                            case 'pdf':
+                                                $icon = asset('icons/pdf-icon.png');
+                                                break;
+                                            case 'ppt':
+                                            case 'pptx':
+                                                $icon = asset('icons/ppt-icon.png');
+                                                break;
+                                            case 'txt':
+                                                $icon = asset('icons/txt-icon.png');
+                                                break;
+                                            default:
+                                                $icon = asset('icons/file-icon.png');
+                                        }
+                                    @endphp
 
-                                <div class="file-item">
-                                    <img src="{{ $icon }}" alt="file icon">
-                                    <a href="{{ asset('storage/' . $tailieu->file) }}" target="_blank">
-                                        Xem tài liệu
-                                    </a>
-                                    <span class="delete">x</span>
-                                </div>
-                            @endforeach
-                        @else
-                            <p>Chưa có tài liệu.</p>
-                        @endif
+                                    <div class="file-item">
+                                        <img src="{{ $icon }}" alt="file icon">
+                                        <a href="{{ asset('storage/' . $tailieu->file) }}" target="_blank">
+                                            Xem tài liệu
+                                        </a>
+                                        <!-- Nút xóa tài liệu (form nhỏ) -->
+                                        <form action="{{ route('tailieu.destroy', $tailieu->id) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" style="background: none; border: none; color: red; font-weight: bold; cursor: pointer;">x</button>
+                                        </form>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p>Chưa có tài liệu.</p>
+                            @endif
 
-                            <button class="edit-btn">Chỉnh sửa</button>
+                            {{-- Nút chỉnh sửa và xóa --}}
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="{{ route('baihoc.edit', $baihoc->id) }}" class="btn btn-sm btn-primary">Chỉnh sửa</a>
+
+                                <form action="{{ route('baihoc.destroy', $baihoc->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa bài học này?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 @empty
@@ -64,14 +78,7 @@
                 <a href="{{ route('baihoc.thembaihoc', ['id' => $khoahoc->id]) }}" class="btn btn-success">
                     Thêm Bài Học
                 </a>
-
-                <form action="{{ route('baihoc.xoaAll', $khoahoc->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa tất cả bài học của khóa học này?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Xóa Bài Học</button>
-                </form>
             </div>
-
         </div>
 
         <div class="col-md-4 text-center">
@@ -87,7 +94,6 @@
     .file-item { display: flex; align-items: center; margin-bottom: 5px; }
     .file-item img { width: 24px; height: 24px; margin-right: 8px; }
     .file-item .delete { margin-left: auto; color: red; cursor: pointer; font-weight: bold; }
-    .edit-btn { margin-top: 5px; background-color: #5cb85c; color: white; padding: 3px 8px; border-radius: 5px; font-size: 14px; border: none; }
 </style>
 
 <script>

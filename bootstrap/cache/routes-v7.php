@@ -102,7 +102,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::zOFVwhuc29vzwR9e',
+            '_route' => 'generated::AhUQJ22YbUXFEowz',
           ),
           1 => NULL,
           2 => 
@@ -335,7 +335,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::1QxzW9fBanOi9JUt',
+            '_route' => 'generated::2wG5DGoM8cKWobiE',
           ),
           1 => NULL,
           2 => 
@@ -352,7 +352,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/students/(?|([^/]++)(?|/edit(*:36)|(*:43)|(*:50))|home(*:62)|khoahoc(?|(*:79)|cuatoi(*:92)))|/khoahoc/([^/]++)(?|/edit(*:126)|(*:134))|/baihoc/(?|danhsach/([^/]++)(*:171)|them/([^/]++)(*:192)|xoa/([^/]++)(*:212)))/?$}sDu',
+      0 => '{^(?|/students/(?|([^/]++)(?|/edit(*:36)|(*:43)|(*:50))|home(*:62)|khoahoc(?|(*:79)|cuatoi(*:92)))|/khoahoc/([^/]++)(?|/edit(*:126)|(*:134))|/baihoc/(?|danhsach/([^/]++)(*:171)|them/([^/]++)(*:192)|sua/([^/]++)(*:212)|xoa/([^/]++)(*:232))|/tailieu/([^/]++)(*:258))/?$}sDu',
     ),
     3 => 
     array (
@@ -605,11 +605,56 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'baihoc.xoaAll',
+            '_route' => 'baihoc.edit',
           ),
           1 => 
           array (
-            0 => 'khoahoc_id',
+            0 => 'id',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      232 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'baihoc.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'id',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      258 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'tailieu.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'id',
           ),
           2 => 
           array (
@@ -782,7 +827,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::zOFVwhuc29vzwR9e' => 
+    'generated::AhUQJ22YbUXFEowz' => 
     array (
       'methods' => 
       array (
@@ -805,7 +850,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::zOFVwhuc29vzwR9e',
+        'as' => 'generated::AhUQJ22YbUXFEowz',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1627,27 +1672,28 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'baihoc.xoaAll' => 
+    'baihoc.edit' => 
     array (
       'methods' => 
       array (
-        0 => 'DELETE',
+        0 => 'GET',
+        1 => 'HEAD',
       ),
-      'uri' => 'baihoc/xoa/{khoahoc_id}',
+      'uri' => 'baihoc/sua/{id}',
       'action' => 
       array (
         'middleware' => 
         array (
           0 => 'web',
         ),
-        'uses' => 'App\\Http\\Controllers\\BaiHocController@destroyAll',
-        'controller' => 'App\\Http\\Controllers\\BaiHocController@destroyAll',
+        'uses' => 'App\\Http\\Controllers\\BaiHocController@edit',
+        'controller' => 'App\\Http\\Controllers\\BaiHocController@edit',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'baihoc.xoaAll',
+        'as' => 'baihoc.edit',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1663,7 +1709,79 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::1QxzW9fBanOi9JUt' => 
+    'baihoc.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'baihoc/xoa/{id}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\BaiHocController@destroy',
+        'controller' => 'App\\Http\\Controllers\\BaiHocController@destroy',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'baihoc.destroy',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'tailieu.destroy' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'tailieu/{id}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\TaiLieuBaiHocController@destroy',
+        'controller' => 'App\\Http\\Controllers\\TaiLieuBaiHocController@destroy',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'tailieu.destroy',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::2wG5DGoM8cKWobiE' => 
     array (
       'methods' => 
       array (
@@ -1679,13 +1797,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:43:"function () {
     return view(\'welcome\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000053e0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005400000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::1QxzW9fBanOi9JUt',
+        'as' => 'generated::2wG5DGoM8cKWobiE',
       ),
       'fallback' => false,
       'defaults' => 

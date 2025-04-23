@@ -41,6 +41,16 @@
                 </span>
             </div>
             <small class="text-muted">Bạn có thể chọn nhiều file: PDF, Word, PowerPoint, TXT. Tối đa mỗi file 2MB.</small>
+            @error('files')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+            @if ($errors->has('files.*'))
+                @foreach ($errors->get('files.*') as $messages)
+                    @foreach ($messages as $msg)
+                        <div class="text-danger mt-1">{{ $msg }}</div>
+                    @endforeach
+                @endforeach
+            @endif
         </div>
 
         <div class="d-flex justify-content-between">
