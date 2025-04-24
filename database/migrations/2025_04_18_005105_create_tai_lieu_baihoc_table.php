@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('baihoc_id')->constrained('bai_hocs')->onDelete('cascade'); // sửa tại đây
             $table->string('file');
+            $table->string('original_name')->nullable(); // Thêm dòng này
             $table->timestamps();
         });
     }

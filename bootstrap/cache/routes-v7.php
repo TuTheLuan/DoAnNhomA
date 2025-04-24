@@ -102,7 +102,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::AhUQJ22YbUXFEowz',
+            '_route' => 'generated::ghU1q01aMUU0I5nP',
           ),
           1 => NULL,
           2 => 
@@ -335,7 +335,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::2wG5DGoM8cKWobiE',
+            '_route' => 'generated::FHYfpU2nDkZp8O2a',
           ),
           1 => NULL,
           2 => 
@@ -352,7 +352,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/students/(?|([^/]++)(?|/edit(*:36)|(*:43)|(*:50))|home(*:62)|khoahoc(?|(*:79)|cuatoi(*:92)))|/khoahoc/([^/]++)(?|/edit(*:126)|(*:134))|/baihoc/(?|danhsach/([^/]++)(*:171)|them/([^/]++)(*:192)|sua/([^/]++)(*:212)|xoa/([^/]++)(*:232))|/tailieu/([^/]++)(*:258))/?$}sDu',
+      0 => '{^(?|/students/(?|([^/]++)(?|/edit(*:36)|(*:43)|(*:50))|home(*:62)|khoahoc(?|(*:79)|cuatoi(*:92)))|/khoahoc/([^/]++)(?|/edit(*:126)|(*:134))|/baihoc/(?|danhsach/([^/]++)(*:171)|them/([^/]++)(*:192)|xoa/([^/]++)(*:212)|c(?|hinhsua/([^/]++)(*:240)|apnhat/([^/]++)(*:263)))|/tailieu/([^/]++)(*:290))/?$}sDu',
     ),
     3 => 
     array (
@@ -605,6 +605,28 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
+            '_route' => 'baihoc.destroy',
+          ),
+          1 => 
+          array (
+            0 => 'id',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
+      ),
+      240 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
             '_route' => 'baihoc.edit',
           ),
           1 => 
@@ -622,13 +644,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      232 => 
+      263 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'baihoc.destroy',
+            '_route' => 'baihoc.update',
           ),
           1 => 
           array (
@@ -636,7 +658,7 @@ app('router')->setCompiledRoutes(
           ),
           2 => 
           array (
-            'DELETE' => 0,
+            'PUT' => 0,
           ),
           3 => NULL,
           4 => false,
@@ -644,7 +666,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      258 => 
+      290 => 
       array (
         0 => 
         array (
@@ -827,7 +849,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::AhUQJ22YbUXFEowz' => 
+    'generated::ghU1q01aMUU0I5nP' => 
     array (
       'methods' => 
       array (
@@ -844,13 +866,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:77:"function (\\Illuminate\\Http\\Request $request) {
     return $request->user();
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005240000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000056a0000000000000000";}}',
         'namespace' => NULL,
         'prefix' => 'api',
         'where' => 
         array (
         ),
-        'as' => 'generated::AhUQJ22YbUXFEowz',
+        'as' => 'generated::ghU1q01aMUU0I5nP',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1672,43 +1694,6 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'baihoc.edit' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'baihoc/sua/{id}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'uses' => 'App\\Http\\Controllers\\BaiHocController@edit',
-        'controller' => 'App\\Http\\Controllers\\BaiHocController@edit',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'baihoc.edit',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
     'baihoc.destroy' => 
     array (
       'methods' => 
@@ -1781,7 +1766,80 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::2wG5DGoM8cKWobiE' => 
+    'baihoc.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'baihoc/chinhsua/{id}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\BaiHocController@edit',
+        'controller' => 'App\\Http\\Controllers\\BaiHocController@edit',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'baihoc.edit',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'baihoc.update' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'PUT',
+      ),
+      'uri' => 'baihoc/capnhat/{id}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\BaiHocController@update',
+        'controller' => 'App\\Http\\Controllers\\BaiHocController@update',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'baihoc.update',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::FHYfpU2nDkZp8O2a' => 
     array (
       'methods' => 
       array (
@@ -1797,13 +1855,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:43:"function () {
     return view(\'welcome\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005400000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005870000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::2wG5DGoM8cKWobiE',
+        'as' => 'generated::FHYfpU2nDkZp8O2a',
       ),
       'fallback' => false,
       'defaults' => 

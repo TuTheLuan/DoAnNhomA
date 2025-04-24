@@ -42,9 +42,8 @@
 
                                     <div class="file-item">
                                         <img src="{{ $icon }}" alt="file icon">
-                                        <a href="{{ asset('storage/' . $tailieu->file) }}" target="_blank">
-                                            Xem tài liệu
-                                        </a>
+                                        <a href="{{ asset('storage/' . $tailieu->file) }}" target="_blank">{{ $tailieu->original_name }}</a>
+
                                         <!-- Nút xóa tài liệu (form nhỏ) -->
                                         <form action="{{ route('tailieu.destroy', $tailieu->id) }}" method="POST" style="display: inline;">
                                             @csrf

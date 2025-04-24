@@ -18,4 +18,11 @@ class BaiHoc extends Model
         return $this->hasMany(TaiLieuBaiHoc::class, 'baihoc_id');
     }
 
+    
+    public function khoahoc()
+    {
+        return $this->belongsTo(KhoaHoc::class);
+    }
+
+
 }

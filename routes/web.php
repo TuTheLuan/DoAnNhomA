@@ -61,13 +61,13 @@ Route::get('/baihoc/them/{id}', [BaiHocController::class, 'thembaihoc'])->name('
 // Lưu bài học vào DB (sau khi submit form)
 Route::post('/baihoc/store', [BaiHocController::class, 'store'])->name('baihoc.store');
 
-
-Route::get('/baihoc/sua/{id}', [BaiHocController::class, 'edit'])->name('baihoc.edit');
 Route::delete('/baihoc/xoa/{id}', [BaiHocController::class, 'destroy'])->name('baihoc.destroy');
 
 //Tài liệu
 Route::delete('/tailieu/{id}', [TaiLieuBaiHocController::class, 'destroy'])->name('tailieu.destroy');
-
+//Chỉnh sửa bài học 
+Route::get('/baihoc/chinhsua/{id}', [BaiHocController::class, 'edit'])->name('baihoc.edit');
+Route::put('/baihoc/capnhat/{id}', [BaiHocController::class, 'update'])->name('baihoc.update');
 
 
 
