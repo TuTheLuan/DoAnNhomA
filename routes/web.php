@@ -47,6 +47,8 @@ Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->n
 Route::get('teacher/diendan', [DiendanController::class, 'index'])->name('diendan.index');
 
 Route::get('students/diendan/{id}', [DiendanController::class, 'show'])->name('diendan.show');
+Route::get('students/diendan/{id}/chat', [DiendanController::class, 'chat'])->name('diendan.chat');
+Route::post('students/diendan/{id}/chat/send', [DiendanController::class, 'chatSend'])->name('diendan.chat.send');
 Route::get('students/diendan', [DiendanController::class, 'indexForStudents'])->name('diendan.index.students');
 
 Route::get('teacher/themdiendan', [DiendanController::class, 'create'])->name('diendan.create');

@@ -27,7 +27,7 @@
                                     <p class="card-text text-muted">Giảng viên: {{ $diendan->ten_giang_vien }}</p>
                                 </div>
                                 <div class="card-footer bg-white">
-                                    <a href="{{ route('diendan.show', $diendan->id) }}" class="btn btn-primary btn-block">
+                                    <a href="{{ route('diendan.chat', $diendan->id) }}" class="btn btn-primary btn-block">
                                         <i class="fas fa-sign-in-alt"></i> Tham gia
                                     </a>
                                 </div>

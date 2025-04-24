@@ -91,13 +91,37 @@ class DiendanController extends Controller
             'ten_dien_dan' => 'required|string|max:255',
             'loai_thao_luan' => 'required|in:public,anonymous',
             'ten_giang_vien' => 'required|string|max:255',
+            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $diendan->update([
-            'ten_dien_dan' => $request->ten_dien_dan,
-            'loai_thao_luan' => $request->loai_thao_luan,
-            'ten_giang_vien' => $request->ten_giang_vien,
-        ]);
+        // Cập nhật các trường text
+        $diendan->ten_dien_dan = $request->ten_dien_dan;
+        $diendan->loai_thao_luan = $request->loai_thao_luan;
+        $diendan->ten_giang_vien = $request->ten_giang_vien;
+
+        // Xử lý ảnh nền mới nếu có
+        if ($request->hasFile('background_image')) {
+            $backgroundImagePath = $request->file('background_image')->store('diendan_backgrounds', 'public');
+            $diendan->background_image = $backgroundImagePath;
+        }
+
+        // Xử lý ảnh diễn đàn mới nếu có
+        if ($request->hasFile('images')) {
+            $imagePaths = [];
+            if (is_array($diendan->images)) {
+                $imagePaths = $diendan->images;
+            } elseif (is_string($diendan->images) && !empty($diendan->images)) {
+                $imagePaths = json_decode($diendan->images, true) ?: [];
+            }
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('diendan_images', 'public');
+                $imagePaths[] = $path;
+            }
+            $diendan->images = $imagePaths;
+        }
+
+        $diendan->save();
 
         return redirect()->route('diendan.index')->with('success', 'Cập nhật diễn đàn thành công!');
     }
@@ -113,5 +137,41 @@ class DiendanController extends Controller
     {
         $diendan = Diendan::findOrFail($id);
         return view('students.diendan_show', compact('diendan'));
+    }
+
+    public function chat($id)
+    {
+        $diendan = Diendan::findOrFail($id);
+
+        // Đảm bảo images là mảng
+        if (is_string($diendan->images)) {
+            $decodedImages = json_decode($diendan->images, true);
+            $diendan->images = is_array($decodedImages) ? $decodedImages : [];
+        } elseif (is_null($diendan->images)) {
+            $diendan->images = [];
+        }
+
+        // Lấy tin nhắn của diễn đàn
+        $messages = \App\Models\DiendanMessage::where('diendan_id', $id)->orderBy('created_at', 'asc')->get();
+
+        return view('students.diendan_chat', compact('diendan', 'messages'));
+    }
+
+    public function chatSend(Request $request, $id)
+    {
+        $request->validate([
+            'message' => 'required|string|max:1000',
+        ]);
+
+        $diendan = Diendan::findOrFail($id);
+
+        // Lưu tin nhắn mới
+        \App\Models\DiendanMessage::create([
+            'diendan_id' => $id,
+            'student_name' => auth()->user()->name ?? 'Học viên',
+            'content' => $request->input('message'),
+        ]);
+
+        return redirect()->route('diendan.chat', ['id' => $id])->with('success', 'Tin nhắn đã được gửi.');
     }
 }
