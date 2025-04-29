@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\KhoaHocController;
+
+
 use App\Http\Controllers\BaiHocController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -36,12 +38,15 @@ Route::get('/students/home', [StudentController::class, 'home'])->name('students
 Route::get('/students/khoahoc', [StudentController::class, 'khoahoc'])->name('students.khoahoc');
 
 Route::get('/students/khoahoccuatoi', [StudentController::class, 'khoahoccuatoi'])->name('students.khoahoccuatoi');
+Route::get('/students/thongbao', [StudentController::class, 'thongbao'])->name('students.thongbao');
+
 
 // Giảng viên
 Route::get('/teacher/home', [TeacherController::class, 'home'])->name('teacher.home');
 Route::get('/teacher/khoahoc', [TeacherController::class, 'khoahoc'])->name('teacher.khoahoc');
 Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.themkhoahoc');
 Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.luukhoahoc');
+Route::get('/teacher/thongbao', [TeacherController::class, 'thongbao'])->name('teacher.thongbao');
 
 //Diễn đàn
 Route::get('teacher/diendan', [DiendanController::class, 'index'])->name('diendan.index');

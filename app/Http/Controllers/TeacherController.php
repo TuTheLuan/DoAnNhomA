@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\KhoaHoc;
+use App\Models\Student;
+use App\Models\Diendan;
+use App\Models\ThongBao;
 
 class TeacherController extends Controller
 {
@@ -11,36 +15,36 @@ class TeacherController extends Controller
      */
     public function home()
     {
-        return view('teacher.home');
+        $soKhoaHoc = KhoaHoc::count();
+        $soDienDan = Diendan::count();
+        $soHocVien = Student::count();
+        $thongBaoMoiNhat = ThongBao::orderBy('created_at', 'desc')->take(5)->get();
+
+        return view('teacher.home', compact('soKhoaHoc', 'soDienDan', 'soHocVien', 'thongBaoMoiNhat'));
     }
 
-    /**
-     * Hiển thị danh sách khóa học
-     */
+    // Các phương thức khác giữ nguyên
     public function courses()
     {
         return view('teacher.courses');
     }
 
-    /**
-     * Hiển thị danh sách lớp học
-     */
+    public function thongbao()
+    {
+        $thongBaoMoiNhat = \App\Models\ThongBao::orderBy('created_at', 'desc')->get();
+        return view('teacher.thongbao', compact('thongBaoMoiNhat'));
+    }
+
     public function classes()
     {
         return view('teacher.classes');
     }
 
-    /**
-     * Hiển thị thông báo
-     */
     public function notifications()
     {
         return view('teacher.notifications');
     }
 
-    /**
-     * Hiển thị thông tin cá nhân
-     */
     public function profile()
     {
         return view('teacher.profile');
