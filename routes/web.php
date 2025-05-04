@@ -6,6 +6,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\KhoaHocController;
 use App\Http\Controllers\BaiHocController;
 use App\Http\Controllers\TaiLieuBaiHocController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -70,6 +71,8 @@ Route::get('/baihoc/chinhsua/{id}', [BaiHocController::class, 'edit'])->name('ba
 // Đổi từ /baihoc/capnhat/{id} -> /baihoc/update/{id}
 Route::put('/baihoc/update/{id}', [BaiHocController::class, 'update'])->name('baihoc.update');
 
+//Hiển thị khóa học user
+Route::get('/user/khoahoc', [UserController::class, 'khoaHocCuaToi']);
 
 
 
