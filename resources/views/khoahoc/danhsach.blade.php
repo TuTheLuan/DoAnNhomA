@@ -4,22 +4,14 @@
 <div class="container bg-white p-4 rounded shadow-sm mt-4">
 
     <!-- Header -->
-    <div class="d-flex align-items-center mb-4">
-        <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="avatar" style="width: 60px; height: 60px; border: 1px solid #999; border-radius: 5px;">
-        <h1 class="ms-3 text-danger" style="text-shadow: 1px 1px #888;">KHÓA HỌC</h1>
-    </div>
-    @if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
+    
 
     <!-- Search Bar -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <div class="flex-grow-1 me-2" style="max-width: 300px;">
-            <input type="text" class="form-control" placeholder="Tìm kiếm khóa học...">
-        </div>
+    <form action="{{ route('khoahoc.index') }}" method="GET" class="mb-3">
+        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm khóa học..." value="{{ request('search') }}">
+    </form>
+
         <div class="d-flex">
 
         <a href="{{ route('khoahoc.themkhoahoc') }}" class="btn btn-primary me-2">
@@ -73,7 +65,7 @@
 
             <!-- Xóa -->
             <form action="{{ route('khoahoc.destroy', $khoahoc->id) }}" method="POST" class="d-inline"
-                onsubmit="return confirm('Bạn có chắc chắn muốn xóa khóa học này?');">
+                onsubmit="return confirm('Bạn có chắc chắn muốn xóa khóa học {{ $khoahoc->ten }}?');">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn p-0" style="border: none; background: none;" title="Xóa khóa học">
@@ -86,11 +78,17 @@
 
         </tbody>
     </table>
-
+    {!! $khoahoctb->withQueryString()->links('pagination::bootstrap-5') !!}
     <!-- Pagination -->
-    <div class="text-end">
-        <span>1</span> of <span>2</span>
-    </div>
+    <!-- <div class="d-flex justify-content-between align-items-center mt-3">
+        <div>
+            Hiển thị trang {{ $khoahoctb->currentPage() }} / {{ $khoahoctb->lastPage() }}
+        </div>
+        <div>
+            {{ $khoahoctb->links() }}
+        </div>
+    </div> -->
+
 
 </div>
 

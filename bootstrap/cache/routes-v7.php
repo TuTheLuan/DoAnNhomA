@@ -102,7 +102,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::ghU1q01aMUU0I5nP',
+            '_route' => 'generated::LKGwivHWKmjpTtt5',
           ),
           1 => NULL,
           2 => 
@@ -335,7 +335,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::FHYfpU2nDkZp8O2a',
+            '_route' => 'generated::RRPCdbqZcu2tHRKe',
           ),
           1 => NULL,
           2 => 
@@ -352,7 +352,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/students/(?|([^/]++)(?|/edit(*:36)|(*:43)|(*:50))|home(*:62)|khoahoc(?|(*:79)|cuatoi(*:92)))|/khoahoc/([^/]++)(?|/edit(*:126)|(*:134))|/baihoc/(?|danhsach/([^/]++)(*:171)|them/([^/]++)(*:192)|xoa/([^/]++)(*:212)|c(?|hinhsua/([^/]++)(*:240)|apnhat/([^/]++)(*:263)))|/tailieu/([^/]++)(*:290))/?$}sDu',
+      0 => '{^(?|/students/(?|([^/]++)(?|/edit(*:36)|(*:43)|(*:50))|home(*:62)|khoahoc(?|(*:79)|cuatoi(*:92)))|/khoahoc/([^/]++)(?|/edit(*:126)|(*:134))|/baihoc/(?|danhsach/([^/]++)(*:171)|them/([^/]++)(*:192)|xoa/([^/]++)(*:212)|chinhsua/([^/]++)(*:237)|update/([^/]++)(*:260))|/tailieu/([^/]++)(*:286))/?$}sDu',
     ),
     3 => 
     array (
@@ -621,7 +621,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      240 => 
+      237 => 
       array (
         0 => 
         array (
@@ -644,7 +644,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      263 => 
+      260 => 
       array (
         0 => 
         array (
@@ -666,7 +666,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      290 => 
+      286 => 
       array (
         0 => 
         array (
@@ -849,7 +849,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::ghU1q01aMUU0I5nP' => 
+    'generated::LKGwivHWKmjpTtt5' => 
     array (
       'methods' => 
       array (
@@ -866,13 +866,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:77:"function (\\Illuminate\\Http\\Request $request) {
     return $request->user();
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000056a0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005240000000000000000";}}',
         'namespace' => NULL,
         'prefix' => 'api',
         'where' => 
         array (
         ),
-        'as' => 'generated::ghU1q01aMUU0I5nP',
+        'as' => 'generated::LKGwivHWKmjpTtt5',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1809,7 +1809,7 @@ app('router')->setCompiledRoutes(
       array (
         0 => 'PUT',
       ),
-      'uri' => 'baihoc/capnhat/{id}',
+      'uri' => 'baihoc/update/{id}',
       'action' => 
       array (
         'middleware' => 
@@ -1839,7 +1839,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::FHYfpU2nDkZp8O2a' => 
+    'generated::RRPCdbqZcu2tHRKe' => 
     array (
       'methods' => 
       array (
@@ -1855,13 +1855,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:43:"function () {
     return view(\'welcome\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005870000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005410000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::FHYfpU2nDkZp8O2a',
+        'as' => 'generated::RRPCdbqZcu2tHRKe',
       ),
       'fallback' => false,
       'defaults' => 

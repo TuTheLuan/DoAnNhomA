@@ -13,10 +13,10 @@ class TaiLieuBaiHoc extends Model
     protected $table = 'tai_lieu_baihoc';
 
     // Các cột được phép gán giá trị hàng loạt
-    protected $fillable = [
-        'baihoc_id',
-        'file',
-    ];
+    protected $fillable = ['baihoc_id', 
+    'file', 
+    'original_name'];
+
 
     /**
      * Mỗi tài liệu bài học thuộc về một bài học.

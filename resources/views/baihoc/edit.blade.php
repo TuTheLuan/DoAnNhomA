@@ -58,16 +58,13 @@
             <label class="form-label">Tài liệu đã có:</label>
             <ul class="list-group">
                 @foreach ($baihoc->tailieu as $file)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <li class="list-group-item">
                         <a href="{{ asset('storage/' . $file->file) }}" target="_blank">{{ $file->original_name }}</a>
-                        <form action="{{ route('tailieu.destroy', $file->id) }}" method="POST" onsubmit="return confirm('Xóa tài liệu này?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger">X</button>
-                        </form>
                     </li>
                 @endforeach
             </ul>
+
+
         </div>
 
         <div class="d-flex justify-content-between">

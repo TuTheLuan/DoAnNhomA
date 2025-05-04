@@ -81,8 +81,18 @@
         </div>
 
         <div class="col-md-4 text-center">
-            <img src="{{ asset('images/ai-hand.png') }}" alt="AI" class="img-fluid rounded shadow-sm">
+            <h5 class="text-secondary mb-3" style="font-weight: 600;">
+                Hình ảnh khóa học
+            </h5>
+            <div class="p-2 bg-white border rounded shadow-sm" style="display: inline-block;">
+                <img src="{{ asset('images/' . $khoahoc->anh) }}" 
+                    alt="Ảnh khóa học" 
+                    class="img-fluid rounded" 
+                    style="max-height: 250px; object-fit: cover;">
+            </div>
         </div>
+
+
     </div>
 </div>
 

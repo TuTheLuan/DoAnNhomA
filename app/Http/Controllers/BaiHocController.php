@@ -13,32 +13,35 @@ class BaiHocController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'so' => 'required|integer',
-            'tieude' => 'required|string|max:255',
+            'so' => ['required', 'string', 'max:50', 'regex:/^[\pL\s0-9]+$/u'],
+            'tieude' => ['required', 'string', 'min:7', 'max:255'],
             'khoahoc_id' => 'required|exists:khoahoctb,id',
             'files' => 'nullable',
             'files.*' => 'nullable|file|mimes:pdf,docx,doc,ppt,pptx,txt|max:2048',
+        ], [
+            'so.max' => 'Bài học số vượt quá kí tự cho phép hãy kiểm tra lại',
+            'so.regex' => 'Bài học số chỉ được chứa chữ và số',
+            'tieude.min' => 'Tiêu đề bài học vượt quá kí tự cho phép! Hãy kiểm tra lại',
+            'tieude.max' => 'Tiêu đề bài học vượt quá kí tự cho phép! Hãy kiểm tra lại',
         ]);
 
-        // Tạo bài học
         $baihoc = BaiHoc::create([
             'so' => $request->so,
             'tieude' => $request->tieude,
             'khoahoc_id' => $request->khoahoc_id,
         ]);
 
-        // Lưu file nếu có
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $uploadedFile) {
                 if ($uploadedFile->isValid()) {
                     $filename = time() . '_' . $uploadedFile->getClientOriginalName();
                     $path = $uploadedFile->storeAs('tailieu', $filename, 'public');
 
-                    $fileModel = new TaiLieuBaiHoc();
-                    $fileModel->baihoc_id = $baihoc->id;
-                    $fileModel->file = $path;
-                    $fileModel->original_name = $uploadedFile->getClientOriginalName(); // tên file gốc
-                    $fileModel->save();
+                    TaiLieuBaiHoc::create([
+                        'baihoc_id' => $baihoc->id,
+                        'file' => $path,
+                        'original_name' => $uploadedFile->getClientOriginalName(),
+                    ]);
                 }
             }
         }
@@ -47,6 +50,7 @@ class BaiHocController extends Controller
             ->route('baihoc.danhsach', $request->khoahoc_id)
             ->with('success', 'Thêm bài học thành công!');
     }
+
 
 
 
@@ -92,34 +96,39 @@ class BaiHocController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'so' => 'required|integer',
-            'tieude' => 'required|string|max:255',
-            'files.*' => 'nullable|file|mimes:pdf,docx,doc,ppt,pptx,txt|max:2048',
+            'so' => ['required', 'string', 'max:50', 'regex:/^[\pL\s0-9]+$/u'],
+            'tieude' => ['required', 'string', 'min:7', 'max:255'],
+            'files.*' => 'nullable|file|max:2048|mimes:pdf,doc,docx,ppt,pptx,txt'
+        ], [
+            'so.max' => 'Bài học số vượt quá kí tự cho phép hãy kiểm tra lại',
+            'so.regex' => 'Bài học số chỉ được chứa chữ và số',
+            'tieude.min' => 'Tiêu đề bài học chưa đạt kí tự! Hãy kiểm tra lại',
+            'tieude.max' => 'Tiêu đề bài học vượt quá kí tự cho phép! Hãy kiểm tra lại',
         ]);
 
         $baihoc = BaiHoc::findOrFail($id);
-        $baihoc->update([
-            'so' => $request->so,
-            'tieude' => $request->tieude,
-        ]);
+
+        $baihoc->so = $request->so;
+        $baihoc->tieude = $request->tieude;
+        $baihoc->save();
 
         if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $uploadedFile) {
-                if ($uploadedFile->isValid()) {
-                    $filename = time() . '_' . $uploadedFile->getClientOriginalName();
-                    $path = $uploadedFile->storeAs('tailieu', $filename, 'public');
+            foreach ($request->file('files') as $file) {
+                $originalName = $file->getClientOriginalName();
+                $path = $file->store('tailieu', 'public');
 
-                    TaiLieuBaiHoc::create([
-                        'baihoc_id' => $baihoc->id,
-                        'file' => $path,
-                        'original_name' => $uploadedFile->getClientOriginalName(),
-                    ]);
-                }
+                TaiLieuBaiHoc::create([
+                    'baihoc_id' => $baihoc->id,
+                    'file' => $path,
+                    'original_name' => $originalName,
+                ]);
             }
         }
 
-        return redirect()->route('baihoc.danhsach', $baihoc->khoahoc_id)->with('success', 'Cập nhật thành công!');
+        return redirect()->route('baihoc.danhsach', $baihoc->khoahoc_id)
+                        ->with('success', 'Cập nhật bài học thành công.');
     }
+
 
 
 

@@ -67,7 +67,9 @@ Route::delete('/baihoc/xoa/{id}', [BaiHocController::class, 'destroy'])->name('b
 Route::delete('/tailieu/{id}', [TaiLieuBaiHocController::class, 'destroy'])->name('tailieu.destroy');
 //Chỉnh sửa bài học 
 Route::get('/baihoc/chinhsua/{id}', [BaiHocController::class, 'edit'])->name('baihoc.edit');
-Route::put('/baihoc/capnhat/{id}', [BaiHocController::class, 'update'])->name('baihoc.update');
+// Đổi từ /baihoc/capnhat/{id} -> /baihoc/update/{id}
+Route::put('/baihoc/update/{id}', [BaiHocController::class, 'update'])->name('baihoc.update');
+
 
 
 

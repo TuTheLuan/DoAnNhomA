@@ -24,12 +24,18 @@
 
         <div class="mb-3">
             <label for="so" class="form-label">Bài học số:</label>
-            <input type="number" class="form-control" name="so" id="so" value="{{ old('so') }}" required>
+            <input type="text" class="form-control" name="so" id="so" value="{{ old('so') }}" required>
+            @error('so')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-3">
             <label for="tieude" class="form-label">Tiêu đề bài học:</label>
             <input type="text" class="form-control" name="tieude" id="tieude" value="{{ old('tieude') }}" required>
+            @error('tieude')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-4">
