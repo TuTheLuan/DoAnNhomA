@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+
+    public function thongke()
+     {
+         return view('students.thongke'); // Phải trùng với tên file blade
+     }
      // Hiển thị form thêm học viên
      public function create()
      {

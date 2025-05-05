@@ -26,7 +26,7 @@
                     <li class="nav-item"><a href="{{ route('students.index') }}" class="nav-link">📚 Học Viên</a></li>
                     <li class="nav-item"><a href="{{ route('students.khoahoc') }}" class="nav-link">📖 Khóa Học</a></li>
                     <li class="nav-item"><a href="{{ route('diendan.index.students') }}" class="nav-link">📰 Diễn đàn</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">📊 Thống Kê</a></li>
+                    <li class="nav-item"><a href="{{ route('students.thongke') }}" class="nav-link">📊 Thống Kê</a></li>
                     <li class="nav-item">
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf

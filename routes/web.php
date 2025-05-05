@@ -22,7 +22,7 @@ use App\Http\Controllers\DiendanController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+// Học viên
 Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
 Route::post('/students', [StudentController::class, 'store'])->name('students.store');
 
@@ -39,6 +39,8 @@ Route::get('/students/khoahoc', [StudentController::class, 'khoahoc'])->name('st
 
 Route::get('/students/khoahoccuatoi', [StudentController::class, 'khoahoccuatoi'])->name('students.khoahoccuatoi');
 Route::get('/students/thongbao', [StudentController::class, 'thongbao'])->name('students.thongbao');
+
+Route::get('/students/thongke', [StudentController::class, 'thongke'])->name('students.thongke');
 
 
 // Giảng viên
