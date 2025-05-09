@@ -113,16 +113,6 @@ class StudentController extends Controller
         return view('students.home', compact('soKhoaHoc', 'soDienDan', 'soHocVien', 'thongBaoMoiNhat'));
     }
 
-    public function khoahoc()
-    {
-        return view('students.khoahoc');
-    }
-
-    public function myCourses()
-    {
-        return view('students.khoahoccuatoi');
-    }
-
     public function thongbao()
     {
         $thongBaoMoiNhat = \App\Models\ThongBao::orderBy('created_at', 'desc')->get();
