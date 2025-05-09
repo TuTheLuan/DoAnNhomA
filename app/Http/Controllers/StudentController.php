@@ -12,7 +12,15 @@ class StudentController extends Controller
 
     public function thongke()
      {
-         return view('students.thongke'); // Phải trùng với tên file blade
+        $tongHocVien = Student::count();
+        $tongKhoaHoc = KhoaHoc::count();
+      
+    
+        return view('students.thongke', [
+            'tongHocVien' => $tongHocVien,
+            'tongKhoaHoc' => $tongKhoaHoc,
+           
+        ]);
      }
      // Hiển thị form thêm học viên
      public function create()
