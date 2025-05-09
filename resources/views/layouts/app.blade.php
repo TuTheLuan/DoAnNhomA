@@ -24,7 +24,7 @@
                 <ul class="nav flex-column">
                     <li class="nav-item"><a href="{{ route('students.home') }}" class="nav-link">🏠 Home</a></li>
                     <li class="nav-item"><a href="{{ route('students.index') }}" class="nav-link">📚 Học Viên</a></li>
-                    <li class="nav-item"><a href="{{ route('khoahoc.index') }}" class="nav-link">📖 Khóa Học</a></li>
+                    <li class="nav-item"><a href="{{ route('user.khoahoc') }}" class="nav-link">📖 Khóa Học</a></li>
                     <li class="nav-item"><a href="{{ route('diendan.index.students') }}" class="nav-link">📰 Diễn đàn</a></li>
                     <li class="nav-item"><a href="{{ route('students.thongke') }}" class="nav-link">📊 Thống Kê</a></li>
                     <li class="nav-item">
