@@ -9,7 +9,8 @@ class KhoaHocController extends Controller
 {
     public function danhsach()
     {
-        return view('khoahoc.danhsach');
+        $khoahoctb = \App\Models\KhoaHoc::paginate(10);
+        return view('khoahoc.danhsach', compact('khoahoctb'));
     }
 
     public function themkhoahoc()
