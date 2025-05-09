@@ -10,13 +10,13 @@ class DiendanController extends Controller
 {
     public function index()
     {
-        $diendans = Diendan::all();
+        $diendans = Diendan::paginate(10);
         return view('teacher.diendan', compact('diendans'));
     }
 
     public function indexForStudents()
     {
-        $diendans = Diendan::all();
+        $diendans = Diendan::paginate(5);
         return view('students.diendan', compact('diendans'));
     }
 
