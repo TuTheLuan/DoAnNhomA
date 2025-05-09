@@ -23,16 +23,8 @@ class DiendanTableSeeder extends Seeder
                 'loai_thao_luan' => $faker->randomElement(['public', 'anonymous']),
                 'ngay_tao' => $faker->date(),
                 'ten_giang_vien' => 'Huỳnh Thái Quốc',
-                'background_image' => $faker->optional()->imageUrl(640, 480, 'nature', true),
-                'images' => $faker->optional()->randomElements([
-                    $faker->imageUrl(640, 480, 'nature', true),
-                    $faker->imageUrl(640, 480, 'people', true),
-                    $faker->imageUrl(640, 480, 'abstract', true),
-                ], $faker->numberBetween(1, 3), false) ? json_encode($faker->randomElements([
-                    $faker->imageUrl(640, 480, 'nature', true),
-                    $faker->imageUrl(640, 480, 'people', true),
-                    $faker->imageUrl(640, 480, 'abstract', true),
-                ], $faker->numberBetween(1, 3), false)) : null,
+                'background_image' => null,
+                'images' => null,
             ]);
         }
     }

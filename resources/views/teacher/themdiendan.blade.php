@@ -27,7 +27,7 @@
                             <div class="col-md-4 text-center bg-light rounded p-4 mb-4 border">
                                 <i class="fas fa-image fa-3x mb-3 text-secondary"></i>
                                 <div>
-                                    <label for="background_image" class="d-block text-primary fw-bold mb-2 text-decoration-underline">Chọn ảnh nền</label>
+                                    <h3>Chọn ảnh nền</h3>
                                     <input type="file" id="background_image" name="background_image" class="form-control @error('background_image') is-invalid @enderror">
                                     @error('background_image')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -94,7 +94,7 @@
                             <div class="col-md-12 mt-4">
                                 <div class="bg-light border rounded p-4 text-center">
                                     <i class="fas fa-image fa-2x mb-2 text-secondary"></i>
-                                    <label for="images" class="d-block text-primary fw-bold mb-2 text-decoration-underline">Chọn ảnh diễn đàn</label>
+                                    <h3>Chọn ảnh diễn đàn</h3>
                                     <input type="file" id="images" name="images[]" class="form-control @error('images.*') is-invalid @enderror" multiple>
                                     @error('images.*')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
