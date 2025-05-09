@@ -5,7 +5,7 @@
     <h1>Diễn đàn học viên</h1>
     
     <div class="row mt-4">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     Hiển thị diễn đàn
@@ -34,6 +34,9 @@
                             </div>
                         </div>
                         @endforeach
+                    </div>
+                    <div class="d-flex justify-content-center my-3">
+                        {{ $diendans->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>
