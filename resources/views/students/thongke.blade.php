@@ -7,16 +7,14 @@
     <div class="row text-center mb-4">
         <div class="col-md-4">
             <div class="stat-box">
-            <h1 class="text-primary">{{ $tongHocVien }}</h1>
-            <p>Tổng số học viên</p>
-
-
+                <h1 class="text-primary">{{ $tongHocVien }}</h1>
+                <p>Tổng số học viên</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="stat-box">
-            <h1 class="text-primary">{{ $tongKhoaHoc }}</h1>
-            <p>Tổng số khóa học</p>
+                <h1 class="text-primary">{{ $tongKhoaHoc }}</h1>
+                <p>Tổng số khóa học</p>
             </div>
         </div>
         <div class="col-md-4">

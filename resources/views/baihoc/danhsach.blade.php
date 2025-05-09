@@ -2,152 +2,120 @@
 
 @section('content')
 <div class="container mt-4">
-    <h2 class="text-center text-danger mb-4" style="text-shadow: 1px 1px 2px gray;">Khóa Học Ngôn Ngữ AI</h2>
+    <h2 class="text-center text-danger mb-4" style="text-shadow: 1px 1px 2px gray;">
+        Danh Sách Bài Học - {{ $khoahoc->ten_khoahoc }}
+    </h2>
 
     <div class="row justify-content-between align-items-start">
         <div class="col-md-7">
             <div id="lessonList">
-                <!-- Danh sách bài học -->
+                @forelse ($baihocs as $baihoc)
+                    <div class="lesson-box">
+                        <div class="lesson-header" onclick="toggleLesson(this)">
+                            Bài {{ $baihoc->so }}: {{ $baihoc->tieude }}
+                            <span>&#9660;</span>
+                        </div>
+                        <div class="lesson-content">
+                            @if ($baihoc->tailieu->count())
+                                @foreach ($baihoc->tailieu as $tailieu)
+                                    @php
+                                        $extension = strtolower(pathinfo($tailieu->file, PATHINFO_EXTENSION));
+                                        switch ($extension) {
+                                            case 'doc':
+                                            case 'docx':
+                                                $icon = asset('icons/word-icon.png');
+                                                break;
+                                            case 'pdf':
+                                                $icon = asset('icons/pdf-icon.png');
+                                                break;
+                                            case 'ppt':
+                                            case 'pptx':
+                                                $icon = asset('icons/ppt-icon.png');
+                                                break;
+                                            case 'txt':
+                                                $icon = asset('icons/txt-icon.png');
+                                                break;
+                                            default:
+                                                $icon = asset('icons/file-icon.png');
+                                        }
+                                    @endphp
+
+                                    <div class="file-item">
+                                        <img src="{{ $icon }}" alt="file icon">
+                                        <a href="{{ asset('storage/' . $tailieu->file) }}" target="_blank">{{ $tailieu->original_name }}</a>
+
+                                        <!-- Nút xóa tài liệu (form nhỏ) -->
+                                        <form action="{{ route('tailieu.destroy', $tailieu->id) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" style="background: none; border: none; color: red; font-weight: bold; cursor: pointer;">x</button>
+                                        </form>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p>Chưa có tài liệu.</p>
+                            @endif
+
+                            {{-- Nút chỉnh sửa và xóa --}}
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="{{ route('baihoc.edit', $baihoc->id) }}" class="btn btn-sm btn-primary">Chỉnh sửa</a>
+
+                                <form action="{{ route('baihoc.destroy', $baihoc->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa bài học này?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <p>Chưa có bài học nào.</p>
+                @endforelse
             </div>
 
             <div class="mt-3 d-flex gap-3">
-                <button class="btn btn-success">Thêm Bài Học</button>
-                <button class="btn btn-danger">Xóa Bài Học</button>
+                <a href="{{ route('baihoc.thembaihoc', ['id' => $khoahoc->id]) }}" class="btn btn-success">
+                    Thêm Bài Học
+                </a>
             </div>
         </div>
+
         <div class="col-md-4 text-center">
-            <img src="{{ asset('images/ai-hand.png') }}" alt="AI" class="img-fluid rounded shadow-sm">
+            <h5 class="text-secondary mb-3" style="font-weight: 600;">
+                Hình ảnh khóa học
+            </h5>
+            <div class="p-2 bg-white border rounded shadow-sm" style="display: inline-block;">
+                <img src="{{ asset('images/' . $khoahoc->anh) }}" 
+                    alt="Ảnh khóa học" 
+                    class="img-fluid rounded" 
+                    style="max-height: 250px; object-fit: cover;">
+            </div>
         </div>
+
+
     </div>
 </div>
 
 <style>
-    .lesson-box {
-        background-color: #efefef;
-        border-radius: 8px;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-    }
-
-    .lesson-header {
-        display: flex;
-        justify-content: space-between;
-        cursor: pointer;
-        font-weight: 600;
-        background-color: #ddd;
-        padding: 8px;
-        border-radius: 6px;
-    }
-
-    .lesson-content {
-        padding: 10px;
-        display: none;
-        background-color: #fff;
-        margin-top: 5px;
-        border-radius: 6px;
-    }
-
-    .lesson-content .file-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 5px;
-    }
-
-    .file-item img {
-        width: 24px;
-        height: 24px;
-        margin-right: 8px;
-    }
-
-    .file-item .delete {
-        margin-left: auto;
-        color: red;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    .edit-btn {
-        margin-top: 5px;
-        background-color: #5cb85c;
-        color: white;
-        padding: 3px 8px;
-        border-radius: 5px;
-        font-size: 14px;
-        border: none;
-    }
+    .lesson-box { background-color: #efefef; border-radius: 8px; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; }
+    .lesson-header { display: flex; justify-content: space-between; cursor: pointer; font-weight: 600; background-color: #ddd; padding: 8px; border-radius: 6px; }
+    .lesson-content { padding: 10px; display: none; background-color: #fff; margin-top: 5px; border-radius: 6px; }
+    .file-item { display: flex; align-items: center; margin-bottom: 5px; }
+    .file-item img { width: 24px; height: 24px; margin-right: 8px; }
+    .file-item .delete { margin-left: auto; color: red; cursor: pointer; font-weight: bold; }
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const lessons = [
-            {
-                number: 1,
-                title: "Khái niệm ngôn ngữ AI",
-                files: [
-                    { icon: "doc.png", name: "Tài liệu bài 1" },
-                    { icon: "ppt.png", name: "Tài liệu bài 1" }
-                ]
-            },
-            {
-                number: 2,
-                title: "Làm quen với ngôn ngữ AI",
-                files: []
-            },
-            {
-                number: 3,
-                title: "Từ khóa về ngôn ngữ AI",
-                files: []
-            }
-        ];
-
-        const lessonList = document.getElementById('lessonList');
-        lessonList.innerHTML = '';
-
-        lessons.forEach(lesson => {
-            const box = document.createElement('div');
-            box.className = 'lesson-box';
-
-            const header = document.createElement('div');
-            header.className = 'lesson-header';
-            header.innerHTML = `Bài ${lesson.number}: ${lesson.title} <span>&#9660;</span>`;
-            header.onclick = function () {
-                const content = this.nextElementSibling;
-                const icon = this.querySelector('span');
-                if (content.style.display === 'block') {
-                    content.style.display = 'none';
-                    icon.innerHTML = '&#9660;';
-                } else {
-                    content.style.display = 'block';
-                    icon.innerHTML = '&#9650;';
-                }
-            };
-
-            const content = document.createElement('div');
-            content.className = 'lesson-content';
-
-            lesson.files.forEach(file => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <img src="/images/${file.icon}" alt="${file.name}">
-                    ${file.name}
-                    <span class="delete">x</span>
-                `;
-                content.appendChild(fileItem);
-            });
-
-            if (lesson.files.length > 0) {
-                const editBtn = document.createElement('button');
-                editBtn.className = 'edit-btn';
-                editBtn.innerText = 'Chỉnh sửa';
-                content.appendChild(editBtn);
-            }
-
-            box.appendChild(header);
-            box.appendChild(content);
-            lessonList.appendChild(box);
-        });
-    });
+    function toggleLesson(header) {
+        const content = header.nextElementSibling;
+        const icon = header.querySelector('span');
+        if (content.style.display === 'block') {
+            content.style.display = 'none';
+            icon.innerHTML = '&#9660;';
+        } else {
+            content.style.display = 'block';
+            icon.innerHTML = '&#9650;';
+        }
+    }
 </script>
 @endsection

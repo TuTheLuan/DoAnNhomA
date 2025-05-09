@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\KhoaHocController;
+use App\Http\Controllers\UserController;
 
 
 use App\Http\Controllers\BaiHocController;
@@ -78,10 +79,28 @@ Route::post('/khoahoc', [KhoaHocController::class, 'store'])->name('khoahoc.stor
 Route::put('khoahoc/{id}', [KhoaHocController::class, 'update'])->name('khoahoc.update');
 
 //Bài học
-Route::get('/baihoc/danhsach', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
-Route::get('/baihoc/thembaihoc', [BaiHocController::class, 'thembaihoc'])->name('baihoc.thembaihoc');
-Route::get('/lessons', [LessonController::class, 'index'])->name('lessons.index');
-Route::post('/lessons', [LessonController::class, 'store'])->name('lessons.store');
+// Danh sách bài học theo khóa học
+Route::get('/baihoc/danhsach/{id}', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
+
+// Form thêm bài học cho khóa học có ID
+Route::get('/baihoc/them/{id}', [BaiHocController::class, 'thembaihoc'])->name('baihoc.thembaihoc');
+
+// Lưu bài học vào DB (sau khi submit form)
+Route::post('/baihoc/store', [BaiHocController::class, 'store'])->name('baihoc.store');
+
+Route::delete('/baihoc/xoa/{id}', [BaiHocController::class, 'destroy'])->name('baihoc.destroy');
+
+//Tài liệu
+Route::delete('/tailieu/{id}', [TaiLieuBaiHocController::class, 'destroy'])->name('tailieu.destroy');
+//Chỉnh sửa bài học 
+Route::get('/baihoc/chinhsua/{id}', [BaiHocController::class, 'edit'])->name('baihoc.edit');
+// Đổi từ /baihoc/capnhat/{id} -> /baihoc/update/{id}
+Route::put('/baihoc/update/{id}', [BaiHocController::class, 'update'])->name('baihoc.update');
+
+//Hiển thị khóa học user
+Route::get('/user/khoahoc', [UserController::class, 'khoaHocCuaToi'])->name('user.khoahoc');
+Route::get('/user/baihoc/{khoahoc_id}', [UserController::class, 'baihoc'])->name('user.baihoc');
+
 
 
 // Login
