@@ -3,16 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\KhoaHoc; 
+use App\Models\KhoaHoc;
+use App\Models\BaiHoc;
 
 class UserController extends Controller
 {
     public function khoaHocCuaToi()
     {
         // Tạm thời load tất cả khóa học để hiển thị
-        $khoahocs = KhoaHoc::all(); 
+        $khoahocs = KhoaHoc::all();
 
         return view('user.khoahoc', compact('khoahocs'));
     }
-}
 
+    public function baihoc($khoahoc_id)
+    {
+        // Load khóa học kèm danh sách bài học và tài liệu liên quan
+        $khoahoc = KhoaHoc::with(['baiHocs.taiLieu'])->findOrFail($khoahoc_id);
+
+        // Lấy danh sách bài học đã load từ quan hệ
+        $baihocs = $khoahoc->baiHocs;
+
+        return view('user.baihoc', compact('khoahoc', 'baihocs'));
+    }
+}

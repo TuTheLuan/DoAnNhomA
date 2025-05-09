@@ -72,7 +72,9 @@ Route::get('/baihoc/chinhsua/{id}', [BaiHocController::class, 'edit'])->name('ba
 Route::put('/baihoc/update/{id}', [BaiHocController::class, 'update'])->name('baihoc.update');
 
 //Hiển thị khóa học user
-Route::get('/user/khoahoc', [UserController::class, 'khoaHocCuaToi']);
+Route::get('/user/khoahoc', [UserController::class, 'khoaHocCuaToi'])->name('user.khoahoc');
+Route::get('/user/baihoc/{khoahoc_id}', [UserController::class, 'baihoc'])->name('user.baihoc');
+
 
 
 

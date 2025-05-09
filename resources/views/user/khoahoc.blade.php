@@ -8,13 +8,14 @@
         @foreach($khoahocs as $khoahoc)
         <div class="col">
             <div class="card h-100 shadow-sm">
-                <img src="{{ asset('storage/' . $khoahoc->hinh_anh) }}" class="card-img-top" alt="Hình ảnh khóa học" style="height: 180px; object-fit: cover;">
+                <img src="{{ asset('images/' . $khoahoc->anh) }}" class="card-img-top" alt="Hình ảnh khóa học" style="height: 180px; object-fit: cover;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ $khoahoc->ten_khoahoc }}</h5>
-                    <p class="card-text">Giảng viên: {{ $khoahoc->giang_vien }}</p>
+                    <h5 class="card-title">{{ $khoahoc->ten }}</h5>
+                    <p class="card-text">Giảng viên: {{ $khoahoc->giangvien ?? 'Đang cập nhật' }}</p>
+                    <p class="card-text">Số bài học: {{ $khoahoc->sobaihoc ?? 'Đang cập nhật' }}</p>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="#" class="btn btn-danger">Học</a>
+                    <a href="{{ route('user.baihoc', $khoahoc->id) }}" class="btn btn-danger">Học</a>
                 </div>
             </div>
         </div>
