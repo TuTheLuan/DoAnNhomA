@@ -95,27 +95,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const deleteForms = document.querySelectorAll(".delete-form");
-
-        deleteForms.forEach(function (form) {
-            form.addEventListener("submit", function (e) {
-                e.preventDefault(); // Ngăn submit mặc định
-                Swal.fire({
-                    title: "Bạn có chắc chắn?",
-                    text: "Hành động này sẽ xóa học viên khỏi danh sách!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Xóa",
-                    cancelButtonText: "Hủy"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit(); // Nếu xác nhận thì submit form
-                    }
-                });
-            });
-        });
-    });
+    
 
     document.addEventListener("DOMContentLoaded", function () {
         const deleteButtons = document.querySelectorAll(".delete-btn");
