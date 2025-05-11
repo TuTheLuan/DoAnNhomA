@@ -40,7 +40,8 @@
                     <h2 class="fw-bold text-primary mb-3" style="font-size: 2rem;">{{ $diendan->ten_dien_dan }}</h2>
                     <p class="mb-2 text-secondary">👨‍🏫 Giảng viên: <strong>{{ $diendan->ten_giang_vien }}</strong></p>
                     <p class="mb-0 text-secondary">📅 Ngày tạo:
-                        {{ \Carbon\Carbon::parse($diendan->ngay_tao)->format('d/m/Y') }}</p>
+                        {{ \Carbon\Carbon::parse($diendan->ngay_tao)->format('d/m/Y') }}
+                    </p>
                 </div>
             </div>
         </div>
@@ -52,7 +53,21 @@
             @if(isset($messages) && count($messages) > 0)
                 @foreach($messages as $message)
                     <div class="mb-3">
-                        <div class="fw-semibold text-dark">{{ $message->student_name ?? 'Học viên' }}</div>
+                        <div class="fw-semibold text-dark">
+                        @if($isTeacher)
+                            {{ $message->student_name }}
+                        @else
+                            @php
+                                if (!function_exists('getAnonymousName')) {
+                                    function getAnonymousName($name) {
+                                        $hash = substr(md5($name), 0, 4);
+                                        return 'Ẩn danh ' . $hash;
+                                    }
+                                }
+                            @endphp
+                            {{ getAnonymousName($message->student_name) }}
+                        @endif
+                        </div>
                         <div class="text-body">{{ $message->content }}</div>
                         <div class="text-muted small">{{ \Carbon\Carbon::parse($message->created_at)->format('H:i d/m/Y') }}</div>
                     </div>

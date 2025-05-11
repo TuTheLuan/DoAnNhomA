@@ -72,6 +72,11 @@
                     <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
                 </button>
             </form>
+
+            <!-- Xem điểm -->
+            <a href="{{ route('diem.xem', $khoahoc->id) }}" class="btn btn-success btn-sm ms-2" title="Xem điểm khóa học">
+                <i class="fas fa-file-excel"></i> Điểm
+            </a>
         </td>
     </tr>
     @endforeach

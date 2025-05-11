@@ -55,7 +55,7 @@ class DiendanController extends Controller
 
             // Tạo mã diễn đàn tự động
             $lastDiendan = Diendan::orderBy('id', 'desc')->first();
-            $newCode = $lastDiendan ? 'DD' . str_pad((int)substr($lastDiendan->ma_dien_dan, 2) + 1, 3, '0', STR_PAD_LEFT) : 'DD001';
+            $newCode = $lastDiendan ? 'DD' . str_pad((int) substr($lastDiendan->ma_dien_dan, 2) + 1, 3, '0', STR_PAD_LEFT) : 'DD001';
 
             // Tạo diễn đàn mới
             Diendan::create([
@@ -136,14 +136,13 @@ class DiendanController extends Controller
     public function show($id)
     {
         $diendan = Diendan::findOrFail($id);
-        return view('students.diendan_show', compact('diendan'));
+        return view('diendan_show', compact('diendan'));
     }
 
     public function chat($id)
     {
         $diendan = Diendan::findOrFail($id);
 
-        // Đảm bảo images là mảng
         if (is_string($diendan->images)) {
             $decodedImages = json_decode($diendan->images, true);
             $diendan->images = is_array($decodedImages) ? $decodedImages : [];
@@ -151,10 +150,18 @@ class DiendanController extends Controller
             $diendan->images = [];
         }
 
-        // Lấy tin nhắn của diễn đàn
         $messages = \App\Models\DiendanMessage::where('diendan_id', $id)->orderBy('created_at', 'asc')->get();
 
-        return view('students.diendan_chat', compact('diendan', 'messages'));
+        $currentUser = auth()->user();
+
+        // Kiểm tra user null để tránh lỗi
+        if ($currentUser) {
+            $isTeacher = \DB::table('teachers')->where('email', $currentUser->email)->exists();
+        } else {
+            $isTeacher = false;
+        }
+
+        return view('students.diendan_chat', compact('diendan', 'messages', 'currentUser', 'isTeacher'));
     }
 
     public function chatSend(Request $request, $id)
@@ -165,13 +172,16 @@ class DiendanController extends Controller
 
         $diendan = Diendan::findOrFail($id);
 
-        // Lưu tin nhắn mới
+        $user = auth()->user();
+
         \App\Models\DiendanMessage::create([
             'diendan_id' => $id,
-            'student_name' => auth()->user()->name ?? 'Học viên',
+            'student_name' => $user->name ?? 'Học viên',
+            'user_id' => $user->id ?? null, // thêm trường user_id nếu có
             'content' => $request->input('message'),
         ]);
 
         return redirect()->route('diendan.chat', ['id' => $id])->with('success', 'Tin nhắn đã được gửi.');
     }
+
 }

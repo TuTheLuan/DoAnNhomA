@@ -5,7 +5,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\KhoaHocController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\DiemController;
 
 use App\Http\Controllers\BaiHocController;
 use App\Http\Controllers\LoginController;
@@ -125,4 +125,10 @@ Route::put('/settings', [SettingsController::class, 'update'])->name('settings.u
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::prefix('diem')->group(function () {
+    Route::get('/xem/{id}', [DiemController::class, 'xemDiem'])->name('diem.xem');
+    Route::get('/xuat-excel/{id}', [DiemController::class, 'xuatExcel'])->name('diem.xuat');
+    Route::get('/thoat', [DiemController::class, 'thoat'])->name('diem.thoat');
 });

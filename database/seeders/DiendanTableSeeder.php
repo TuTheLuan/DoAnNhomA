@@ -30,7 +30,7 @@ class DiendanTableSeeder extends Seeder
             'ma_dien_dan' => 'DD' . str_pad($i, 3, '0', STR_PAD_LEFT),
             'ten_dien_dan' => 'Môn demo ' . $i,
             'loai_thao_luan' => $faker->randomElement(['public', 'anonymous']),
-            'ngay_tao' => $faker->date(),
+            'ngay_tao' => now()->format('Y-m-d'),
             'ten_giang_vien' => 'Huỳnh Thái Quốc',
             'background_image' => null,
             'images' => null,

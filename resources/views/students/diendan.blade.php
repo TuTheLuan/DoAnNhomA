@@ -1,3 +1,10 @@
+@php
+    // Hàm tạo số ngẫu nhiên cố định dựa trên tên người gửi
+    function getAnonymousName($name) {
+        $hash = substr(md5($name), 0, 4);
+        return 'Ẩn danh ' . $hash;
+    }
+@endphp
 @extends('layouts.app')
 
 @section('content')
