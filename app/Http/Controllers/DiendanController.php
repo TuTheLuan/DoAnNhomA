@@ -30,8 +30,9 @@ class DiendanController extends Controller
         $request->validate([
             'ten_dien_dan' => 'required|string|max:255',
             'loai_thao_luan' => 'required|in:public,anonymous',
-            'ten_giang_vien' => 'required|string|max:255',
+            'ten_giang_vien' => ['required', 'string', 'max:255', 'regex:/^[\pL\s]+$/u'],
             'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images' => 'nullable|array',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
@@ -90,8 +91,9 @@ class DiendanController extends Controller
         $request->validate([
             'ten_dien_dan' => 'required|string|max:255',
             'loai_thao_luan' => 'required|in:public,anonymous',
-            'ten_giang_vien' => 'required|string|max:255',
+            'ten_giang_vien' => ['required', 'string', 'max:255', 'regex:/^[\pL\s]+$/u'],
             'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images' => 'nullable|array',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 

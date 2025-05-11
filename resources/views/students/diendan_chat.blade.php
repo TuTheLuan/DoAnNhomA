@@ -94,7 +94,7 @@
                 const btn = document.getElementById('toggle-more');
                 const moreImages = document.getElementById('more-images');
 
-                if (btn) {
+                if (btn && moreImages) {
                     btn.addEventListener('click', function () {
                         moreImages.classList.toggle('d-none');
                         btn.style.display = 'none'; // Ẩn nút sau khi hiển thị

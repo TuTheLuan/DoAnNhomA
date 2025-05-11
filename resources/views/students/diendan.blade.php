@@ -30,8 +30,8 @@
                                 </div>
                                 @endif
                                 <div class="card-body" style="text-align: center;">
-                                    <h5 class="card-title">{{ $diendan->ten_dien_dan }}</h5>
-                                    <p class="card-text text-muted">Giảng viên: {{ $diendan->ten_giang_vien }}</p>
+                                    <h5 class="card-title">{{ \Illuminate\Support\Str::limit($diendan->ten_dien_dan, 20) }}</h5>
+                                    <p class="card-text text-muted">Giảng viên: {{ \Illuminate\Support\Str::limit($diendan->ten_giang_vien, 20)  }}</p>
                                 </div>
                                 <div class="card-footer bg-white">
                                     <a href="{{ route('diendan.chat', $diendan->id) }}" class="btn btn-primary btn-block">

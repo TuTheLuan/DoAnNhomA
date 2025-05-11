@@ -59,7 +59,9 @@
                                     <label for="ten_giang_vien" class="form-label fw-bold">Tên giảng viên:</label>
                                     <input type="text" id="ten_giang_vien" name="ten_giang_vien"
                                            class="form-control bg-white @error('ten_giang_vien') is-invalid @enderror"
-                                           value="{{ $diendan->ten_giang_vien }}" required>
+                                           value="{{ $diendan->ten_giang_vien }}" required
+                                           pattern="[A-Za-zÀ-ỹ\s]+"
+                                           title="Chỉ được nhập chữ cái và khoảng trắng">
                                     @error('ten_giang_vien')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

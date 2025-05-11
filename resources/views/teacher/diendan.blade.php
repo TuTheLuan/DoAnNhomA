@@ -32,8 +32,8 @@
                         @foreach($diendans as $diendan)
                         <tr>
                             <td><a href="{{ route('diendan.show', $diendan->id) }}">{{ $diendan->ma_dien_dan }}</a></td>
-                            <td>{{ $diendan->ten_dien_dan }}</td>
-                            <td>{{ $diendan->ten_giang_vien }}</td>
+                            <td>{{ \Illuminate\Support\Str::limit($diendan->ten_dien_dan, 20) }}</td>
+                            <td>{{ \Illuminate\Support\Str::limit($diendan->ten_giang_vien , 20) }}</td>
                             <td>
                                 @if($diendan->background_image)
                                     <img src="{{ asset('storage/' . $diendan->background_image) }}"
