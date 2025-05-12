@@ -4,7 +4,7 @@
 @section('content')
 <div class="container mt-4" style="max-width: 600px;">
     <h3 class="text-center text-warning mb-4" style="text-shadow: 1px 1px 2px gray;">
-        Chỉnh Sửa Bài Học - {{ $baihoc->khoahoc->ten }}
+        Chỉnh Sửa Bài Học 
     </h3>
 
     @if ($errors->any())

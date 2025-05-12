@@ -6,6 +6,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\KhoaHocController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DiemController;
+use App\Http\Controllers\TaiLieuBaiHocController;
 
 use App\Http\Controllers\BaiHocController;
 use App\Http\Controllers\LoginController;

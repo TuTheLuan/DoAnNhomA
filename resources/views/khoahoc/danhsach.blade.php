@@ -8,18 +8,25 @@
 
     <!-- Search Bar -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-    <form action="{{ route('khoahoc.index') }}" method="GET" class="mb-3">
-        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm khóa học..." value="{{ request('search') }}">
+    <form action="{{ route('khoahoc.index') }}" method="GET" class="mb-4" style="max-width: 400px;">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Tìm kiếm khóa học..." value="{{ request('search') }}">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i> Tìm kiếm
+            </button>
+        </div>
     </form>
+
+
 
         <div class="d-flex">
 
         <a href="{{ route('khoahoc.themkhoahoc') }}" class="btn btn-primary me-2">
         <i class="fas fa-plus"></i> THÊM MỚI</a>
 
-            <button class="btn btn-secondary">
+            <a href="{{ route('khoahoc.index') }}" class="btn btn-secondary">
                 <i class="fas fa-sync-alt"></i> TẢI LẠI DỮ LIỆU
-            </button>
+            </a>
         </div>
     </div>
 
