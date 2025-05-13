@@ -18,4 +18,9 @@ class KhoaHoc extends Model
         'sobaihoc',
         'anh',
     ];
+
+    public function users() {
+        return $this->belongsToMany(User::class, 'user_khoahoc');
+    }
+    
 }

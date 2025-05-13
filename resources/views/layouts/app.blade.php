@@ -23,14 +23,30 @@
                 </div>
                 <ul class="nav flex-column">
                     <li class="nav-item"><a href="{{ route('students.home') }}" class="nav-link">🏠 Home</a></li>
-                    <li class="nav-item"><a href="{{ route('students.index') }}" class="nav-link">📚 Học Viên</a></li>
-                    <li class="nav-item"><a href="{{ route('students.khoahoc') }}" class="nav-link">📖 Khóa Học</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">📊 Thống Kê</a></li>
+                    @php
+                        $user = auth()->user();
+                    @endphp
+                    <li class="nav-item">
+                        @if($user && in_array($user->role, ['admin', 'teacher']))
+                            <a href="{{ route('students.index') }}" class="nav-link">📚 Học Viên</a>
+                        @else
+                            <a href="#" class="nav-link disabled" onclick="event.preventDefault();" title="Bạn không có quyền truy cập">📚 Học Viên</a>
+                        @endif
+                    </li>
+                    <li class="nav-item"><a href="{{ route('user.khoahoc') }}" class="nav-link">📖 Khóa Học</a></li>
+                    <li class="nav-item"><a href="{{ route('diendan.index.students') }}" class="nav-link">📰 Diễn đàn</a></li>
+                    <li class="nav-item">
+                        @if($user && in_array($user->role, ['admin', 'teacher']))
+                            <a href="{{ route('students.thongke') }}" class="nav-link">📊 Thống Kê</a>
+                        @else
+                            <a href="#" class="nav-link disabled" onclick="event.preventDefault();" title="Bạn không có quyền truy cập">📊 Thống Kê</a>
+                        @endif
+                    </li>
                     <li class="nav-item">
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a href="#" id="logout-link" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             🚪 Đăng Xuất
                         </a>
                     </li>
@@ -43,5 +59,23 @@
             </div>
         </div>
     </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var logoutLink = document.getElementById('logout-link');
+        if (logoutLink) {
+            logoutLink.addEventListener('click', function () {
+                // Disable the logout link to prevent multiple clicks
+                logoutLink.style.pointerEvents = 'none';
+                logoutLink.style.opacity = '0.6';
+            });
+        }
+
+        // Prevent back button from loading cached pages after logout
+        window.history.pushState(null, '', window.location.href);
+        window.onpopstate = function () {
+            window.location.reload();
+        };
+    });
+</script>
 </body>
 </html>

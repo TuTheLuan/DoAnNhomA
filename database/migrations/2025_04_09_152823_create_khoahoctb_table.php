@@ -9,17 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('khoahoctb', function (Blueprint $table) {
             $table->id();
             $table->string('ma');
             $table->string('ten');
             $table->string('giangvien')->nullable();
+            $table->integer('sobaihoc')->nullable(); 
+            $table->string('anh')->nullable();       
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.

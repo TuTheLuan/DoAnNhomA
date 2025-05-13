@@ -2,30 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
+    /**
+     * Show the registration form.
+     */
     public function showRegistrationForm()
     {
         return view('auth.register');
     }
 
+    /**
+     * Handle a registration request.
+     */
     public function register(Request $request)
     {
-        $request->validate([
-            'username' => 'required|min:1|max:10|regex:/^[a-zA-Z0-9]+$/|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|max:20|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/',
-        ], [
+        $messages = [
             'username.required' => 'Tên người dùng không được để trống.',
             'username.min' => 'Tên người dùng phải có ít nhất 1 ký tự.',
             'username.max' => 'Tên người dùng không được quá 10 ký tự.',
@@ -38,15 +37,38 @@ class RegisterController extends Controller
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
             'password.max' => 'Mật khẩu không được quá 20 ký tự.',
             'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
-            'password.regex' => 'Mật khẩu phải chứa ít nhất 1 chữ thường, 1 chữ in hoa, 1 số và 1 ký tự đặc biệt.',
-        ]);
+            'password.regex' => 'Mật khẩu phải chứa ít nhất 1 chữ thường, 1 chữ in hoa, 1 số và 1 ký tự đặc biệt.'
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'username' => ['required', 'string', 'min:1', 'max:10', 'regex:/^[a-zA-Z0-9]+$/', 'unique:users,username'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:6', 'max:20', 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/'],
+            'role' => ['required', 'string', 'in:student,teacher,admin'],
+        ], $messages);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $status = 'approved';
+        // Remove pending status for teacher, auto approve all roles
+        // if ($request->role === 'teacher') {
+        //     $status = 'pending';
+        //     // Here you can add notification to admin for approval
+        // }
 
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'status' => $status,
         ]);
 
-        return redirect('/login')->with('success', 'Đăng ký thành công!');
+        event(new Registered($user));
+
+        // Sau khi đăng ký, chuyển về trang đăng nhập mà không tự động đăng nhập
+        return redirect()->route('login')->with('message', 'Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.');
     }
 }

@@ -4,30 +4,29 @@
 <div class="container bg-white p-4 rounded shadow-sm mt-4">
 
     <!-- Header -->
-    <div class="d-flex align-items-center mb-4">
-        <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="avatar" style="width: 60px; height: 60px; border: 1px solid #999; border-radius: 5px;">
-        <h1 class="ms-3 text-danger" style="text-shadow: 1px 1px #888;">KHÓA HỌC</h1>
-    </div>
-    @if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
+    
 
     <!-- Search Bar -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <div class="flex-grow-1 me-2" style="max-width: 300px;">
-            <input type="text" class="form-control" placeholder="Tìm kiếm khóa học...">
+    <form action="{{ route('khoahoc.index') }}" method="GET" class="mb-4" style="max-width: 400px;">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Tìm kiếm khóa học..." value="{{ request('search') }}">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i> Tìm kiếm
+            </button>
         </div>
+    </form>
+
+
+
         <div class="d-flex">
 
         <a href="{{ route('khoahoc.themkhoahoc') }}" class="btn btn-primary me-2">
         <i class="fas fa-plus"></i> THÊM MỚI</a>
 
-            <button class="btn btn-secondary">
+            <a href="{{ route('khoahoc.index') }}" class="btn btn-secondary">
                 <i class="fas fa-sync-alt"></i> TẢI LẠI DỮ LIỆU
-            </button>
+            </a>
         </div>
     </div>
 
@@ -45,43 +44,63 @@
         </thead>
         <tbody>
         @foreach($khoahoctb as $khoahoc)
-        <tr>
-            <td>{{ $khoahoc->ma }}</td>
-            <td>{{ $khoahoc->ten }}</td>
-            <td>{{ $khoahoc->giangvien }}</td>
-            <td>{{ $khoahoc->sobaihoc }}</td>
-            <td>
-                @if($khoahoc->anh)
-                    <img src="{{ asset('images/' . $khoahoc->anh) }}" alt="Ảnh khóa học" width="80" height="60" style="object-fit: cover;">
-                @else
-                    <span class="text-muted">Không có ảnh</span>
-                @endif
-            </td>
-            <td>
-                <!-- Sửa -->
-                <a href="{{ route('khoahoc.edit', $khoahoc->id) }}" title="Chỉnh sửa khóa học">
-                    <i class="fas fa-pen text-primary me-3" style="cursor: pointer;"></i>
-                </a>
-                <!-- Xóa -->
-                <form action="{{ route('khoahoc.destroy', $khoahoc->id) }}" method="POST" class="d-inline"
-                    onsubmit="return confirm('Bạn có chắc chắn muốn xóa khóa học này?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn p-0" style="border: none; background: none;" title="Xóa khóa học">
-                        <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
-                    </button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
+    <tr>
+        <!-- Click vào mã sẽ dẫn đến danh sách bài học -->
+        <td>
+            <a href="{{ route('baihoc.danhsach', ['id' => $khoahoc->id]) }}" title="Xem bài học của {{ $khoahoc->ten }}">
+                {{ $khoahoc->ma }}
+            </a>
+        </td>
+        
+        <td>{{ $khoahoc->ten }}</td>
+        <td>{{ $khoahoc->giangvien }}</td>
+        <td>{{ $khoahoc->sobaihoc }}</td>
+
+        <td>
+            @if($khoahoc->anh)
+                <img src="{{ asset('images/' . $khoahoc->anh) }}" alt="Ảnh khóa học" width="80" height="60" style="object-fit: cover;">
+            @else
+                <span class="text-muted">Không có ảnh</span>
+            @endif
+        </td>
+
+        <td>
+            <!-- Sửa -->
+            <a href="{{ route('khoahoc.edit', $khoahoc->id) }}" title="Chỉnh sửa khóa học">
+                <i class="fas fa-pen text-primary me-3" style="cursor: pointer;"></i>
+            </a>
+
+            <!-- Xóa -->
+            <form action="{{ route('khoahoc.destroy', $khoahoc->id) }}" method="POST" class="d-inline"
+                onsubmit="return confirm('Bạn có chắc chắn muốn xóa khóa học {{ $khoahoc->ten }}?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn p-0" style="border: none; background: none;" title="Xóa khóa học">
+                    <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
+                </button>
+            </form>
+
+            <!-- Xem điểm -->
+            <a href="{{ route('diem.xem', $khoahoc->id) }}" class="btn btn-success btn-sm ms-2" title="Xem điểm khóa học">
+                <i class="fas fa-file-excel"></i> Điểm
+            </a>
+        </td>
+    </tr>
+    @endforeach
 
         </tbody>
     </table>
-
+    {!! $khoahoctb->withQueryString()->links('pagination::bootstrap-5') !!}
     <!-- Pagination -->
-    <div class="text-end">
-        <span>1</span> of <span>2</span>
-    </div>
+    <!-- <div class="d-flex justify-content-between align-items-center mt-3">
+        <div>
+            Hiển thị trang {{ $khoahoctb->currentPage() }} / {{ $khoahoctb->lastPage() }}
+        </div>
+        <div>
+            {{ $khoahoctb->links() }}
+        </div>
+    </div> -->
+
 
 </div>
 

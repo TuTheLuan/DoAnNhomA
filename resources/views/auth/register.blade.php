@@ -52,6 +52,17 @@
                     </div>
                 </div>
 
+                <div class="mb-3">
+                    <label for="role" class="form-label">Vai trò</label>
+                    <select name="role" id="role" class="form-select" required>
+                        <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Học viên</option>
+                        <option value="teacher" {{ old('role') == 'teacher' ? 'selected' : '' }}>Giảng viên</option>
+                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Quản trị viên</option>
+                    </select>
+                    @error('role')
+                        <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
                 <button type="submit" class="btn btn-success d-block mx-auto mt-3 rounded-pill">
                     Đăng Ký
                 </button>

@@ -4,11 +4,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\KhoaHocController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DiemController;
+use App\Http\Controllers\TaiLieuBaiHocController;
+
 use App\Http\Controllers\BaiHocController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\DiendanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,28 +24,53 @@ use App\Http\Controllers\ForgotPasswordController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+use App\Http\Middleware\RoleMiddleware;
 
-Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
-Route::post('/students', [StudentController::class, 'store'])->name('students.store');
+// Học viên
+Route::middleware([RoleMiddleware::class.':admin,teacher'])->group(function () {
+    Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
+    Route::post('/students', [StudentController::class, 'store'])->name('students.store');
 
-Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+    Route::get('/students', [StudentController::class, 'index'])->name('students.index');
 
-Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
-Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
+    Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('students.edit');
+    Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
 
-Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
+    Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
 
-Route::get('/students/home', [StudentController::class, 'home'])->name('students.home');
+    Route::get('/students/khoahoc', [StudentController::class, 'khoahoc'])->name('students.khoahoc');
 
-Route::get('/students/khoahoc', [StudentController::class, 'khoahoc'])->name('students.khoahoc');
+    Route::get('/students/thongbao', [StudentController::class, 'thongbao'])->name('students.thongbao');
 
-Route::get('/students/khoahoccuatoi', [StudentController::class, 'khoahoccuatoi'])->name('students.khoahoccuatoi');
+    Route::get('/students/thongke', [StudentController::class, 'thongke'])->name('students.thongke');
+});
+
+Route::middleware([RoleMiddleware::class.':admin,teacher,student'])->group(function () {
+    Route::get('/students/home', [StudentController::class, 'home'])->name('students.home');
+});
+
 
 // Giảng viên
 Route::get('/teacher/home', [TeacherController::class, 'home'])->name('teacher.home');
 Route::get('/teacher/khoahoc', [TeacherController::class, 'khoahoc'])->name('teacher.khoahoc');
 Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.themkhoahoc');
 Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.luukhoahoc');
+Route::get('/teacher/thongbao', [TeacherController::class, 'thongbao'])->name('teacher.thongbao');
+
+//Diễn đàn
+Route::get('teacher/diendan', [DiendanController::class, 'index'])->name('diendan.index');
+
+Route::get('students/diendan/{id}', [DiendanController::class, 'show'])->name('diendan.show');
+Route::get('students/diendan/{id}/chat', [DiendanController::class, 'chat'])->name('diendan.chat');
+Route::post('students/diendan/{id}/chat/send', [DiendanController::class, 'chatSend'])->name('diendan.chat.send');
+Route::get('students/diendan', [DiendanController::class, 'indexForStudents'])->name('diendan.index.students');
+
+Route::get('teacher/themdiendan', [DiendanController::class, 'create'])->name('diendan.create');
+Route::post('teacher/themdiendan', [DiendanController::class, 'store'])->name('diendan.store');
+Route::get('teacher/diendan/{id}/edit', [DiendanController::class, 'edit'])->name('diendan.edit');
+Route::put('teacher/diendan/{id}', [DiendanController::class, 'update'])->name('diendan.update');
+Route::delete('teacher/diendan/{id}', [DiendanController::class, 'destroy'])->name('diendan.destroy');
+
 
 //Khóa học
 Route::get('/khoahoc/danhsach', [KhoaHocController::class, 'danhsach'])->name('khoahoc.danhsach');
@@ -55,10 +85,28 @@ Route::post('/khoahoc', [KhoaHocController::class, 'store'])->name('khoahoc.stor
 Route::put('khoahoc/{id}', [KhoaHocController::class, 'update'])->name('khoahoc.update');
 
 //Bài học
-Route::get('/baihoc/danhsach', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
-Route::get('/baihoc/thembaihoc', [BaiHocController::class, 'thembaihoc'])->name('baihoc.thembaihoc');
-Route::get('/lessons', [LessonController::class, 'index'])->name('lessons.index');
-Route::post('/lessons', [LessonController::class, 'store'])->name('lessons.store');
+// Danh sách bài học theo khóa học
+Route::get('/baihoc/danhsach/{id}', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
+
+// Form thêm bài học cho khóa học có ID
+Route::get('/baihoc/them/{id}', [BaiHocController::class, 'thembaihoc'])->name('baihoc.thembaihoc');
+
+// Lưu bài học vào DB (sau khi submit form)
+Route::post('/baihoc/store', [BaiHocController::class, 'store'])->name('baihoc.store');
+
+Route::delete('/baihoc/xoa/{id}', [BaiHocController::class, 'destroy'])->name('baihoc.destroy');
+
+//Tài liệu
+Route::delete('/tailieu/{id}', [TaiLieuBaiHocController::class, 'destroy'])->name('tailieu.destroy');
+//Chỉnh sửa bài học 
+Route::get('/baihoc/chinhsua/{id}', [BaiHocController::class, 'edit'])->name('baihoc.edit');
+// Đổi từ /baihoc/capnhat/{id} -> /baihoc/update/{id}
+Route::put('/baihoc/update/{id}', [BaiHocController::class, 'update'])->name('baihoc.update');
+
+//Hiển thị khóa học user
+Route::get('/user/khoahoc', [UserController::class, 'khoaHocCuaToi'])->name('user.khoahoc');
+Route::get('/user/baihoc/{khoahoc_id}', [UserController::class, 'baihoc'])->name('user.baihoc');
+
 
 
 // Login
@@ -88,5 +136,12 @@ Route::put('/settings', [SettingsController::class, 'update'])->name('settings.u
 
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('welcome');
 });
+
+Route::prefix('diem')->group(function () {
+    Route::get('/xem/{id}', [DiemController::class, 'xemDiem'])->name('diem.xem');
+    Route::get('/xuat-excel/{id}', [DiemController::class, 'xuatExcel'])->name('diem.xuat');
+    Route::get('/thoat', [DiemController::class, 'thoat'])->name('diem.thoat');
+});
+

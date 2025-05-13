@@ -2,10 +2,27 @@
 
 namespace App\Http\Controllers;
 use App\Models\Student; 
+use App\Models\KhoaHoc;
+use App\Models\Diendan;
+use App\Models\ThongBao;
 use Illuminate\Http\Request;
+
 
 class StudentController extends Controller
 {
+
+    public function thongke()
+    {
+        $tongHocVien = Student::count();
+        $tongKhoaHoc = KhoaHoc::count();
+      
+
+        return view('students.thongke', [
+            'tongHocVien' => $tongHocVien,
+            'tongKhoaHoc' => $tongKhoaHoc,
+          
+        ]);
+    }
      // Hiển thị form thêm học viên
      public function create()
      {
@@ -88,16 +105,17 @@ class StudentController extends Controller
 
     public function home()
     {
-        return view('students.home');
+        $soKhoaHoc = KhoaHoc::count();
+        $soDienDan = Diendan::count();
+        $soHocVien = Student::count();
+        $thongBaoMoiNhat = ThongBao::orderBy('created_at', 'desc')->take(5)->get();
+
+        return view('students.home', compact('soKhoaHoc', 'soDienDan', 'soHocVien', 'thongBaoMoiNhat'));
     }
 
-    public function khoahoc()
+    public function thongbao()
     {
-        return view('students.khoahoc');
-    }
-
-    public function myCourses()
-    {
-        return view('students.khoahoccuatoi');
+        $thongBaoMoiNhat = \App\Models\ThongBao::orderBy('created_at', 'desc')->get();
+        return view('students.thongbao', compact('thongBaoMoiNhat'));
     }
 }
