@@ -29,18 +29,16 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'username' => 'required|min:1|max:10|regex:/^[a-zA-Z0-9]+$/',
-            'password' => 'required|min:6|max:20',
-        ], [
-            'username.required' => 'Tên người dùng không được để trống.',
-            'username.min' => 'Tên người dùng phải có ít nhất 1 ký tự.',
-            'username.max' => 'Tên người dùng không được quá 10 ký tự.',
-            'username.regex' => 'Tên người dùng không được chứa ký tự đặc biệt.',
-            'password.required' => 'Mật khẩu không được để trống.',
-            'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
-            'password.max' => 'Mật khẩu không được quá 20 ký tự.',
-        ]);
+$request->validate([
+    'username' => 'required|string|max:255',
+    'password' => 'required|min:6|max:20',
+], [
+    'username.required' => 'Tên người dùng hoặc email không được để trống.',
+    'username.max' => 'Tên người dùng hoặc email không được quá 255 ký tự.',
+    'password.required' => 'Mật khẩu không được để trống.',
+    'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
+    'password.max' => 'Mật khẩu không được quá 20 ký tự.',
+]);
 
         $field = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         $credentials = [$field => $request->input('username'), 'password' => $request->input('password')];
