@@ -50,26 +50,33 @@ Route::middleware([RoleMiddleware::class.':admin,teacher,student'])->group(funct
 });
 
 
+ 
 // Giảng viên
-Route::get('/teacher/home', [TeacherController::class, 'home'])->name('teacher.home');
-Route::get('/teacher/khoahoc', [TeacherController::class, 'khoahoc'])->name('teacher.khoahoc');
-Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.themkhoahoc');
-Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.luukhoahoc');
-Route::get('/teacher/thongbao', [TeacherController::class, 'thongbao'])->name('teacher.thongbao');
+Route::middleware([RoleMiddleware::class.':admin,teacher'])->group(function () {
+    Route::get('/teacher/home', [TeacherController::class, 'home'])->name('teacher.home');
+    Route::get('/teacher/khoahoc', [TeacherController::class, 'khoahoc'])->name('teacher.khoahoc');
+    Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.themkhoahoc');
+    Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.luukhoahoc');
+    Route::get('/teacher/thongbao', [TeacherController::class, 'thongbao'])->name('teacher.thongbao');
+});
 
 //Diễn đàn
-Route::get('teacher/diendan', [DiendanController::class, 'index'])->name('diendan.index');
+Route::middleware([RoleMiddleware::class.':admin,teacher'])->group(function () {
+    Route::get('teacher/diendan', [DiendanController::class, 'index'])->name('diendan.index');
 
-Route::get('students/diendan/{id}', [DiendanController::class, 'show'])->name('diendan.show');
-Route::get('students/diendan/{id}/chat', [DiendanController::class, 'chat'])->name('diendan.chat');
-Route::post('students/diendan/{id}/chat/send', [DiendanController::class, 'chatSend'])->name('diendan.chat.send');
-Route::get('students/diendan', [DiendanController::class, 'indexForStudents'])->name('diendan.index.students');
+    Route::get('teacher/themdiendan', [DiendanController::class, 'create'])->name('diendan.create');
+    Route::post('teacher/themdiendan', [DiendanController::class, 'store'])->name('diendan.store');
+    Route::get('teacher/diendan/{id}/edit', [DiendanController::class, 'edit'])->name('diendan.edit');
+    Route::put('teacher/diendan/{id}', [DiendanController::class, 'update'])->name('diendan.update');
+    Route::delete('teacher/diendan/{id}', [DiendanController::class, 'destroy'])->name('diendan.destroy');
+});
 
-Route::get('teacher/themdiendan', [DiendanController::class, 'create'])->name('diendan.create');
-Route::post('teacher/themdiendan', [DiendanController::class, 'store'])->name('diendan.store');
-Route::get('teacher/diendan/{id}/edit', [DiendanController::class, 'edit'])->name('diendan.edit');
-Route::put('teacher/diendan/{id}', [DiendanController::class, 'update'])->name('diendan.update');
-Route::delete('teacher/diendan/{id}', [DiendanController::class, 'destroy'])->name('diendan.destroy');
+Route::middleware([RoleMiddleware::class.':admin,teacher,student'])->group(function () {
+    Route::get('students/diendan/{id}', [DiendanController::class, 'show'])->name('diendan.show');
+    Route::get('students/diendan/{id}/chat', [DiendanController::class, 'chat'])->name('diendan.chat');
+    Route::post('students/diendan/{id}/chat/send', [DiendanController::class, 'chatSend'])->name('diendan.chat.send');
+    Route::get('students/diendan', [DiendanController::class, 'indexForStudents'])->name('diendan.index.students');
+});
 
 
 //Khóa học
