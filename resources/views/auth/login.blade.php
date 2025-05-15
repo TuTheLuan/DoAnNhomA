@@ -14,9 +14,9 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="username" class="form-label">Tên người dùng</label>
+                    <label for="username" class="form-label">Tên người dùng hoặc Email</label>
                     <div class="input-group">
-                        <input type="text" name="username" id="username" class="form-control rounded-start shadow-sm" value="{{ old('username') }}" required autocomplete="username" autofocus>
+                        <input type="text" name="username" id="username" class="form-control rounded-start shadow-sm" value="{{ old('username') }}" required autocomplete="username" autofocus placeholder="Nhập username hoặc email">
                     </div>
                     @error('username')
                         <div class="text-danger mt-1">{{ $message }}</div>
