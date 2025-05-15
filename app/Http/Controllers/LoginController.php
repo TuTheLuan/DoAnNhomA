@@ -29,17 +29,25 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-$request->validate([
-    'username' => 'required|string|max:255',
-    'password' => 'required|min:6|max:20',
-], [
-    'username.required' => 'Tên người dùng hoặc email không được để trống.',
-    'username.max' => 'Tên người dùng hoặc email không được quá 255 ký tự.',
-    'password.required' => 'Mật khẩu không được để trống.',
-    'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
-    'password.max' => 'Mật khẩu không được quá 20 ký tự.',
-]);
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'password' => 'required|min:6|max:20',
+        ], [
+            'username.required' => 'Tên người dùng hoặc email không được để trống.',
+            'username.max' => 'Tên người dùng hoặc email không được quá 255 ký tự.',
+            'password.required' => 'Mật khẩu không được để trống.',
+            'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
+            'password.max' => 'Mật khẩu không được quá 20 ký tự.',
+        ]);
+        //  Kiểm tra domain email hợp lệ 
+        if (filter_var($request->username, FILTER_VALIDATE_EMAIL)) {
+            $validDomains = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com', 'icloud.com', 'aol.com', 'protonmail.com', 'zoho.com', 'yandex.com'];
+            $domain = substr(strrchr($request->username, "@"), 1);
 
+            if (!in_array($domain, $validDomains)) {
+                return back()->withErrors(['username' => 'Email không hợp lệ, vui lòng nhập lại email!'])->withInput();
+            }
+        }
         $field = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         $credentials = [$field => $request->input('username'), 'password' => $request->input('password')];
 
