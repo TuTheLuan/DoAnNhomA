@@ -57,7 +57,7 @@ class RegisterController extends Controller
             'yahoo.com',
             'outlook.com',
             'live.com',
-            'icloud.com',
+            'icloud.com', 
             'msn.com',
             'aol.com',
             'mail.com',

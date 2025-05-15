@@ -12,12 +12,12 @@ class RoleMiddleware
     {
         $user = Auth::user();
 
+        // Nếu chưa đăng nhập thì chuyển hướng về trang login
         if (!$user) {
-            return redirect()->route('login')->withErrors(['message' => 'Vui lòng đăng nhập.']);
+            return redirect()->route('login');
         }
 
-        $roles = array_slice(func_get_args(), 2);
-
+        // Kiểm tra nếu vai trò của user không nằm trong danh sách $roles thì abort 403
         if (!in_array($user->role, $roles)) {
             abort(403, 'Unauthorized action.');
         }
