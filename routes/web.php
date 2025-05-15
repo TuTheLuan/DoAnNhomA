@@ -14,17 +14,27 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\DiendanController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+
 use App\Http\Middleware\RoleMiddleware;
+
+// Phần routes cho Email Verification
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/login'); // Chuyển về trang login sau khi verify thành công
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/resend', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Link xác thực đã được gửi lại!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
+
 
 // Học viên
 Route::middleware([RoleMiddleware::class.':admin,teacher'])->group(function () {
@@ -49,8 +59,6 @@ Route::middleware([RoleMiddleware::class.':admin,teacher,student'])->group(funct
     Route::get('/students/home', [StudentController::class, 'home'])->name('students.home');
 });
 
-
- 
 // Giảng viên
 Route::middleware([RoleMiddleware::class.':admin,teacher'])->group(function () {
     Route::get('/teacher/home', [TeacherController::class, 'home'])->name('teacher.home');
@@ -60,7 +68,7 @@ Route::middleware([RoleMiddleware::class.':admin,teacher'])->group(function () {
     Route::get('/teacher/thongbao', [TeacherController::class, 'thongbao'])->name('teacher.thongbao');
 });
 
-//Diễn đàn
+// Diễn đàn
 Route::middleware([RoleMiddleware::class.':admin,teacher'])->group(function () {
     Route::get('teacher/diendan', [DiendanController::class, 'index'])->name('diendan.index');
 
@@ -78,8 +86,7 @@ Route::middleware([RoleMiddleware::class.':admin,teacher,student'])->group(funct
     Route::get('students/diendan', [DiendanController::class, 'indexForStudents'])->name('diendan.index.students');
 });
 
-
-//Khóa học
+// Khóa học
 Route::get('/khoahoc/danhsach', [KhoaHocController::class, 'danhsach'])->name('khoahoc.danhsach');
 Route::get('/khoahoc/themkhoahoc', [KhoaHocController::class, 'themkhoahoc'])->name('khoahoc.themkhoahoc');
 Route::get('/khoahoc/danhsach', [KhoaHocController::class, 'index'])->name('khoahoc.index');
@@ -91,30 +98,25 @@ Route::post('/khoahoc', [KhoaHocController::class, 'store'])->name('khoahoc.stor
 
 Route::put('khoahoc/{id}', [KhoaHocController::class, 'update'])->name('khoahoc.update');
 
-//Bài học
-// Danh sách bài học theo khóa học
+// Bài học
 Route::get('/baihoc/danhsach/{id}', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
 
-// Form thêm bài học cho khóa học có ID
 Route::get('/baihoc/them/{id}', [BaiHocController::class, 'thembaihoc'])->name('baihoc.thembaihoc');
 
-// Lưu bài học vào DB (sau khi submit form)
 Route::post('/baihoc/store', [BaiHocController::class, 'store'])->name('baihoc.store');
 
 Route::delete('/baihoc/xoa/{id}', [BaiHocController::class, 'destroy'])->name('baihoc.destroy');
 
-//Tài liệu
-Route::delete('/tailieu/{id}', [TaiLieuBaiHocController::class, 'destroy'])->name('tailieu.destroy');
-//Chỉnh sửa bài học 
 Route::get('/baihoc/chinhsua/{id}', [BaiHocController::class, 'edit'])->name('baihoc.edit');
-// Đổi từ /baihoc/capnhat/{id} -> /baihoc/update/{id}
+
 Route::put('/baihoc/update/{id}', [BaiHocController::class, 'update'])->name('baihoc.update');
 
-//Hiển thị khóa học user
+// Tài liệu
+Route::delete('/tailieu/{id}', [TaiLieuBaiHocController::class, 'destroy'])->name('tailieu.destroy');
+
+// Hiển thị khóa học user
 Route::get('/user/khoahoc', [UserController::class, 'khoaHocCuaToi'])->name('user.khoahoc');
 Route::get('/user/baihoc/{khoahoc_id}', [UserController::class, 'baihoc'])->name('user.baihoc');
-
-
 
 // Login
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -125,8 +127,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
-// Quên mật khẩu
-// Custom luồng gửi mã 6 số → xác minh → đổi mật khẩu
+// Quên mật khẩu (custom flow)
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetCode'])->name('password.email');
 
@@ -136,19 +137,18 @@ Route::post('/verify-token', [ForgotPasswordController::class, 'verifyToken']);
 Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset.custom');
 Route::post('/reset-password', [ForgotPasswordController::class, 'updatePassword'])->name('password.update.custom');
 
-
 // Setting
 Route::get('/settings', [SettingsController::class, 'edit'])->name('settings.edit');
 Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
 
-
+// Trang welcome
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Điểm
 Route::prefix('diem')->group(function () {
     Route::get('/xem/{id}', [DiemController::class, 'xemDiem'])->name('diem.xem');
     Route::get('/xuat-excel/{id}', [DiemController::class, 'xuatExcel'])->name('diem.xuat');
     Route::get('/thoat', [DiemController::class, 'thoat'])->name('diem.thoat');
 });
-
