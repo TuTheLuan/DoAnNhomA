@@ -28,12 +28,15 @@ class DiendanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ten_dien_dan' => 'required|string|max:255',
+            'ten_dien_dan' => 'required|string|max:255|unique:diendan,ten_dien_dan',
             'loai_thao_luan' => 'required|in:public,anonymous',
             'ten_giang_vien' => ['required', 'string', 'max:255', 'regex:/^[\pL\s]+$/u'],
-            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'background_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'images' => 'nullable|array',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ], [
+            'ten_dien_dan.unique' => 'Tên diễn đàn đã có, vui lòng nhập tên khác',
+            'background_image.required' => 'Ảnh diễn đàn là bắt buộc',
         ]);
 
         try {
@@ -89,12 +92,14 @@ class DiendanController extends Controller
         $diendan = Diendan::findOrFail($id);
 
         $request->validate([
-            'ten_dien_dan' => 'required|string|max:255',
+            'ten_dien_dan' => 'required|string|max:255|unique:diendan,ten_dien_dan,' . $id,
             'loai_thao_luan' => 'required|in:public,anonymous',
             'ten_giang_vien' => ['required', 'string', 'max:255', 'regex:/^[\pL\s]+$/u'],
             'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'images' => 'nullable|array',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ], [
+            'ten_dien_dan.unique' => 'Tên diễn đàn đã có, vui lòng nhập tên khác',
         ]);
 
         // Cập nhật các trường text
