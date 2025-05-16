@@ -18,8 +18,11 @@ class KhoaHoc extends Model
         'giangvien',
         'sobaihoc',
         'anh',
-        'meet_link',     // Link Google Meet
-        'meet_time',     // Thời gian học
+        'meet_link',
+        'meet_time',
+        'thoigian_batdau',
+        'thoigian_ketthuc',
+        'trangthai'
     ];
 
     public function users() {

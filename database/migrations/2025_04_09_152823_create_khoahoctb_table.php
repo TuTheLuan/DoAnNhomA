@@ -19,7 +19,10 @@ return new class extends Migration
             $table->integer('sobaihoc')->nullable(); 
             $table->string('anh')->nullable();  
             $table->string('meet_link')->nullable();      // Link Google Meet
-            $table->string('meet_time')->nullable();      // Thời gian học   
+            $table->string('meet_time')->nullable();      // Thời gian học
+            $table->date('thoigian_batdau')->nullable();  // Ngày bắt đầu
+            $table->date('thoigian_ketthuc')->nullable(); // Ngày kết thúc
+            $table->string('trangthai')->nullable();      // Trạng thái khóa học
             $table->timestamps();
         });
     }

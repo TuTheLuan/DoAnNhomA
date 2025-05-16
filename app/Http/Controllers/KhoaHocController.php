@@ -17,12 +17,10 @@ class KhoaHocController extends Controller
     {
         return view('khoahoc.themkhoahoc');
     }
-
     public function index(Request $request)
     {
         $query = KhoaHoc::query();
 
-        // Lọc theo từ khóa (tên, mã, giảng viên)
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
@@ -32,7 +30,6 @@ class KhoaHocController extends Controller
             });
         }
 
-        // Lọc theo tên giảng viên nếu có
         if ($request->filled('giangvien')) {
             $query->where('giangvien', $request->giangvien);
         }
@@ -44,6 +41,12 @@ class KhoaHocController extends Controller
         return view('khoahoc.danhsach', compact('khoahoctb', 'tatcaGiangVien'));
     }
 
+    public function create()
+    {
+        $trangThaiOptions = ['Mở', 'Đang diễn ra', 'Kết thúc', 'Ẩn'];
+        return view('khoahoc.themkhoahoc', compact('trangThaiOptions'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -53,32 +56,14 @@ class KhoaHocController extends Controller
             'anh' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             'meet_link' => ['nullable', 'url'],
             'meet_time' => ['nullable', 'string', 'max:255'],
-        ], [
-            'ten.required' => 'Vui lòng nhập tên khóa học.',
-            'ten.min' => 'Tên khóa học phải có ít nhất 7 ký tự.',
-            'ten.max' => 'Tên khóa học không được vượt quá 155 ký tự.',
-            'ten.regex' => 'Tên khóa học không được chứa ký tự đặc biệt.',
-            
-            'giangvien.required' => 'Vui lòng nhập tên giảng viên.',
-            'giangvien.min' => 'Tên giảng viên phải có ít nhất 7 ký tự.',
-            'giangvien.max' => 'Tên giảng viên không được vượt quá 55 ký tự.',
-            'giangvien.regex' => 'Tên giảng viên không được chứa ký tự đặc biệt.',
-            
-            'sobaihoc.required' => 'Vui lòng nhập số bài học.',
-            'sobaihoc.integer' => 'Số bài học phải là số nguyên.',
-            'sobaihoc.min' => 'Số bài học phải lớn hơn 0.',
-
-            'anh.image' => 'Tệp tải lên phải là ảnh.',
-            'anh.mimes' => 'Ảnh phải có định dạng: jpeg, png, jpg, gif.',
-            'anh.max' => 'Ảnh không được vượt quá 2MB.',
-
-            'meet_link.url' => 'Link Google Meet không đúng định dạng URL.',
-            'meet_time.max' => 'Thời gian học Google Meet không được vượt quá 255 ký tự.',
+            'trangthai' => ['nullable', 'in:Mở,Đang diễn ra,Kết thúc,Ẩn'],
+            'thoigian_batdau' => ['nullable', 'date'],
+            'thoigian_ketthuc' => ['nullable', 'date', 'after_or_equal:thoigian_batdau'],
         ]);
 
-        $lastKhoaHoc = KhoaHoc::orderBy('id', 'desc')->first();
-        $newCode = $lastKhoaHoc && $lastKhoaHoc->ma
-            ? 'KH' . str_pad((int)substr($lastKhoaHoc->ma, 2) + 1, 3, '0', STR_PAD_LEFT)
+        $last = KhoaHoc::orderBy('id', 'desc')->first();
+        $newCode = $last && $last->ma
+            ? 'KH' . str_pad((int)substr($last->ma, 2) + 1, 3, '0', STR_PAD_LEFT)
             : 'KH001';
 
         $imageName = null;
@@ -86,6 +71,12 @@ class KhoaHocController extends Controller
             $image = $request->file('anh');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('images'), $imageName);
+        }
+
+        $validTrangThai = ['Mở', 'Đang diễn ra', 'Kết thúc', 'Ẩn'];
+        $trangthai = $request->input('trangthai');
+        if (!in_array($trangthai, $validTrangThai)) {
+            $trangthai = 'Mở';
         }
 
         KhoaHoc::create([
@@ -96,6 +87,9 @@ class KhoaHocController extends Controller
             'anh' => $imageName,
             'meet_link' => $request->meet_link,
             'meet_time' => $request->meet_time,
+            'trangthai' => $trangthai,
+            'thoigian_batdau' => $request->thoigian_batdau,
+            'thoigian_ketthuc' => $request->thoigian_ketthuc,
         ]);
 
         return redirect()->route('khoahoc.index')->with('success', 'Thêm khóa học thành công!');
@@ -103,8 +97,9 @@ class KhoaHocController extends Controller
 
     public function edit($id)
     {
-        $khoahoctb = KhoaHoc::findOrFail($id);
-        return view('khoahoc.edit', ['khoahoc' => $khoahoctb]);
+        $khoahoc = KhoaHoc::findOrFail($id);
+        $trangThaiOptions = ['Mở', 'Đang diễn ra', 'Kết thúc', 'Ẩn'];
+        return view('khoahoc.edit', compact('khoahoc', 'trangThaiOptions'));
     }
 
     public function update(Request $request, $id)
@@ -116,32 +111,13 @@ class KhoaHocController extends Controller
             'anh' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             'meet_link' => ['nullable', 'url'],
             'meet_time' => ['nullable', 'string', 'max:255'],
-        ], [
-            'ten.required' => 'Vui lòng nhập tên khóa học.',
-            'ten.min' => 'Tên khóa học phải có ít nhất 7 ký tự.',
-            'ten.max' => 'Tên khóa học không được vượt quá 155 ký tự.',
-            'ten.regex' => 'Tên khóa học không được chứa ký tự đặc biệt.',
-            
-            'giangvien.required' => 'Vui lòng nhập tên giảng viên.',
-            'giangvien.min' => 'Tên giảng viên phải có ít nhất 7 ký tự.',
-            'giangvien.max' => 'Tên giảng viên không được vượt quá 55 ký tự.',
-            'giangvien.regex' => 'Tên giảng viên không được chứa ký tự đặc biệt.',
-            
-            'sobaihoc.required' => 'Vui lòng nhập số bài học.',
-            'sobaihoc.integer' => 'Số bài học phải là số nguyên.',
-            'sobaihoc.min' => 'Số bài học phải lớn hơn 0.',
-
-            'anh.image' => 'Tệp tải lên phải là ảnh.',
-            'anh.mimes' => 'Ảnh phải có định dạng: jpeg, png, jpg, gif.',
-            'anh.max' => 'Ảnh không được vượt quá 2MB.',
-
-            'meet_link.url' => 'Link Google Meet không đúng định dạng URL.',
-            'meet_time.max' => 'Thời gian học Google Meet không được vượt quá 255 ký tự.',
+            'trangthai' => ['nullable', 'in:Mở,Đang diễn ra,Kết thúc,Ẩn'],
+            'thoigian_batdau' => ['nullable', 'date'],
+            'thoigian_ketthuc' => ['nullable', 'date', 'after_or_equal:thoigian_batdau'],
         ]);
 
         $khoaHoc = KhoaHoc::findOrFail($id);
 
-        // Cập nhật ảnh nếu có
         if ($request->hasFile('anh')) {
             $image = $request->file('anh');
             $imageName = time() . '_' . $image->getClientOriginalName();
@@ -149,12 +125,20 @@ class KhoaHocController extends Controller
             $khoaHoc->anh = $imageName;
         }
 
+        $validTrangThai = ['Mở', 'Đang diễn ra', 'Kết thúc', 'Ẩn'];
+        $trangthai = $request->input('trangthai');
+        if (!in_array($trangthai, $validTrangThai)) {
+            $trangthai = 'Mở';
+        }
+
         $khoaHoc->ten = $request->ten;
         $khoaHoc->giangvien = $request->giangvien;
         $khoaHoc->sobaihoc = $request->sobaihoc;
-
         $khoaHoc->meet_link = $request->meet_link;
         $khoaHoc->meet_time = $request->meet_time;
+        $khoaHoc->trangthai = $trangthai;
+        $khoaHoc->thoigian_batdau = $request->thoigian_batdau;
+        $khoaHoc->thoigian_ketthuc = $request->thoigian_ketthuc;
 
         $khoaHoc->save();
 
