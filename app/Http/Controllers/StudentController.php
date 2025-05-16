@@ -7,23 +7,42 @@ use App\Models\Diendan;
 use App\Models\ThongBao;
 use Illuminate\Http\Request;
 use App\Models\BaiHoc;
+use App\Models\BaiThiHoanThanh;
+use App\Models\DiemThi;
+
+
 
 
 class StudentController extends Controller
 {
 
     public function thongke()
-    {
-        $tongHocVien = Student::count();
-        $tongKhoaHoc = KhoaHoc::count();
+{
+    $tongHocVien = Student::count();
+    $tongKhoaHoc = KhoaHoc::count();
+    $tongBaiThiHoanThanh = DiemThi::count();
 
+    $students = Student::all();
+    $bangDiem = [];
 
-        return view('students.thongke', [
-            'tongHocVien' => $tongHocVien,
-            'tongKhoaHoc' => $tongKhoaHoc,
+    foreach ($students as $student) {
+        $diemBaiTap = [];
+        foreach ($student->diemBaiTap as $baiTap) {
+            $diemBaiTap[$baiTap->bai_so] = $baiTap->diem;
+        }
 
-        ]);
+        $bangDiem[] = [
+            'ma_hoc_vien' => $student->id,
+            'ten' => $student->ho_ten,
+            'diem_bai_tap' => $diemBaiTap,
+            'diem_thi' => optional($student->diemThi)->diem,
+        ];
     }
+
+    return view('students.thongke', compact(
+        'tongHocVien', 'tongKhoaHoc', 'tongBaiThiHoanThanh', 'bangDiem'
+    ));
+}
     // Hiển thị form thêm học viên
     public function create()
     {

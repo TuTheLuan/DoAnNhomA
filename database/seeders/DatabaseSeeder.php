@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             StudentsTableSeeder::class,
             DiendanTableSeeder::class,
             KhoaHocTableSeeder::class,
+            DiemSeeder::class,
         ]);
     }
 

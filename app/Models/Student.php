@@ -24,13 +24,14 @@ class Student extends Model
 
     public function diemBaiTap()
     {
-        return $this->hasMany(\App\Models\DiemBaiTap::class);
+        return $this->hasMany(DiemBaiTap::class);
     }
 
     public function diemThi()
     {
-        return $this->hasOne(\App\Models\DiemThi::class);
+        return $this->hasOne(DiemThi::class);
     }
+
 
 }
 

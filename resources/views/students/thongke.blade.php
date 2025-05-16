@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-4">
             <div class="stat-box">
-                <h1 class="text-primary">0</h1>
+                <h1 class="text-primary">{{ $tongBaiThiHoanThanh }}</h1>
                 <p>Tổng số bài thi hoàn thành</p>
             </div>
         </div>

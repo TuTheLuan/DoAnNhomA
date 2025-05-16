@@ -71,7 +71,10 @@ Route::middleware([RoleMiddleware::class.':admin,teacher'])->group(function () {
 
     Route::get('/students/thongbao', [StudentController::class, 'thongbao'])->name('students.thongbao');
 
-    Route::get('/students/thongke', [StudentController::class, 'thongke'])->name('students.thongke');
+    Route::get('/students/thongke', [StudentController::class, 'thongke'])
+    ->name('students.thongke')
+    ->middleware(['auth', 'role:teacher,admin']);
+
 });
 
 Route::middleware([RoleMiddleware::class.':admin,teacher,student'])->group(function () {
