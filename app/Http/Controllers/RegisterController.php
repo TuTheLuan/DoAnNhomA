@@ -66,7 +66,7 @@ class RegisterController extends Controller
             'status' => $status,
         ]);
 
-        event(new Registered($user));
+        //event(new Registered($user));
 
         // Sau khi đăng ký, chuyển về trang đăng nhập mà không tự động đăng nhập
         return redirect()->route('login')->with('message', 'Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.');

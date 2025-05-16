@@ -20,5 +20,17 @@ class Student extends Model
 
     public $timestamps = true;
 
+    // Student.php
+
+    public function diemBaiTap()
+    {
+        return $this->hasMany(\App\Models\DiemBaiTap::class);
+    }
+
+    public function diemThi()
+    {
+        return $this->hasOne(\App\Models\DiemThi::class);
+    }
+
 }
 
