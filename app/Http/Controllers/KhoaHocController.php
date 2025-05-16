@@ -20,21 +20,32 @@ class KhoaHocController extends Controller
 
     public function index(Request $request)
     {
-        // Xử lý tìm kiếm
         $query = KhoaHoc::query();
 
+        // Lọc theo từ khóa (tên, mã, giảng viên)
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
-            $query->where('ten', 'like', "%$search%")
+            $query->where(function ($q) use ($search) {
+                $q->where('ten', 'like', "%$search%")
                 ->orWhere('ma', 'like', "%$search%")
                 ->orWhere('giangvien', 'like', "%$search%");
+            });
         }
 
-        // Phân trang kèm theo search
+        // Lọc theo tên giảng viên nếu có
+        if ($request->filled('giangvien')) {
+            $query->where('giangvien', $request->giangvien);
+        }
+
+        // Lấy dữ liệu phân trang
         $khoahoctb = $query->paginate(5)->withQueryString();
 
-        return view('khoahoc.danhsach', compact('khoahoctb'));
+        // Lấy danh sách giảng viên duy nhất
+        $tatcaGiangVien = KhoaHoc::select('giangvien')->distinct()->pluck('giangvien');
+
+        return view('khoahoc.danhsach', compact('khoahoctb', 'tatcaGiangVien'));
     }
+
 
 
     public function store(Request $request)
