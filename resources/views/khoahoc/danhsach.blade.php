@@ -49,13 +49,14 @@
                 <th><u>Giảng Viên</u></th>
                 <th><u>Số Bài Học</u></th>
                 <th><u>Hình Ảnh</u></th>
+                <th><u>Link Meet</u></th>
+                <th><u>Thời Gian Meet</u></th>
                 <th><u>Hành Động</u></th>
             </tr>
         </thead>
         <tbody>
         @foreach($khoahoctb as $khoahoc)
     <tr>
-        <!-- Click vào mã sẽ dẫn đến danh sách bài học -->
         <td>
             <a href="{{ route('baihoc.danhsach', ['id' => $khoahoc->id]) }}" title="Xem bài học của {{ $khoahoc->ten }}">
                 {{ $khoahoc->ma }}
@@ -75,12 +76,22 @@
         </td>
 
         <td>
-            <!-- Sửa -->
+            @if($khoahoc->meet_link)
+                <a href="{{ $khoahoc->meet_link }}" target="_blank">Tham gia</a>
+            @else
+                <span class="text-muted">Không có link</span>
+            @endif
+        </td>
+
+        <td>
+            {{ $khoahoc->meet_time ?? 'Chưa cập nhật' }}
+        </td>
+
+        <td>
             <a href="{{ route('khoahoc.edit', $khoahoc->id) }}" title="Chỉnh sửa khóa học">
                 <i class="fas fa-pen text-primary me-3" style="cursor: pointer;"></i>
             </a>
 
-            <!-- Xóa -->
             <form action="{{ route('khoahoc.destroy', $khoahoc->id) }}" method="POST" class="d-inline"
                 onsubmit="return confirm('Bạn có chắc chắn muốn xóa khóa học {{ $khoahoc->ten }}?');">
                 @csrf
@@ -90,7 +101,6 @@
                 </button>
             </form>
 
-            <!-- Xem điểm -->
             <a href="{{ route('diem.xem', $khoahoc->id) }}" class="btn btn-success btn-sm ms-2" title="Xem điểm khóa học">
                 <i class="fas fa-file-excel"></i> Điểm
             </a>

@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('ten');
             $table->string('giangvien')->nullable();
             $table->integer('sobaihoc')->nullable(); 
-            $table->string('anh')->nullable();       
+            $table->string('anh')->nullable();  
+            $table->string('meet_link')->nullable();      // Link Google Meet
+            $table->string('meet_time')->nullable();      // Thời gian học   
             $table->timestamps();
         });
     }
