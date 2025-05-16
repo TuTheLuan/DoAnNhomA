@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-4">
             <div class="stat-box">
-                <h1 class="text-primary">100</h1>
+                <h1 class="text-primary">0</h1>
                 <p>Tổng số bài thi hoàn thành</p>
             </div>
         </div>
@@ -45,14 +45,26 @@
                     <th>STT</th>
                     <th>Mã học viên</th>
                     <th>Tên học viên</th>
-                    <th>BH1</th>
-                    <th>BH2</th>
-                    <th>BH3</th>
-                    <th>…</th>
-                    <th>BH(n)</th>
+                    @for ($i = 1; $i <= 5; $i++)
+                        <th>BH{{ $i }}</th>
+                    @endfor
                     <th>Điểm thi</th>
                 </tr>
             </thead>
+            <tbody>
+                @foreach ($bangDiem as $index => $row)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $row['ma_hoc_vien'] }}</td>
+                    <td>{{ $row['ten'] }}</td>
+                    @for ($i = 1; $i <= 5; $i++)
+                        <td>{{ $row['diem_bai_tap'][$i] ?? '' }}</td>
+                    @endfor
+                    <td>{{ $row['diem_thi'] ?? '' }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+
             
         </table>
 
