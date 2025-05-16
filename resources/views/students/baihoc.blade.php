@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2 class="mb-4 text-center">Danh sách bài học  {{ $khoahoc->ten_khoahoc }}</h2>
-
+    <p>Chưa có bài học để hiển thị</p>
     @foreach($baihocs as $index => $baihoc)
         <div class="card mb-4">
             <div class="card-header">

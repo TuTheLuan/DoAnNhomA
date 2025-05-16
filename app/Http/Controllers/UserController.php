@@ -24,6 +24,6 @@ class UserController extends Controller
         // Lấy danh sách bài học đã load từ quan hệ
         $baihocs = $khoahoc->baiHocs;
 
-        return view('user.baihoc', compact('khoahoc', 'baihocs'));
+        return view('students.baihoc', compact('khoahoc', 'baihocs'));
     }
 }

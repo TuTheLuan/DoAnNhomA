@@ -118,4 +118,28 @@ class StudentController extends Controller
         $thongBaoMoiNhat = \App\Models\ThongBao::orderBy('created_at', 'desc')->get();
         return view('students.thongbao', compact('thongBaoMoiNhat'));
     }
+
+    public function khoahoc(Request $request)
+    {
+        $query = \App\Models\KhoaHoc::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('ten', 'like', "%$search%")
+                  ->orWhere('ma', 'like', "%$search%")
+                  ->orWhere('giangvien', 'like', "%$search%");
+            });
+        }
+
+        if ($request->filled('giangvien')) {
+            $query->where('giangvien', $request->giangvien);
+        }
+
+        $khoahoctb = $query->paginate(5)->withQueryString();
+
+        $tatcaGiangVien = \App\Models\KhoaHoc::select('giangvien')->distinct()->pluck('giangvien');
+
+        return view('students.khoahoc', compact('khoahoctb', 'tatcaGiangVien'));
+    }
 }

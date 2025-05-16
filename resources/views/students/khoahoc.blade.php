@@ -20,7 +20,7 @@
 
     <!-- Danh sách khóa học -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach($khoahocs as $khoahoc)
+        @foreach($khoahoctb as $khoahoc)
         <div class="col">
             <div class="card h-100 shadow-sm">
                 <img src="{{ asset('images/' . $khoahoc->anh) }}" class="card-img-top" alt="Hình ảnh khóa học" style="height: 180px; object-fit: cover;">
@@ -39,7 +39,7 @@
 
     <!-- Phân trang -->
     <div class="d-flex justify-content-center my-3">
-        {{ $khoahocs->links('pagination::bootstrap-5') }}
+        {{ $khoahoctb->links('pagination::bootstrap-5') }}
     </div>
 </div>
 @endsection

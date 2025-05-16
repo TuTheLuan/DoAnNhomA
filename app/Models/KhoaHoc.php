@@ -28,4 +28,10 @@ class KhoaHoc extends Model
     public function users() {
         return $this->belongsToMany(User::class, 'user_khoahoc');
     }
+
+    public function baiHocs()
+{
+    return $this->hasMany(BaiHoc::class, 'khoahoc_id');
+}
+
 }
