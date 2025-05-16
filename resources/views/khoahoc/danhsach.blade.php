@@ -8,14 +8,24 @@
 
     <!-- Search Bar -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-    <form action="{{ route('khoahoc.index') }}" method="GET" class="mb-4" style="max-width: 400px;">
-        <div class="input-group">
+    <form action="{{ route('khoahoc.index') }}" method="GET" class="mb-4" style="max-width: 600px;">
+        <div class="input-group mb-2">
             <input type="text" name="search" class="form-control" placeholder="Tìm kiếm khóa học..." value="{{ request('search') }}">
+            
+            <!-- Dropdown lọc giảng viên -->
+            <select name="giangvien" class="form-select">
+                <option value="">-- Tất cả giảng viên --</option>
+                @foreach($tatcaGiangVien as $gv)
+                    <option value="{{ $gv }}" {{ request('giangvien') == $gv ? 'selected' : '' }}>{{ $gv }}</option>
+                @endforeach
+            </select>
+
             <button type="submit" class="btn btn-primary">
                 <i class="fas fa-search"></i> Tìm kiếm
             </button>
         </div>
     </form>
+
 
 
 

@@ -19,7 +19,15 @@ class ForgotPasswordController extends Controller
     
     public function sendResetCode(Request $request) {
         $request->validate(['email' => 'required|email']);
-    
+        
+        //  Kiểm tra domain email hợp lệ 
+        $validDomains = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com', 'icloud.com', 'aol.com', 'protonmail.com', 'zoho.com', 'yandex.com'];
+        $domain = substr(strrchr($request->email, "@"), 1);
+
+        if (!in_array($domain, $validDomains)) {
+            return back()->withErrors(['email' => 'Email không hợp lệ, vui lòng nhập lại email!'])->withInput();
+        }
+
         $user = User::where('email', $request->email)->first();
     
         if (!$user) {

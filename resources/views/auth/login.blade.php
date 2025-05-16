@@ -10,6 +10,23 @@
                 <h1>Đăng Nhập</h1>
             </div>
 
+            {{-- Thêm thông báo thành công --}}
+            @if (session('message'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
@@ -40,9 +57,9 @@
                     <a href="{{ route('password.request') }}" class="text-primary text-decoration-none">Bạn quên mật khẩu?</a>
                 </div>
 
-<button type="submit" class="btn btn-success d-block mx-auto mt-3 rounded-pill">
-    <i class="fas fa-arrow-right"></i>
-</button>
+                <button type="submit" class="btn btn-success d-block mx-auto mt-3 rounded-pill">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
 
                 <p class="mt-3 text-center">
                     <a href="{{ route('register') }}" class="text-primary text-decoration-none">Bạn chưa có tài khoản?</a>

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -51,12 +50,29 @@ class RegisterController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // Danh sách domain email cho phép
+        $allowedDomains = [
+            'gmail.com',
+            'hotmail.com',
+            'yahoo.com',
+            'outlook.com',
+            'live.com',
+            'icloud.com', 
+            'msn.com',
+            'aol.com',
+            'mail.com',
+            'zoho.com',
+            'protonmail.com',
+        ];
+
+        // Lấy domain từ email
+        $emailDomain = substr(strrchr($request->email, "@"), 1);
+
+        if (!in_array(strtolower($emailDomain), $allowedDomains)) {
+            return redirect()->back()->withErrors(['email' => 'Email không hợp lệ, vui lòng nhập lại email!'])->withInput();
+        }
+
         $status = 'approved';
-        // Remove pending status for teacher, auto approve all roles
-        // if ($request->role === 'teacher') {
-        //     $status = 'pending';
-        //     // Here you can add notification to admin for approval
-        // }
 
         $user = User::create([
             'username' => $request->username,
