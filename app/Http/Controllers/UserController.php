@@ -13,7 +13,7 @@ class UserController extends Controller
         // Thay đổi lấy dữ liệu với phân trang
         $khoahocs = KhoaHoc::paginate(5);
 
-        return view('user.khoahoc', compact('khoahocs'));
+        return view('students.khoahoc', compact('khoahocs'));
     }
 
     public function baihoc($khoahoc_id)
