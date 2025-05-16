@@ -19,6 +19,25 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Middleware\RoleMiddleware;
+ 
+use Illuminate\Support\Facades\Auth;
+//Homepage
+
+
+Route::get('/', function () {
+    return view('home');
+});
+
+// Đảm bảo khi bấm "Home" sẽ luôn về trang homepage (view home.blade.php)
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
+
+
+// Đảm bảo trang đầu tiên khi vào web là homepage, không redirect đến dashboard hay trang khác
+// Nếu có middleware hoặc route redirect khác, cần kiểm tra và điều chỉnh
+
+// Ví dụ nếu có route redirect sau login, có thể chỉnh sửa trong AuthServiceProvider hoặc middleware
 
 // Phần routes cho Email Verification
 Route::get('/email/verify', function () {
@@ -141,7 +160,7 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'updatePassword
 Route::get('/settings', [SettingsController::class, 'edit'])->name('settings.edit');
 Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
 
-// Trang welcome
+// Trang welcome (mặc định Laravel)
 Route::get('/', function () {
     return view('welcome');
 });

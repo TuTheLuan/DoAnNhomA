@@ -10,8 +10,8 @@ class UserController extends Controller
 {
     public function khoaHocCuaToi()
     {
-        // Tạm thời load tất cả khóa học để hiển thị
-        $khoahocs = KhoaHoc::all();
+        // Thay đổi lấy dữ liệu với phân trang
+        $khoahocs = KhoaHoc::paginate(5);
 
         return view('user.khoahoc', compact('khoahocs'));
     }

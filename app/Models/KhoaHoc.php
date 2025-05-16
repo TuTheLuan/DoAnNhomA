@@ -10,17 +10,19 @@ class KhoaHoc extends Model
     use HasFactory;
 
     protected $table = 'khoahoctb'; // Tên bảng tương ứng trong database
-    public $timestamps = false; // Vì `created_at`, `updated_at` đang NULL
+    public $timestamps = false; // Nếu bạn không dùng created_at, updated_at
+
     protected $fillable = [
-        'ma',        // 
+        'ma',
         'ten',
         'giangvien',
         'sobaihoc',
         'anh',
+        'meet_link',     // Link Google Meet
+        'meet_time',     // Thời gian học
     ];
 
     public function users() {
         return $this->belongsToMany(User::class, 'user_khoahoc');
     }
-    
 }
