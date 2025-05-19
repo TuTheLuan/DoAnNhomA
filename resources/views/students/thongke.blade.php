@@ -25,18 +25,26 @@
         </div>
     </div>
 
-    <div class="mb-3 d-flex justify-content-between">
+    <form method="GET" action="{{ route('students.thongke') }}" class="mb-3 d-flex justify-content-between">
         <div class="input-group w-50">
-            <input type="text" class="form-control" placeholder="Tìm kiếm khóa học">
-            <button class="btn btn-outline-secondary" type="button">
+            <input type="text" name="search" class="form-control me-2" placeholder="Tìm kiếm học viên" value="{{ request('search') }}" maxlength="100">
+            <button class="btn btn-outline-secondary" type="submit">
                 🔍
             </button>
         </div>
-        <select class="form-select w-25">
-            <option selected>Chọn khóa học</option>
-            <!-- Thêm option khóa học ở đây -->
+
+        <select class="form-select w-25" name="khoahoc">
+            <option value="">Chọn khóa học</option>
+            @foreach ($khoahoc as $khoaHoc)
+                <option value="{{ $khoaHoc->id }}" {{ request('khoahoc') == $khoaHoc->id ? 'selected' : '' }}>
+                    {{ $khoaHoc->ten }}
+                </option>
+            @endforeach
         </select>
-    </div>
+
+
+    </form>
+
 
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
@@ -52,29 +60,65 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($bangDiem as $index => $row)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $row['ma_hoc_vien'] }}</td>
-                    <td>{{ $row['ten'] }}</td>
-                    @for ($i = 1; $i <= 5; $i++)
-                        <td>{{ $row['diem_bai_tap'][$i] ?? '' }}</td>
-                    @endfor
-                    <td>{{ $row['diem_thi'] ?? '' }}</td>
-                </tr>
-                @endforeach
-            </tbody>
+            @foreach ($bangDiem as $index => $row)
+            <tr>
+                {{-- Tính số thứ tự chính xác theo trang --}}
+                <td>{{ ($students->currentPage() - 1) * $students->perPage() + $index + 1 }}</td>
+                <td>{{ $row['ma_hoc_vien'] }}</td>
+                <td>{{ $row['ten'] }}</td>
+                @for ($i = 1; $i <= 5; $i++)
+                    <td>{{ $row['diem_bai_tap'][$i] ?? '' }}</td>
+                @endfor
+                <td>{{ $row['diem_thi'] ?? '' }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+
 
             
         </table>
 
-        <nav>
-            <ul class="pagination">
-                <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">»</a></li>
-            </ul>
-        </nav>
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+            <nav>
+                <ul class="pagination">
+                    {{-- << Trang đầu tiên --}}
+                    <li class="page-item {{ $students->onFirstPage() ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $students->url(1) }}" aria-label="Đầu tiên">
+                            <<
+                        </a>
+                    </li>
+
+                    {{-- < Trang trước --}}
+                    <li class="page-item {{ $students->onFirstPage() ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $students->previousPageUrl() }}" aria-label="Lùi">
+                            <
+                        </a>
+                    </li>
+
+                    {{-- Trang hiện tại --}}
+                    <li class="page-item active">
+                        <span class="page-link">
+                            {{ $students->currentPage() }}
+                        </span>
+                    </li>
+
+                    {{-- > Trang sau --}}
+                    <li class="page-item {{ !$students->hasMorePages() ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $students->nextPageUrl() }}" aria-label="Tiến">
+                            >
+                        </a>
+                    </li>
+
+                    {{-- >> Trang cuối --}}
+                    <li class="page-item {{ !$students->hasMorePages() ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $students->url($students->lastPage()) }}" aria-label="Cuối cùng">
+                            >>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 @endsection

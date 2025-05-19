@@ -16,33 +16,59 @@ use App\Models\DiemThi;
 class StudentController extends Controller
 {
 
-    public function thongke()
-{
-    $tongHocVien = Student::count();
-    $tongKhoaHoc = KhoaHoc::count();
-    $tongBaiThiHoanThanh = DiemThi::count();
+    public function thongke(Request $request)
+    {
+        $tongHocVien = Student::count();
+        $tongKhoaHoc = KhoaHoc::count();
+        $tongBaiThiHoanThanh = DiemThi::count();
+        $khoahoc = KhoaHoc::all();
+        // Lấy biến tìm kiếm từ request
+        $search = $request->input('search');
+        $khoaHocId = $request->input('khoa_hoc');
 
-    $students = Student::all();
-    $bangDiem = [];
+        // Query builder bắt đầu từ model Student
+        $query = Student::with(['diemBaiTap', 'diemThi']);
 
-    foreach ($students as $student) {
-        $diemBaiTap = [];
-        foreach ($student->diemBaiTap as $baiTap) {
-            $diemBaiTap[$baiTap->bai_so] = $baiTap->diem;
+        // Nếu có tìm kiếm theo tên học viên
+        if ($search) {
+            $query->where('ho_ten', 'like', "{$search}%");
         }
 
-        $bangDiem[] = [
-            'ma_hoc_vien' => $student->id,
-            'ten' => $student->ho_ten,
-            'diem_bai_tap' => $diemBaiTap,
-            'diem_thi' => optional($student->diemThi)->diem,
-        ];
+
+        // Nếu có chọn khóa học (giả sử Student có khóa học liên kết)
+        if ($khoaHocId) {
+            $query->whereHas('khoaHoc', function ($q) use ($khoaHocId) {
+                $q->where('id', $khoaHocId);
+            });
+        }
+
+        // Phân trang
+        $students = $query->paginate(10)->withQueryString();
+
+        $bangDiem = $students->getCollection()->map(function ($student) {
+            $diemBaiTap = [];
+            foreach ($student->diemBaiTap as $baiTap) {
+                $diemBaiTap[$baiTap->bai_so] = $baiTap->diem;
+            }
+            return [
+                'ma_hoc_vien' => $student->id,
+                'ten' => $student->ho_ten,
+                'diem_bai_tap' => $diemBaiTap,
+                'diem_thi' => optional($student->diemThi)->diem,
+            ];
+        });
+
+        return view('students.thongke', [
+            'tongHocVien' => $tongHocVien,
+            'tongKhoaHoc' => $tongKhoaHoc,
+            'tongBaiThiHoanThanh' => $tongBaiThiHoanThanh,
+            'bangDiem' => $bangDiem,
+            'students' => $students,
+            'khoahoc' => $khoahoc, // Truyền danh sách khóa học
+        ]);
     }
 
-    return view('students.thongke', compact(
-        'tongHocVien', 'tongKhoaHoc', 'tongBaiThiHoanThanh', 'bangDiem'
-    ));
-}
+
     // Hiển thị form thêm học viên
     public function create()
     {
