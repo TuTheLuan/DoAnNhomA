@@ -4,15 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KhoaHoc;
+use App\Models\BaiHoc;
 use App\Models\Student;
 use App\Models\Diendan;
 use App\Models\ThongBao;
 
 class TeacherController extends Controller
 {
-    /**
-     * Hiển thị trang chủ giảng viên
-     */
     public function home()
     {
         $soKhoaHoc = KhoaHoc::count();
@@ -23,7 +21,6 @@ class TeacherController extends Controller
         return view('teacher.home', compact('soKhoaHoc', 'soDienDan', 'soHocVien', 'thongBaoMoiNhat'));
     }
 
-    // Các phương thức khác giữ nguyên
     public function courses()
     {
         return view('teacher.courses');
@@ -31,7 +28,7 @@ class TeacherController extends Controller
 
     public function thongbao()
     {
-        $thongBaoMoiNhat = \App\Models\ThongBao::orderBy('created_at', 'desc')->get();
+        $thongBaoMoiNhat = ThongBao::orderBy('created_at', 'desc')->get();
         return view('teacher.thongbao', compact('thongBaoMoiNhat'));
     }
 
@@ -62,12 +59,28 @@ class TeacherController extends Controller
 
     public function createCourse()
     {
-        return view('teacher.themkhoahoc');
+        return view('teacher.khoahoc.them');
     }
 
     public function storeCourse(Request $request)
     {
-        // Xử lý logic thêm khóa học ở đây
-        return redirect()->route('teacher.khoahoc')->with('success', 'Thêm khóa học thành công!');
+        // Xử lý thêm khóa học
+        KhoaHoc::create($request->all());
+        return redirect()->route('teacher.khoahoc.danhsach')->with('success', 'Thêm khóa học thành công!');
+    }
+
+    // ✅ Hiển thị danh sách khóa học
+    public function danhsachKhoaHoc()
+    {
+        $khoahocs = KhoaHoc::all();
+        return view('teacher.khoahoc.danhsach', compact('khoahocs'));
+    }
+
+    // ✅ Hiển thị danh sách bài học thuộc 1 khóa học
+    public function danhsachBaiHoc($idKhoaHoc)
+    {
+        $khoahoc = KhoaHoc::findOrFail($idKhoaHoc);
+        $baihocs = BaiHoc::where('ma_khoa_hoc', $idKhoaHoc)->get();
+        return view('teacher.baihoc.danhsach', compact('khoahoc', 'baihocs'));
     }
 }

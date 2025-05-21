@@ -61,7 +61,7 @@ class BaiHocController extends Controller
         $khoahoc = KhoaHoc::findOrFail($id);
         $baihocs = BaiHoc::where('khoahoc_id', $id)->get();
 
-        return view('baihoc.danhsach', compact('baihocs', 'khoahoc'));
+        return view('teacher.baihoc.danhsach', compact('baihocs', 'khoahoc'));
     }
 
 
@@ -69,7 +69,7 @@ class BaiHocController extends Controller
     public function thembaihoc($id)
     {
         $khoahoc = KhoaHoc::findOrFail($id);
-        return view('baihoc.thembaihoc', compact('khoahoc'));
+        return view('teacher.baihoc.thembaihoc', compact('khoahoc'));
     }
     public function destroy($id)
     {
@@ -90,7 +90,7 @@ class BaiHocController extends Controller
     public function edit($id)
     {
         $baihoc = BaiHoc::with('khoahoc')->findOrFail($id);
-        return view('baihoc.edit', compact('baihoc'));
+        return view('teacher.baihoc.edit', compact('baihoc'));
     }
 
     public function update(Request $request, $id)

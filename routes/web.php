@@ -109,9 +109,9 @@ Route::middleware([RoleMiddleware::class.':admin,teacher,student'])->group(funct
 });
 
 // Khóa học
-Route::get('/khoahoc/danhsach', [KhoaHocController::class, 'danhsach'])->name('khoahoc.danhsach');
-Route::get('/khoahoc/themkhoahoc', [KhoaHocController::class, 'themkhoahoc'])->name('khoahoc.themkhoahoc');
-Route::get('/khoahoc/danhsach', [KhoaHocController::class, 'index'])->name('khoahoc.index');
+Route::get('/teacher/khoahoc/danhsach', [KhoaHocController::class, 'danhsach'])->name('teacher.khoahoc.danhsach');
+Route::get('/teacher/khoahoc/themkhoahoc', [KhoaHocController::class, 'themkhoahoc'])->name('teacher.khoahoc.themkhoahoc');
+Route::get('/teacher/khoahoc/danhsach', [KhoaHocController::class, 'index'])->name('teacher.khoahoc.index');
 
 Route::get('khoahoc/{id}/edit', [KhoaHocController::class, 'edit'])->name('khoahoc.edit');
 Route::delete('khoahoc/{id}', [KhoaHocController::class, 'destroy'])->name('khoahoc.destroy');
