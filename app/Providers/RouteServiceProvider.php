@@ -26,14 +26,43 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->configureRateLimiting();
 
-        $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
+        Route::middleware('api')
+            ->prefix('api')
+            ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
-        });
+        $this->map();
+    }
+
+
+    /**
+     * Định nghĩa các route map của ứng dụng.
+     */
+    public function map()
+    {
+        // Route web chính 
+        $this->mapWebRoutes();
+
+        // Các route theo phân quyền hoặc module
+        Route::middleware('web')
+            ->group(base_path('routes/guest.php'));
+
+        Route::middleware('web')
+            ->group(base_path('routes/student.php'));
+
+        Route::middleware('web')
+            ->group(base_path('routes/teacher.php'));
+
+        Route::middleware('web')
+            ->group(base_path('routes/user.php'));
+    }
+
+    /**
+     * Định nghĩa route web mặc định 
+     */
+    protected function mapWebRoutes()
+    {
+        Route::middleware('web')
+            ->group(base_path('routes/web.php'));
     }
 
     /**

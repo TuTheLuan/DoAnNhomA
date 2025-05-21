@@ -6,11 +6,11 @@
 
     <!-- Thanh tìm kiếm + nút thêm -->
     <div class="d-flex justify-content-end align-items-center mb-3">
-    <a href="{{ route('students.create') }}" class="btn btn-success me-2">+ Thêm</a>
+    <a href="{{ route('teacher.student.create') }}" class="btn btn-success me-2">+ Thêm</a>
 
-    <form method="GET" action="{{ route('students.index') }}" class="d-flex" style="max-width: 400px;">
+    <form method="GET" action="{{ route('teacher.student.list') }}" class="d-flex" style="max-width: 400px;">
     <input type="text" name="search" class="form-control me-2" placeholder="Tìm kiếm..." value="{{ request('search') }}" maxlength="100">
-    <button type="submit" class="btn btn-outline-secondary">🔍</button>
+            <button type="submit" class="btn btn-outline-secondary">🔍</button>
     </form>
 
     </div>
@@ -37,7 +37,7 @@
                     <td>{{ $student->dia_chi }}</td>
                     <td>
                         <!-- Biểu tượng sửa -->
-                        <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm">✏</a>
+                        <a href="{{ route('teacher.student.edit', $student->id) }}" class="btn btn-warning btn-sm">✏</a>
 
                         <!-- Nút xóa học viên -->
                         <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $student->id }}">🗑</button>
@@ -53,11 +53,11 @@
             <nav>
                 <ul class="pagination">
                     {{-- << Trang đầu tiên --}}
-                    <li class="page-item {{ $students->onFirstPage() ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $students->url(1) }}" aria-label="Đầu tiên">
-                            <<
-                        </a>
-                    </li>
+<li class="page-item {{ $students->currentPage() == 1 ? 'disabled' : '' }}">
+    <a class="page-link" href="{{ $students->url(1) }}" aria-label="Đầu tiên">
+        <<
+    </a>
+</li>
 
                     {{-- < Trang trước --}}
                     <li class="page-item {{ $students->onFirstPage() ? 'disabled' : '' }}">

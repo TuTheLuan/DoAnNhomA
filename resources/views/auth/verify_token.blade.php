@@ -11,7 +11,7 @@
                 <p>Mã đã được gửi đến email của bạn</p>
             </div>
 
-            <form method="POST" action="{{ route('password.verify') }}" class="mt-4">
+            <form method="POST" action="{{ url('/password/verify') }}" class="mt-4">
                 @csrf
                 <div class="mb-3">
                     <label for="token" class="form-label">Mã xác nhận</label>

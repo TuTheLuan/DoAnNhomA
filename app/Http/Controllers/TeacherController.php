@@ -70,4 +70,11 @@ class TeacherController extends Controller
         // Xử lý logic thêm khóa học ở đây
         return redirect()->route('teacher.khoahoc')->with('success', 'Thêm khóa học thành công!');
     }
+
+    // Thêm phương thức listStudents theo route đã khai báo
+    public function listStudents()
+    {
+        $students = Student::all();
+        return view('teacher.studentmanagement.list', compact('students'));
+    }
 }
