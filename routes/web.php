@@ -21,17 +21,8 @@ use Illuminate\Http\Request;
 use App\Http\Middleware\RoleMiddleware;
  
 use Illuminate\Support\Facades\Auth;
-//Homepage
 
 
-Route::get('/', function () {
-    return view('home');
-});
-
-// Đảm bảo khi bấm "Home" sẽ luôn về trang homepage (view home.blade.php)
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
 
 
 // Đảm bảo trang đầu tiên khi vào web là homepage, không redirect đến dashboard hay trang khác
@@ -159,6 +150,13 @@ Route::post('/verify-token', [ForgotPasswordController::class, 'verifyToken']);
 Route::get('/reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset.custom');
 Route::post('/reset-password', [ForgotPasswordController::class, 'updatePassword'])->name('password.update.custom');
 
+// Điểm
+Route::prefix('diem')->group(function () {
+    Route::get('/xem/{id}', [DiemController::class, 'xemDiem'])->name('diem.xem');
+    Route::get('/xuat-excel/{id}', [DiemController::class, 'xuatExcel'])->name('diem.xuat');
+    Route::get('/thoat', [DiemController::class, 'thoat'])->name('diem.thoat');
+});
+
 // Setting
 Route::get('/settings', [SettingsController::class, 'edit'])->name('settings.edit');
 Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
@@ -168,9 +166,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Điểm
-Route::prefix('diem')->group(function () {
-    Route::get('/xem/{id}', [DiemController::class, 'xemDiem'])->name('diem.xem');
-    Route::get('/xuat-excel/{id}', [DiemController::class, 'xuatExcel'])->name('diem.xuat');
-    Route::get('/thoat', [DiemController::class, 'thoat'])->name('diem.thoat');
-});
+// Đảm bảo khi bấm "Home" sẽ luôn về trang homepage (view home.blade.php)
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
+

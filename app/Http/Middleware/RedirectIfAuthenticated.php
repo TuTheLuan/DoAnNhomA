@@ -21,7 +21,8 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                // Bỏ redirect khi đã đăng nhập, để xử lý redirect sau đăng nhập thành công
+                // return redirect(RouteServiceProvider::HOME);
             }
         }
 
