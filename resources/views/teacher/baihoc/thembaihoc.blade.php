@@ -6,7 +6,7 @@
         Thêm Bài Học - {{ $khoahoc->ten }}
     </h3>
 
-    {{-- Hiển thị lỗi --}}
+    {{-- Thông báo lỗi xác thực --}}
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -14,6 +14,13 @@
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
+        </div>
+    @endif
+
+    {{-- Thông báo lỗi do trùng bài học --}}
+    @if (session('error'))
+        <div class="alert alert-danger">
+            <strong>⚠️ {{ session('error') }}</strong>
         </div>
     @endif
 

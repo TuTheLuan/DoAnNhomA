@@ -21,16 +21,30 @@ class BaiHocController extends Controller
         ], [
             'so.max' => 'Bài học số vượt quá kí tự cho phép hãy kiểm tra lại',
             'so.regex' => 'Bài học số chỉ được chứa chữ và số',
-            'tieude.min' => 'Tiêu đề bài học vượt quá kí tự cho phép! Hãy kiểm tra lại',
+            'tieude.min' => 'Tiêu đề bài học chưa đạt kí tự! Hãy kiểm tra lại',
             'tieude.max' => 'Tiêu đề bài học vượt quá kí tự cho phép! Hãy kiểm tra lại',
         ]);
 
+        // ✅ Kiểm tra trùng bài học theo số trong cùng một khóa học
+        $exists = BaiHoc::where('khoahoc_id', $request->khoahoc_id)
+                        ->where('so', $request->so)
+                        ->first();
+
+        if ($exists) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Bài học đã được tạo! Bạn hãy kiểm tra lại thông tin.');
+        }
+
+        // Tạo bài học mới
         $baihoc = BaiHoc::create([
             'so' => $request->so,
             'tieude' => $request->tieude,
             'khoahoc_id' => $request->khoahoc_id,
         ]);
 
+        // Xử lý file đính kèm (nếu có)
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $uploadedFile) {
                 if ($uploadedFile->isValid()) {
@@ -51,11 +65,6 @@ class BaiHocController extends Controller
             ->with('success', 'Thêm bài học thành công!');
     }
 
-
-
-
-
-
     public function danhsach($id)
     {
         $khoahoc = KhoaHoc::findOrFail($id);
@@ -64,13 +73,12 @@ class BaiHocController extends Controller
         return view('teacher.baihoc.danhsach', compact('baihocs', 'khoahoc'));
     }
 
-
-
     public function thembaihoc($id)
     {
         $khoahoc = KhoaHoc::findOrFail($id);
         return view('teacher.baihoc.thembaihoc', compact('khoahoc'));
     }
+
     public function destroy($id)
     {
         $baihoc = BaiHoc::findOrFail($id);
@@ -128,10 +136,4 @@ class BaiHocController extends Controller
         return redirect()->route('baihoc.danhsach', $baihoc->khoahoc_id)
                         ->with('success', 'Cập nhật bài học thành công.');
     }
-
-
-
-
-
-
 }
