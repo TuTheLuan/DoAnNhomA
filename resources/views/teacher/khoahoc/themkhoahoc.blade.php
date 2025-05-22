@@ -116,7 +116,7 @@
 
             <!-- Nút thao tác -->
             <div class="d-flex justify-content-center mt-4">
-                <a href="{{ route('khoahoc.index') }}" class="btn btn-danger me-3 px-4">Hủy</a>
+                <a href="{{ route('teacher.khoahoc.index') }}" class="btn btn-danger me-3 px-4">Hủy</a>
                 <button type="submit" class="btn btn-success px-4">Thêm</button>
             </div>
         </form>

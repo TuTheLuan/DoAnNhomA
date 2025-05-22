@@ -38,7 +38,7 @@
             <div class="input-group">
                 <input type="file" class="form-control" name="files[]" id="files" multiple>
                 <span class="input-group-text bg-white">
-                    <img src="{{ asset('images/upload-icon.png') }}" alt="upload" style="height: 20px;">
+                    <img src="{{ asset('icons/file-icon.png') }}" alt="folder" style="height: 20px;">
                 </span>
             </div>
             <small class="text-muted">Bạn có thể chọn nhiều file: PDF, Word, PowerPoint, TXT. Tối đa mỗi file 2MB.</small>
