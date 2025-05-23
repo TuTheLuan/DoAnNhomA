@@ -79,10 +79,10 @@ class StudentController extends Controller
     {
         $request->validate([
 
-            'ho_ten' => 'required',
+            'ho_ten' => ['required', 'string', 'max:100', 'regex:/^[\pL\s]+$/u'],
             'gioi_tinh' => 'required',
             'email' => 'required|email|unique:students,email',
-            'dia_chi' => 'required',
+            'dia_chi' => ['required', 'string', 'max:100', 'regex:/^[\pL\s]+$/u'],
 
         ]);
 
@@ -109,10 +109,10 @@ class StudentController extends Controller
     {
         $request->validate([
 
-            'ho_ten' => 'required',
+            'ho_ten' => ['required', 'string', 'max:100', 'regex:/^[\pL\s]+$/u'],
             'gioi_tinh' => 'required',
             'email' => 'required|email|unique:students,email,' . $id,
-            'dia_chi' => 'required',
+            'dia_chi' => ['required', 'string', 'max:100', 'regex:/^[\pL\s]+$/u'],
 
         ]);
 

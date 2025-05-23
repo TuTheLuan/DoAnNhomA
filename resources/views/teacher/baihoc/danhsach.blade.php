@@ -44,11 +44,11 @@
                                         <img src="{{ $icon }}" alt="file icon">
                                         <a href="{{ asset('storage/' . $tailieu->file) }}" target="_blank">{{ $tailieu->original_name }}</a>
 
-                                        <!-- Nút xóa tài liệu (form nhỏ) -->
-                                        <form action="{{ route('tailieu.destroy', $tailieu->id) }}" method="POST" style="display: inline;">
+                                        {{-- Form xóa tài liệu --}}
+                                        <form class="delete-tailieu-form" action="{{ route('tailieu.destroy', $tailieu->id) }}" method="POST" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" style="background: none; border: none; color: red; font-weight: bold; cursor: pointer;">x</button>
+                                            <button type="button" class="btn-delete-tailieu" style="background: none; border: none; color: red; font-weight: bold; cursor: pointer;">x</button>
                                         </form>
                                     </div>
                                 @endforeach
@@ -56,14 +56,14 @@
                                 <p>Chưa có tài liệu.</p>
                             @endif
 
-                            {{-- Nút chỉnh sửa và xóa --}}
+                            {{-- Nút chỉnh sửa và xóa bài học --}}
                             <div class="d-flex gap-2 mt-2">
                                 <a href="{{ route('baihoc.edit', $baihoc->id) }}" class="btn btn-sm btn-primary">Chỉnh sửa</a>
 
-                                <form action="{{ route('baihoc.destroy', $baihoc->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa bài học này?');">
+                                <form action="{{ route('baihoc.destroy', $baihoc->id) }}" method="POST" class="delete-lesson-form">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                                    <button type="button" class="btn btn-sm btn-danger delete-lesson-btn">Xóa</button>
                                 </form>
                             </div>
                         </div>
@@ -91,20 +91,22 @@
                     style="max-height: 250px; object-fit: cover;">
             </div>
         </div>
-
-
     </div>
 </div>
 
+{{-- CSS --}}
 <style>
     .lesson-box { background-color: #efefef; border-radius: 8px; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; }
     .lesson-header { display: flex; justify-content: space-between; cursor: pointer; font-weight: 600; background-color: #ddd; padding: 8px; border-radius: 6px; }
     .lesson-content { padding: 10px; display: none; background-color: #fff; margin-top: 5px; border-radius: 6px; }
     .file-item { display: flex; align-items: center; margin-bottom: 5px; }
     .file-item img { width: 24px; height: 24px; margin-right: 8px; }
-    .file-item .delete { margin-left: auto; color: red; cursor: pointer; font-weight: bold; }
 </style>
 
+{{-- SweetAlert2 --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{{-- Script toggle và xác nhận xóa --}}
 <script>
     function toggleLesson(header) {
         const content = header.nextElementSibling;
@@ -117,5 +119,51 @@
             icon.innerHTML = '&#9650;';
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Xác nhận xóa bài học
+        const deleteLessonButtons = document.querySelectorAll('.delete-lesson-btn');
+        deleteLessonButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const form = this.closest('form');
+                Swal.fire({
+                    title: 'Bạn có chắc?',
+                    text: "Thao tác này sẽ xóa bài học!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Vâng, xóa nó!',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+
+        // Xác nhận xóa tài liệu
+        const deleteTailieuButtons = document.querySelectorAll('.btn-delete-tailieu');
+        deleteTailieuButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const form = this.closest('form');
+                Swal.fire({
+                    title: 'Xác nhận xóa?',
+                    text: "Tài liệu này sẽ bị xóa vĩnh viễn.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Xóa',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
 </script>
 @endsection

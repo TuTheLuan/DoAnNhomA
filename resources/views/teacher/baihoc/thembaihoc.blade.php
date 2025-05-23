@@ -6,6 +6,7 @@
         Thêm Bài Học - {{ $khoahoc->ten }}
     </h3>
 
+    {{-- Thông báo lỗi xác thực --}}
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -16,6 +17,14 @@
         </div>
     @endif
 
+    {{-- Thông báo lỗi do trùng bài học --}}
+    @if (session('error'))
+        <div class="alert alert-danger">
+            <strong>⚠️ {{ session('error') }}</strong>
+        </div>
+    @endif
+
+    {{-- Form thêm bài học --}}
     <form action="{{ route('baihoc.store') }}" method="POST" enctype="multipart/form-data" class="bg-light p-4 rounded shadow-sm">
         @csrf
 
@@ -43,7 +52,7 @@
             <div class="input-group">
                 <input type="file" class="form-control" name="files[]" id="files" multiple>
                 <span class="input-group-text bg-white">
-                    <img src="{{ asset('images/upload-icon.png') }}" alt="upload" style="height: 20px;">
+                    <img src="{{ asset('icons/file-icon.png') }}" alt="folder" style="height: 20px;">
                 </span>
             </div>
             <small class="text-muted">Bạn có thể chọn nhiều file: PDF, Word, PowerPoint, TXT. Tối đa mỗi file 2MB.</small>
@@ -66,3 +75,18 @@
     </form>
 </div>
 @endsection
+
+{{-- Hiển thị thông báo SweetAlert nếu thêm thành công --}}
+@if (session('success'))
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Thành công!',
+            text: '{{ session('success') }}',
+            confirmButtonText: 'Đóng'
+        });
+    </script>
+    @endpush
+@endif

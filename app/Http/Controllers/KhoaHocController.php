@@ -15,7 +15,7 @@ class KhoaHocController extends Controller
 
     public function themkhoahoc()
     {
-        return view('khoahoc.themkhoahoc');
+        return view('teacher.khoahoc.themkhoahoc');
     }
     public function index(Request $request)
     {
@@ -38,7 +38,7 @@ class KhoaHocController extends Controller
 
         $tatcaGiangVien = KhoaHoc::select('giangvien')->distinct()->pluck('giangvien');
 
-        return view('khoahoc.danhsach', compact('khoahoctb', 'tatcaGiangVien'));
+        return view('teacher.khoahoc.danhsach', compact('khoahoctb', 'tatcaGiangVien'));
     }
 
     public function create()
@@ -92,14 +92,14 @@ class KhoaHocController extends Controller
             'thoigian_ketthuc' => $request->thoigian_ketthuc,
         ]);
 
-        return redirect()->route('khoahoc.index')->with('success', 'Thêm khóa học thành công!');
+        return redirect()->route('teacher.khoahoc.index')->with('success', 'Thêm khóa học thành công!');
     }
 
     public function edit($id)
     {
         $khoahoc = KhoaHoc::findOrFail($id);
         $trangThaiOptions = ['Mở', 'Đang diễn ra', 'Kết thúc', 'Ẩn'];
-        return view('khoahoc.edit', compact('khoahoc', 'trangThaiOptions'));
+        return view('teacher.khoahoc.edit', compact('khoahoc', 'trangThaiOptions'));
     }
 
     public function update(Request $request, $id)
@@ -142,7 +142,7 @@ class KhoaHocController extends Controller
 
         $khoaHoc->save();
 
-        return redirect()->route('khoahoc.index')->with('success', 'Cập nhật khóa học thành công!');
+        return redirect()->route('teacher.khoahoc.index')->with('success', 'Cập nhật khóa học thành công!');
     }
 
     public function destroy($id)
@@ -150,6 +150,6 @@ class KhoaHocController extends Controller
         $khoahoc = KhoaHoc::findOrFail($id);
         $khoahoc->delete();
 
-        return redirect()->route('khoahoc.index')->with('success', 'Đã xóa khóa học thành công.');
+        return redirect()->route('teacher.khoahoc.index')->with('success', 'Đã xóa khóa học thành công.');
     }
 }

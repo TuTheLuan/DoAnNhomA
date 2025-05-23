@@ -30,7 +30,7 @@
                     <p class="card-text">Số bài học: {{ $khoahoc->sobaihoc ?? 'Đang cập nhật' }}</p>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="{{ route('students.baihoc', $khoahoc->id) }}" class="btn btn-danger">Học</a>
+                    <a href="{{ route('user.baihoc', $khoahoc->id) }}" class="btn btn-danger">Học</a>
                 </div>
             </div>
         </div>

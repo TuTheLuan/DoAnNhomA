@@ -141,8 +141,8 @@
             <a href="#">Thư viện</a>
         </nav>
         <div>
-            <a href="{{ route('login') }}" class="btn btn-light me-2">Đăng Nhập</a>
-            <a href="{{ route('register') }}" class="btn btn-warning">Đăng Ký</a>
+            <a href="{{ url('/login') }}" class="btn btn-light me-2">Đăng Nhập</a>
+            <a href="{{ url('/register') }}" class="btn btn-warning">Đăng Ký</a>
         </div>
     </header>
     <section class="hero">
