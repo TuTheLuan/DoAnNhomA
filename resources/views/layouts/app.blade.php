@@ -5,17 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Quản Lý Học Viên</title>
-<<<<<<< HEAD
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="{{ asset('js/script.js') }}" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-=======
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
->>>>>>> c9001b6abe9861c55afae0687315478c3224db3d
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
 </head>
 
@@ -111,77 +108,64 @@
         </div>
     </div>
 
-<<<<<<< HEAD
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var logoutLink = document.getElementById('logout-link');
-            if (logoutLink) {
-                logoutLink.addEventListener('click', function () {
-                    // Disable the logout link to prevent multiple clicks
-=======
-    <!-- JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/script.js') }}"></script>
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('js/script.js') }}"></script>
 
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            @if(session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Thành công!',
-                    text: '{{ session('success') }}',
-                    timer: 2500,
-                    showConfirmButton: false
-                });
-            @endif
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công!',
+                text: '{{ session('success') }}',
+                timer: 2500,
+                showConfirmButton: false
+            });
+        @endif
 
-            @if(session('error'))
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi!',
-                    text: '{{ session('error') }}',
-                    showConfirmButton: true
-                });
-            @endif
+        @if(session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: '{{ session('error') }}',
+                showConfirmButton: true
+            });
+        @endif
 
-            @if(session('warning'))
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Cảnh báo!',
-                    text: '{{ session('warning') }}',
-                    showConfirmButton: true
-                });
-            @endif
+        @if(session('warning'))
+            Swal.fire({
+                icon: 'warning',
+                title: 'Cảnh báo!',
+                text: '{{ session('warning') }}',
+                showConfirmButton: true
+            });
+        @endif
 
-            // Xử lý logout
-            var logoutLink = document.getElementById('logout-link');
-            if (logoutLink) {
-                logoutLink.addEventListener('click', function () {
->>>>>>> c9001b6abe9861c55afae0687315478c3224db3d
-                    logoutLink.style.pointerEvents = 'none';
-                    logoutLink.style.opacity = '0.6';
-                });
-            }
+        // Xử lý logout
+        var logoutLink = document.getElementById('logout-link');
+        if (logoutLink) {
+            logoutLink.addEventListener('click', function () {
+                logoutLink.style.pointerEvents = 'none';
+                logoutLink.style.opacity = '0.6';
+                // Gửi form logout nếu có
+                var form = document.getElementById('logout-form');
+                if (form) form.submit();
+            });
+        }
 
-<<<<<<< HEAD
-            // Prevent back button from loading cached pages after logout
-=======
-            // Ngăn back về trang đã logout
->>>>>>> c9001b6abe9861c55afae0687315478c3224db3d
-            window.history.pushState(null, '', window.location.href);
-            window.onpopstate = function () {
-                window.location.reload();
-            };
-        });
-    </script>
-<<<<<<< HEAD
-    @yield('scripts')
-=======
+        // Ngăn back về trang đã logout
+        window.history.pushState(null, '', window.location.href);
+        window.onpopstate = function () {
+            window.location.reload();
+        };
+    });
+</script>
 
-    @stack('scripts')
->>>>>>> c9001b6abe9861c55afae0687315478c3224db3d
+@stack('scripts')
+
 </body>
 </html>

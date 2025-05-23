@@ -4,18 +4,13 @@
 <div class="container bg-white p-4 rounded shadow-sm mt-4">
     <!-- Search and Actions -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-<<<<<<< HEAD
-        <form action="{{ route('khoahoc.index') }}" method="GET" class="mb-4" style="max-width: 600px;">
-            <div class="input-group mb-2">
-                <input type="text" name="search" class="form-control" placeholder="Tìm kiếm khóa học..." value="{{ request('search') }}">
 
                 <!-- Dropdown lọc giảng viên -->
-=======
-        <form action="{{ route('teacher.khoahoc.index') }}" method="GET" class="mb-4" style="max-width: 600px;">
+        <form action="{{ route('teacher.khoahoc') }}" method="GET" class="mb-4" style="max-width: 600px;">
             <div class="input-group mb-2">
                 <input type="text" name="search" class="form-control" placeholder="Tìm kiếm khóa học..." value="{{ request('search') }}">
 
->>>>>>> c9001b6abe9861c55afae0687315478c3224db3d
+
                 <select name="giangvien" class="form-select">
                     <option value="">-- Tất cả giảng viên --</option>
                     @foreach($tatcaGiangVien as $gv)
@@ -30,17 +25,11 @@
         </form>
 
         <div class="d-flex">
-<<<<<<< HEAD
-            <a href="{{ route('khoahoc.themkhoahoc') }}" class="btn btn-primary me-2">
-                <i class="fas fa-plus"></i> THÊM MỚI
-            </a>
-            <a href="{{ route('khoahoc.index') }}" class="btn btn-secondary">
-=======
+
             <a href="{{ route('teacher.khoahoc.themkhoahoc') }}" class="btn btn-primary me-2">
                 <i class="fas fa-plus"></i> THÊM MỚI
             </a>
-            <a href="{{ route('teacher.khoahoc.index') }}" class="btn btn-secondary">
->>>>>>> c9001b6abe9861c55afae0687315478c3224db3d
+            <a href="{{ route('teacher.khoahoc') }}" class="btn btn-secondary">
                 <i class="fas fa-sync-alt"></i> TẢI LẠI DỮ LIỆU
             </a>
         </div>
@@ -96,10 +85,6 @@
                         <span class="text-muted">Chưa có</span>
                     @endif
                 </td>
-<<<<<<< HEAD
-                <td>{{ $khoahoc->thoigian_batdau ? \Carbon\Carbon::parse($khoahoc->ngaybatdau)->format('d/m/Y') : 'Chưa có' }}</td>
-                <td>{{ $khoahoc->thoigian_ketthuc ? \Carbon\Carbon::parse($khoahoc->ngayketthuc)->format('d/m/Y') : 'Chưa có' }}</td>
-=======
                 <td>
                     {{ $khoahoc->thoigian_batdau ? \Carbon\Carbon::parse($khoahoc->thoigian_batdau)->format('d/m/Y') : 'Chưa có' }}
                 </td>
@@ -107,13 +92,12 @@
                     {{ $khoahoc->thoigian_ketthuc ? \Carbon\Carbon::parse($khoahoc->thoigian_ketthuc)->format('d/m/Y') : 'Chưa có' }}
                 </td>
 
->>>>>>> c9001b6abe9861c55afae0687315478c3224db3d
                 <td>
                     <a href="{{ route('khoahoc.edit', $khoahoc->id) }}" title="Chỉnh sửa khóa học">
                         <i class="fas fa-pen text-primary me-3" style="cursor: pointer;"></i>
                     </a>
 
-<<<<<<< HEAD
+
                     <form action="{{ route('khoahoc.destroy', $khoahoc->id) }}" method="POST" class="d-inline"
                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa khóa học {{ $khoahoc->ten }}?');">
                         @csrf
@@ -122,7 +106,7 @@
                             <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
                         </button>
                     </form>
-=======
+
                     <!-- Nút xóa khóa học -->
                     <button type="button"
                         class="btn p-0 btn-delete-khoahoc"
@@ -132,7 +116,7 @@
                         title="Xóa khóa học">
                         <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
                     </button>
->>>>>>> c9001b6abe9861c55afae0687315478c3224db3d
+
 
                     <a href="{{ route('diem.xem', $khoahoc->id) }}" class="btn btn-success btn-sm ms-2" title="Xem điểm khóa học">
                         <i class="fas fa-file-excel"></i> Điểm
@@ -146,13 +130,13 @@
     {!! $khoahoctb->withQueryString()->links('pagination::bootstrap-5') !!}
 </div>
 
-<<<<<<< HEAD
+
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
 @endpush
 
 @endsection
-=======
+
 <!-- Modal xác nhận xóa -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -241,4 +225,3 @@
     });
 </script>
 @endpush
->>>>>>> c9001b6abe9861c55afae0687315478c3224db3d

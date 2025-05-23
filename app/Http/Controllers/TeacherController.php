@@ -54,7 +54,9 @@ class TeacherController extends Controller
 
     public function khoahoc()
     {
-        return view('teacher.khoahoc');
+        $khoahoctb = KhoaHoc::paginate(10);
+        $tatcaGiangVien = KhoaHoc::select('giangvien')->distinct()->pluck('giangvien');
+        return view('teacher.khoahoc.danhsach', compact('khoahoctb', 'tatcaGiangVien'));
     }
 
     public function createCourse()

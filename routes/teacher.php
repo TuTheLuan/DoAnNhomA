@@ -10,8 +10,12 @@ Route::get('/teacher/home', [TeacherController::class, 'home'])->name('teacher.h
 
 // Khóa học
 Route::get('/teacher/khoahoc', [TeacherController::class, 'khoahoc'])->name('teacher.khoahoc');
-Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.themkhoahoc');
-Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.luukhoahoc');
+Route::get('/teacher/themkhoahoc', [TeacherController::class, 'createCourse'])->name('teacher.khoahoc.themkhoahoc');
+Route::post('/teacher/luukhoahoc', [TeacherController::class, 'storeCourse'])->name('teacher.khoahoc.luukhoahoc');
+
+Route::get('/teacher/khoahoc/{id}/edit', [KhoaHocController::class, 'edit'])->name('khoahoc.edit');
+Route::put('/teacher/khoahoc/{id}', [KhoaHocController::class, 'update'])->name('khoahoc.update');
+Route::delete('/teacher/khoahoc/{id}', [KhoaHocController::class, 'destroy'])->name('khoahoc.destroy');
 
 // Quản lý học viên
 Route::get('/teacher/studentmanagement', [TeacherController::class, 'listStudents'])->name('teacher.student.list');
