@@ -125,6 +125,7 @@
 </div>
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.getElementById('courseForm').addEventListener('submit', function(e) {
         const ten = document.getElementById('ten-khoa-hoc').value.trim();
@@ -132,29 +133,49 @@
         const regex = /^[a-zA-Z0-9\sÀ-ỹ]{7,}$/;
 
         if (ten.length < 7 || ten.length > 155 || !regex.test(ten)) {
-            alert("Tên khóa học phải từ 7 đến 155 ký tự, không chứa ký tự đặc biệt.");
             e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Lỗi dữ liệu',
+                text: 'Tên khóa học phải từ 7 đến 155 ký tự, không chứa ký tự đặc biệt.',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
         if (giangvien.length < 7 || giangvien.length > 55 || !regex.test(giangvien)) {
-            alert("Tên giảng viên phải từ 7 đến 55 ký tự, không chứa ký tự đặc biệt.");
             e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Lỗi dữ liệu',
+                text: 'Tên giảng viên phải từ 7 đến 55 ký tự, không chứa ký tự đặc biệt.',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
         const sobaihoc = document.getElementById('so-bai-hoc').value;
         if (sobaihoc < 1 || isNaN(sobaihoc)) {
-            alert("Số bài học phải là một số hợp lệ lớn hơn 0.");
             e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Lỗi dữ liệu',
+                text: 'Số bài học phải là một số hợp lệ lớn hơn 0.',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
         const bd = document.getElementById('thoigian_batdau').value;
         const kt = document.getElementById('thoigian_ketthuc').value;
         if (bd && kt && bd > kt) {
-            alert("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
             e.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Lỗi thời gian',
+                text: 'Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.',
+                confirmButtonText: 'OK'
+            });
             return;
         }
     });
