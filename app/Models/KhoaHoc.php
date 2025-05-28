@@ -34,5 +34,8 @@ class KhoaHoc extends Model
     {
         return $this->hasMany(BaiHoc::class, 'khoahoc_id');
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 }

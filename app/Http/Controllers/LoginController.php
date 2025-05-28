@@ -60,7 +60,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             if ($user->role === 'student') {
-                return redirect()->route('user.khoahoc'); // Chuyển hướng student đến user.khoahoc
+                return redirect()->route('students.khoahoc'); // Chuyển hướng student đến students.khoahoc
             } elseif ($user->role === 'teacher') {
                 return redirect()->route('teacher.home'); // Chuyển hướng teacher đến teacher.home
             } elseif ($user->role === 'admin') {

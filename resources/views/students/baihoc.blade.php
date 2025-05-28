@@ -2,19 +2,25 @@
 
 @section('content')
 <div class="container">
+<<<<<<< HEAD
     <h2 class="mb-4 text-center">Danh sách bài học  {{ $khoahoc->ten_khoahoc }}</h2>
     <p>Chưa có bài học để hiển thị</p>
+=======
+    <h2 class="mb-4 text-center">Danh sách bài học  {{ $khoahoc->ten }}</h2>
+
+    @if($baihocs->isEmpty())
+        <p>Chưa có tài liệu hiển thị.</p>
+    @else
+>>>>>>> master
     @foreach($baihocs as $index => $baihoc)
         <div class="card mb-4">
             <div class="card-header">
                 Bài {{ $index + 1 }}: {{ $baihoc->tieude }}
             </div>
             <div class="card-body">
-            @foreach($baihocs as $baihoc)
-                <div class="card">
-                    
-                    
-                    {{-- Hiển thị tài liệu --}}
+                @if($baihoc->taiLieu->isEmpty())
+                    <p>Chưa có tài liệu cho bài học này.</p>
+                @else
                     @foreach($baihoc->taiLieu as $tailieu)
                         <p>
                             <a href="{{ asset('upload/tailieu/' . $tailieu->file) }}" target="_blank">
@@ -22,10 +28,10 @@
                             </a>
                         </p>
                     @endforeach
-                </div>
-            @endforeach
+                @endif
             </div>
         </div>
     @endforeach
+    @endif
 </div>
 @endsection
