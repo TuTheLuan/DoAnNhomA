@@ -23,7 +23,7 @@
             <div class="col-md-2 sidebar" style="position: fixed; top: 0; bottom: 0; left: 0; z-index: 1000; padding-top: 20px; overflow-y: auto;">
                 <div class="admin-info text-center">
                     <img src="{{ asset('images/admin.png') }}" alt="Admin">
-                    <p>{{ auth()->user()->name ?? 'Tài khoản' }}</p>
+                    <p>{{ auth()->user()->username ?? 'Tài khoản' }}</p>
                 </div>
 
                 @php
