@@ -38,6 +38,7 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '320163ac6b93aebe3dc25b60a0533d56' => __DIR__ . '/..' . '/spatie/laravel-ignition/src/helpers.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
+        '6aaaa20f4fcabf78f92eb23fad25778c' => __DIR__ . '/../..' . '/app/Helpers/ForumHelper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -699,6 +700,8 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         'Database\\Seeders\\DiemSeeder' => __DIR__ . '/../..' . '/database/seeders/DiemSeeder.php',
         'Database\\Seeders\\DiendanTableSeeder' => __DIR__ . '/../..' . '/database/seeders/DiendanTableSeeder.php',
         'Database\\Seeders\\KhoaHocTableSeeder' => __DIR__ . '/../..' . '/database/seeders/KhoaHocTableSeeder.php',
+        'Database\\Seeders\\PermissionTableSeeder' => __DIR__ . '/../..' . '/database/seeders/PermissionTableSeeder.php',
+        'Database\\Seeders\\RoleTableSeeder' => __DIR__ . '/../..' . '/database/seeders/RoleTableSeeder.php',
         'Database\\Seeders\\StudentsTableSeeder' => __DIR__ . '/../..' . '/database/seeders/StudentsTableSeeder.php',
         'Database\\Seeders\\UsersTableSeeder' => __DIR__ . '/../..' . '/database/seeders/UsersTableSeeder.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',

@@ -58,7 +58,7 @@ class StudentController extends Controller
             ];
         });
 
-        return view('students.thongke', [
+        return view('teacher.thongke', [
             'tongHocVien' => $tongHocVien,
             'tongKhoaHoc' => $tongKhoaHoc,
             'tongBaiThiHoanThanh' => $tongBaiThiHoanThanh,
@@ -72,7 +72,7 @@ class StudentController extends Controller
     // Hiển thị form thêm học viên
     public function create()
     {
-        return view('students.createhocvien'); // Phải trùng với tên file blade
+        return view('teacher.studentmanagement.createhocvien');
     }
 
     public function store(Request $request)
@@ -102,7 +102,7 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Student::findOrFail($id);
-        return view('students.edit', compact('student'));
+        return view('teacher.studentmanagement.edit', compact('student'));
     }
 
     public function update(Request $request, $id)
@@ -146,7 +146,7 @@ class StudentController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('students.list', compact('students'));
+        return view('teacher.studentmanagement.list', compact('students'));
     }
 
     public function home()
@@ -162,7 +162,7 @@ class StudentController extends Controller
     public function thongbao()
     {
         $thongBaoMoiNhat = \App\Models\ThongBao::orderBy('created_at', 'desc')->get();
-        return view('students.thongbao', compact('thongBaoMoiNhat'));
+        return view('teacher.thongbao', compact('thongBaoMoiNhat'));
     }
 
     public function khoahoc(Request $request)
@@ -187,6 +187,15 @@ class StudentController extends Controller
         $tatcaGiangVien = \App\Models\KhoaHoc::select('giangvien')->distinct()->pluck('giangvien');
 
         return view('students.khoahoc', compact('khoahoctb', 'tatcaGiangVien'));
+    }
+
+    // Thêm phương thức baihoc để xử lý route students.baihoc
+    public function baihoc($id)
+    {
+        $khoahoc = \App\Models\KhoaHoc::with(['baiHocs.taiLieu'])->findOrFail($id);
+        $baihocs = $khoahoc->baiHocs;
+
+        return view('students.baihoc', compact('khoahoc', 'baihocs'));
     }
 
 }

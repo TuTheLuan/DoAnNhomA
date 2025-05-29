@@ -41,13 +41,13 @@
                             <a href="{{ route('guest.home') }}" class="nav-link">🏠 Trang chủ (Khách)</a>
                         @endif
                     </li>
-<<<<<<< HEAD
+
 
                     {{-- Quản lý học viên (GV) --}}
-=======
+
                     <li class="nav-item"><a href="{{ route('students.khoahoc') }}" class="nav-link">📖 Khóa Học</a></li>
                     <li class="nav-item"><a href="{{ route('diendan.index.students') }}" class="nav-link">📰 Diễn đàn</a></li>
->>>>>>> master
+
                     <li class="nav-item">
                         @if ($user && $user->role === 'teacher')
                             <a href="{{ route('teacher.student.list') }}" class="nav-link">📚 Quản lý Học Viên</a>

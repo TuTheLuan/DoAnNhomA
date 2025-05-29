@@ -164,6 +164,8 @@ return array(
     'Database\\Seeders\\DiemSeeder' => $baseDir . '/database/seeders/DiemSeeder.php',
     'Database\\Seeders\\DiendanTableSeeder' => $baseDir . '/database/seeders/DiendanTableSeeder.php',
     'Database\\Seeders\\KhoaHocTableSeeder' => $baseDir . '/database/seeders/KhoaHocTableSeeder.php',
+    'Database\\Seeders\\PermissionTableSeeder' => $baseDir . '/database/seeders/PermissionTableSeeder.php',
+    'Database\\Seeders\\RoleTableSeeder' => $baseDir . '/database/seeders/RoleTableSeeder.php',
     'Database\\Seeders\\StudentsTableSeeder' => $baseDir . '/database/seeders/StudentsTableSeeder.php',
     'Database\\Seeders\\UsersTableSeeder' => $baseDir . '/database/seeders/UsersTableSeeder.php',
     'DateError' => $vendorDir . '/symfony/polyfill-php83/Resources/stubs/DateError.php',

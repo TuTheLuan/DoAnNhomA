@@ -17,7 +17,7 @@ class DiendanController extends Controller
     public function indexForStudents()
     {
         $diendans = Diendan::paginate(5);
-        return view('students.diendan', compact('diendans'));
+        return view('user.diendan.diendan', compact('diendans'));
     }
 
     public function create()
