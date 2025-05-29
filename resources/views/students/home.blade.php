@@ -29,7 +29,7 @@
                     <p>{{ $soDienDan ?? 0 }}</p>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="{{ route('diendan.index.students') }}" class="btn btn-outline-info">Xem tất cả hoạt động</a>
+                    <a href="{{ route('diendan.index') }}" class="btn btn-outline-info">Xem chi tiết</a>
                 </div>
             </div>
         </div>

@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <form method="GET" action="{{ route('students.thongke') }}" class="mb-3 d-flex justify-content-between">
+    <form method="GET" action="{{ route('teacher.thongke') }}" class="mb-3 d-flex justify-content-between">
         <div class="input-group w-50">
             <input type="text" name="search" class="form-control me-2" placeholder="Tìm kiếm học viên" value="{{ request('search') }}" maxlength="100">
             <button class="btn btn-outline-secondary" type="submit">
@@ -33,10 +33,10 @@
             </button>
         </div>
 
-        <select class="form-select w-25" name="khoahoc">
+        <select class="form-select w-25" name="khoa_hoc">
             <option value="">Chọn khóa học</option>
             @foreach ($khoahoc as $khoaHoc)
-                <option value="{{ $khoaHoc->id }}" {{ request('khoahoc') == $khoaHoc->id ? 'selected' : '' }}>
+                <option value="{{ $khoaHoc->id }}" {{ request('khoa_hoc') == $khoaHoc->id ? 'selected' : '' }}>
                     {{ $khoaHoc->ten }}
                 </option>
             @endforeach

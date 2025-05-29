@@ -10,3 +10,5 @@ Route::get('/students/khoahoccuatoi', [StudentController::class, 'khoahoccuatoi'
 Route::get('/students/thongke', [StudentController::class, 'thongke'])->name('students.thongke');
 
 Route::get('/students/baihoc/{id}', [StudentController::class, 'baihoc'])->name('students.baihoc');
+
+Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');

@@ -8,7 +8,7 @@
     <div class="d-flex justify-content-end align-items-center mb-3">
     <a href="{{ route('teacher.student.create') }}" class="btn btn-success me-2">+ Thêm</a>
 
-    <form method="GET" action="{{ route('teacher.student.list') }}" class="d-flex" style="max-width: 400px;">
+    <form method="GET" action="{{ route('students.index') }}" class="d-flex" style="max-width: 400px;">
     <input type="text" name="search" class="form-control me-2" placeholder="Tìm kiếm..." value="{{ request('search') }}" maxlength="100">
             <button type="submit" class="btn btn-outline-secondary">🔍</button>
     </form>
@@ -116,7 +116,7 @@
                         // Tạo và gửi form xoá
                         const form = document.createElement("form");
                         form.method = "POST";
-                        form.action = `/students/${studentId}`;
+                        form.action = "{{ route('teacher.student.delete', ':studentId') }}".replace(':studentId', studentId);
 
                         const csrf = document.createElement("input");
                         csrf.type = "hidden";

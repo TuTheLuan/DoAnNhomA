@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\DiendanController;
 
 
 
@@ -33,4 +34,10 @@ require __DIR__.'/student.php';
 require __DIR__.'/teacher.php';
 require __DIR__.'/user.php';
 
+
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
 

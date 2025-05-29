@@ -23,52 +23,73 @@ class TeacherController extends Controller
 
     public function courses()
     {
-        return view('teacher.courses');
+        return view('user/thongbao');
     }
 
     public function thongbao()
     {
-        $thongBaoMoiNhat = ThongBao::orderBy('created_at', 'desc')->get();
-        return view('teacher.thongbao', compact('thongBaoMoiNhat'));
+        $thongBaoMoiNhat = \App\Models\ThongBao::orderBy('created_at', 'desc')->get();
+        return view('user.thongbao', compact('thongBaoMoiNhat'));
     }
 
     public function classes()
     {
-        return view('teacher.classes');
+        return view('user/thongbao');
     }
 
     public function notifications()
     {
-        return view('teacher.notifications');
+        return view('user/thongbao');
     }
 
     public function profile()
     {
-        return view('teacher.profile');
+        return view('user/thongbao');
     }
 
     public function myCourses()
     {
-        return view('teacher.mycourses');
+        return view('user/thongbao');
     }
 
-    public function khoahoc()
+    public function khoahoc(Request $request)
     {
-        $khoahoctb = KhoaHoc::paginate(10);
+        $query = KhoaHoc::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('ten', 'like', "%$search%")
+                  ->orWhere('ma', 'like', "%$search%")
+                  ->orWhere('giangvien', 'like', "%$search%") ;
+            });
+        }
+
+        if ($request->filled('giangvien')) {
+            $query->where('giangvien', $request->giangvien);
+        }
+
+        $khoahoctb = $query->paginate(10)->withQueryString();
         $tatcaGiangVien = KhoaHoc::select('giangvien')->distinct()->pluck('giangvien');
         return view('teacher.khoahoc.danhsach', compact('khoahoctb', 'tatcaGiangVien'));
     }
 
     public function createCourse()
     {
-        return view('teacher.khoahoc.them');
+        return view('teacher.khoahoc.themkhoahoc');
     }
 
     public function storeCourse(Request $request)
     {
         // Xử lý thêm khóa học
-        KhoaHoc::create($request->all());
-        return redirect()->route('teacher.khoahoc.danhsach')->with('success', 'Thêm khóa học thành công!');
+        // Tạo mã khóa học tự động
+        $lastKhoaHoc = \App\Models\KhoaHoc::orderBy('id', 'desc')->first();
+        $newCode = $lastKhoaHoc ? 'KH' . str_pad((int) substr($lastKhoaHoc->ma, 2) + 1, 3, '0', STR_PAD_LEFT) : 'KH001';
+
+        // Tạo Khóa học mới bao gồm mã được tạo tự động
+        KhoaHoc::create(array_merge($request->all(), ['ma' => $newCode]));
+
+        return redirect()->route('teacher.khoahoc')->with('success', 'Thêm khóa học thành công!');
     }
 
     // ✅ Hiển thị danh sách khóa học
@@ -87,9 +108,29 @@ class TeacherController extends Controller
     }
 
     // Thêm phương thức listStudents theo route đã khai báo
-    public function listStudents()
+    public function listStudents(Request $request)
     {
-        $students = Student::all();
+        $search = $request->input('search');
+        $students = Student::when($search, function ($query, $search) {
+            return $query->where('ho_ten', 'LIKE', '%' . $search . '%');
+        })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         return view('teacher.studentmanagement.list', compact('students'));
+    }
+
+    public function editStudent($id)
+    {
+        $student = \App\Models\Student::findOrFail($id);
+        return view('teacher.studentmanagement.edit', compact('student'));
+    }
+
+    // Phương thức xóa học viên
+    public function deleteStudent($id)
+    {
+        $student = \App\Models\Student::findOrFail($id);
+        $student->delete();
+
+        return redirect()->route('students.index')->with('success', 'Xóa học viên thành công!');
     }
 }

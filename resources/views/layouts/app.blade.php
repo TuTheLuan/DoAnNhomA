@@ -20,7 +20,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-md-2 sidebar">
+            <div class="col-md-2 sidebar" style="position: fixed; top: 0; bottom: 0; left: 0; z-index: 1000; padding-top: 20px; overflow-y: auto;">
                 <div class="admin-info text-center">
                     <img src="{{ asset('images/admin.png') }}" alt="Admin">
                     <p>{{ auth()->user()->name ?? 'Tài khoản' }}</p>
@@ -45,12 +45,11 @@
 
                     {{-- Quản lý học viên (GV) --}}
 
-                    <li class="nav-item"><a href="{{ route('students.khoahoc') }}" class="nav-link">📖 Khóa Học</a></li>
-                    <li class="nav-item"><a href="{{ route('diendan.index.students') }}" class="nav-link">📰 Diễn đàn</a></li>
+                    <li class="nav-item"><a href="{{ route('diendan.index') }}" class="nav-link">📰 Diễn đàn</a></li>
 
                     <li class="nav-item">
                         @if ($user && $user->role === 'teacher')
-                            <a href="{{ route('teacher.student.list') }}" class="nav-link">📚 Quản lý Học Viên</a>
+                            <a href="{{ route('students.index') }}" class="nav-link">📚 Quản lý Học Viên</a>
                         @else
                             <a href="#" class="nav-link disabled" onclick="event.preventDefault();" title="Chỉ dành cho giảng viên">📚 Quản lý Học Viên</a>
                         @endif
@@ -72,7 +71,7 @@
                         @if ($user && $user->role === 'teacher')
                             <a href="{{ route('diendan.index') }}" class="nav-link">📰 Diễn đàn</a>
                         @elseif ($user && $user->role === 'student')
-                            <a href="{{ route('diendan.index.students') }}" class="nav-link">📰 Diễn đàn</a>
+                            <a href="{{ route('diendan.index') }}" class="nav-link">📰 Diễn đàn</a>
                         @else
                             <a href="#" class="nav-link disabled" title="Chỉ dành cho thành viên">📰 Diễn đàn</a>
                         @endif
@@ -107,7 +106,7 @@
             </div>
 
             <!-- Nội dung chính -->
-            <div class="col-md-10 content">
+            <div class="col-md-10 content" style="margin-left: 16.6667%; padding-left: 20px; padding-right: 20px;">
                 @yield('content')
             </div>
         </div>

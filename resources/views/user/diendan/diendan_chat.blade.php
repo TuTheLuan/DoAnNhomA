@@ -1,106 +1,128 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container py-4">
-        {{-- Phần trên cùng --}}
-        <div class="container mb-4 border-bottom pb-3">
-            <div class="row justify-content-center align-items-center g-4">
-                {{-- Bên trái: Ảnh --}}
-                <div class="col-md-5 text-center">
-                    <div id="visible-images" class="d-flex flex-wrap justify-content-center gap-2 mb-2">
-                        @if(!empty($diendan->images))
-                            @foreach(array_slice($diendan->images, 0, 2) as $image)
-                                <img src="{{ asset('storage/' . $image) }}" alt="Ảnh diễn đàn" class="rounded shadow-sm border"
-                                    style="width: 120px; height: 120px; object-fit: cover;">
-                            @endforeach
-                        @else
-                            <span class="text-muted">Chưa có ảnh</span>
-                        @endif
-                    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                {{-- Thông tin diễn đàn --}}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="fw-bold text-primary mb-3">{{ $diendan->ten_dien_dan }}</h2>
+                                <p class="mb-2 text-secondary">👨‍🏫 Giảng viên: <strong>{{ $diendan->ten_giang_vien }}</strong></p>
+                                <p class="mb-3 text-secondary">📅 Ngày tạo:
+                                    {{ \Carbon\Carbon::parse($diendan->ngay_tao)->format('d/m/Y') }}
+                                </p>
 
-                    @php
-                        $hiddenImages = array_slice($diendan->images ?? [], 2);
-                    @endphp
-
-                    @if(count($hiddenImages) > 0)
-                        <div id="more-images" class="d-none flex-wrap justify-content-center gap-2 mt-2">
-                            @foreach($hiddenImages as $image)
-                                <img src="{{ asset('storage/' . $image) }}" alt="Ảnh diễn đàn" class="rounded shadow-sm border"
-                                    style="width: 70px; height: auto; max-height: 100px; object-fit: cover;">
-                            @endforeach
+                                @if(!empty($diendan->valid_images))
+                                    <div class="mb-4">
+                                        <h5 class="text-muted mb-3">📎 Ảnh đính kèm:</h5>
+                                        <div class="row g-3">
+                                            @php
+                                                $maxVisibleImages = 3; // Số ảnh tối đa hiển thị
+                                                $totalImages = count($diendan->valid_images);
+                                                $remainingImages = $totalImages - $maxVisibleImages;
+                                            @endphp
+                                            
+                                            @foreach($diendan->valid_images as $index => $image)
+                                                @if($index < $maxVisibleImages)
+                                                    <div class="col-4">
+                                                        <div class="position-relative">
+                                                            <a href="{{ asset('storage/' . $image) }}" 
+                                                                target="_blank" 
+                                                                class="d-block image-link">
+                                                                <img src="{{ asset('storage/' . $image) }}" 
+                                                                    alt="Ảnh đính kèm" 
+                                                                    class="img-fluid rounded shadow-sm"
+                                                                    style="width: 100%; height: 200px; object-fit: cover;"
+                                                                    loading="lazy"
+                                                                    onerror="this.style.display='none'">
+                                                                
+                                                                @if($index == ($maxVisibleImages - 1) && $remainingImages > 0)
+                                                                    <div class="position-absolute top-0 end-0 bg-dark bg-opacity-75 text-white rounded-end px-2 py-1">
+                                                                        +{{ $remainingImages }}
+                                                                    </div>
+                                                                @endif
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                        <button id="toggle-more" class="btn btn-sm btn-outline-primary mt-2">
-                            Xem thêm ({{ count($hiddenImages) }})
-                        </button>
+                    </div>
+                </div>
+
+                {{-- Khung chat --}}
+                <div id="chat-box" class="border rounded shadow-sm p-3 mb-4"
+                    style="height: 400px; overflow-y: auto; background-color: #f9f9f9;">
+                    @if(isset($messages) && count($messages) > 0)
+                        @foreach($messages as $message)
+                            <div class="mb-3">
+                                <div class="fw-semibold text-dark">
+                                @if($isTeacher)
+                                    {{ $message->student_name }}
+                                @else
+                                    {{ \App\Helpers\ForumHelper::getAnonymousName($message->student_name) }}
+                                @endif
+                                </div>
+                                <div class="text-body">{{ $message->content }}</div>
+                                <div class="text-muted small">{{ \Carbon\Carbon::parse($message->created_at)->format('H:i d/m/Y') }}</div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="text-center text-muted py-3">
+                            <p class="mb-0">Chưa có tin nhắn nào. Hãy là người đầu tiên gửi tin nhắn!</p>
+                        </div>
                     @endif
                 </div>
 
-                {{-- Bên phải: Thông tin --}}
-                <div class="col-md-6 text-center text-md-start">
-                    <h2 class="fw-bold text-primary mb-3" style="font-size: 2rem;">{{ $diendan->ten_dien_dan }}</h2>
-                    <p class="mb-2 text-secondary">👨‍🏫 Giảng viên: <strong>{{ $diendan->ten_giang_vien }}</strong></p>
-                    <p class="mb-0 text-secondary">📅 Ngày tạo:
-                        {{ \Carbon\Carbon::parse($diendan->ngay_tao)->format('d/m/Y') }}
-                    </p>
+                {{-- Form gửi tin nhắn --}}
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{ route('diendan.chat.store', $diendan->id) }}" method="POST" class="mb-0">
+                            @csrf
+                            <div class="form-group">
+                                <label for="content" class="form-label">Tin nhắn của bạn</label>
+                                <textarea class="form-control @error('content') is-invalid @enderror" 
+                                    id="content" name="content" rows="3" 
+                                    placeholder="Nhập nội dung tin nhắn..."></textarea>
+                                @error('content')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Gửi tin nhắn
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-        {{-- Khung chat --}}
-        <div id="chat-box" class="border rounded shadow-sm p-3 mb-4"
-            style="height: 400px; overflow-y: auto; background-color: #f9f9f9;">
-            @if(isset($messages) && count($messages) > 0)
-                @foreach($messages as $message)
-                    <div class="mb-3">
-                        <div class="fw-semibold text-dark">
-                        @if($isTeacher)
-                            {{ $message->student_name }}
-                        @else
-                            @php
-                                if (!function_exists('getAnonymousName')) {
-                                    function getAnonymousName($name) {
-                                        $hash = substr(md5($name), 0, 4);
-                                        return 'Ẩn danh ' . $hash;
-                                    }
-                                }
-                            @endphp
-                            {{ getAnonymousName($message->student_name) }}
-                        @endif
-                        </div>
-                        <div class="text-body">{{ $message->content }}</div>
-                        <div class="text-muted small">{{ \Carbon\Carbon::parse($message->created_at)->format('H:i d/m/Y') }}</div>
-                    </div>
-                @endforeach
-            @else
-                <div class="text-center text-muted">Chưa có tin nhắn nào</div>
-            @endif
-        </div>
-
-        {{-- Nơi nhập chat --}}
-        <form id="chat-form" method="POST" action="{{ route('diendan.chat.send', $diendan->id) }}">
-            @csrf
-            <div class="input-group shadow-sm">
-                <input type="text" name="message" class="form-control" placeholder="Nhập tin nhắn..." required>
-                <button class="btn btn-primary px-4" type="submit">Gửi</button>
-            </div>
-        </form>
     </div>
 
-    {{-- JavaScript cho nút "Xem thêm" --}}
     @push('scripts')
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const btn = document.getElementById('toggle-more');
-                const moreImages = document.getElementById('more-images');
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cuộn xuống cuối khung chat
+        var chatBox = document.getElementById('chat-box');
+        chatBox.scrollTop = chatBox.scrollHeight;
 
-                if (btn && moreImages) {
-                    btn.addEventListener('click', function () {
-                        moreImages.classList.toggle('d-none');
-                        btn.style.display = 'none'; // Ẩn nút sau khi hiển thị
-                    });
-                }
+        // Thêm lightbox cho ảnh (nếu cần)
+        var imageLinks = document.querySelectorAll('.image-link');
+        imageLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open(this.href, '_blank', 'width=800,height=600');
             });
-        </script>
+        });
+    });
+    </script>
     @endpush
 @endsection

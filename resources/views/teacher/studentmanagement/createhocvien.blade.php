@@ -1,4 +1,4 @@
-ginn@extends('layouts.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="container p-4 rounded" style="background-color: #e9f9fb; max-width: 500px;">
@@ -46,7 +46,7 @@ ginn@extends('layouts.app')
 
         <div class="d-flex justify-content-between">
             <button type="submit" class="btn btn-success px-4">Thêm</button>
-            <a href="{{ route('teacher.student.list') }}" class="btn btn-danger px-4">Hủy</a>
+            <a href="{{ route('students.index') }}" class="btn btn-danger px-4">Hủy</a>
         </div>
     </form>
 </div>

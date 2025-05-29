@@ -68,4 +68,22 @@ class SettingsController extends Controller
 
         return redirect()->route('settings.edit')->with('success', 'Cập nhật thành công!');
     }
+
+    public function deleteAccount(Request $request)
+    {
+        $user = auth()->user();
+        
+        // Xóa tài khoản
+        $user->delete();
+        
+        // Đăng xuất
+        auth()->logout();
+        
+        // Xóa session
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        // Chuyển hướng đến trang login với thông báo
+        return redirect()->route('login')->with('success', 'Tài khoản của bạn đã được xóa thành công.');
+    }
 }

@@ -37,8 +37,8 @@ class StudentController extends Controller
 
         // Nếu có chọn khóa học (giả sử Student có khóa học liên kết)
         if ($khoaHocId) {
-            $query->whereHas('khoaHoc', function ($q) use ($khoaHocId) {
-                $q->where('id', $khoaHocId);
+            $query->whereHas('khoaHocs', function ($q) use ($khoaHocId) {
+                $q->where('khoahoc_id', $khoaHocId);
             });
         }
 

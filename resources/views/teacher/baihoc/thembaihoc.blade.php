@@ -25,7 +25,7 @@
     @endif
 
     {{-- Form thêm bài học --}}
-    <form action="{{ route('baihoc.store') }}" method="POST" enctype="multipart/form-data" class="bg-light p-4 rounded shadow-sm">
+    <form action="{{ route('lessons.store') }}" method="POST" enctype="multipart/form-data" class="bg-light p-4 rounded shadow-sm">
         @csrf
 
         <!-- ID Khóa học (ẩn) -->

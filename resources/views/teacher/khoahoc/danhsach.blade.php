@@ -93,34 +93,29 @@
                 </td>
 
                 <td>
-                    <a href="{{ route('khoahoc.edit', $khoahoc->id) }}" title="Chỉnh sửa khóa học">
-                        <i class="fas fa-pen text-primary me-3" style="cursor: pointer;"></i>
-                    </a>
+                    <div class="align-items-center">
+                        <div class="d-flex align-items-center mb-2">
+                            <!-- Biểu tượng sửa -->
+                            <a href="{{ route('khoahoc.edit', $khoahoc->id) }}" title="Chỉnh sửa khóa học" class="me-2">
+                                <i class="fas fa-pen text-primary" style="cursor: pointer;"></i>
+                            </a>
 
+                            <!-- Nút xóa khóa học (dùng SweetAlert2) -->
+                            <button type="button"
+                                class="btn p-0 btn-delete-khoahoc me-2"
+                                style="border: none; background: none;"
+                                data-id="{{ $khoahoc->id }}"
+                                data-name="{{ $khoahoc->ten }}"
+                                title="Xóa khóa học">
+                                <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
+                            </button>
+                        </div>
 
-                    <form action="{{ route('khoahoc.destroy', $khoahoc->id) }}" method="POST" class="d-inline"
-                        onsubmit="return confirm('Bạn có chắc chắn muốn xóa khóa học {{ $khoahoc->ten }}?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn p-0" style="border: none; background: none;" title="Xóa khóa học">
-                            <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
-                        </button>
-                    </form>
-
-                    <!-- Nút xóa khóa học -->
-                    <button type="button"
-                        class="btn p-0 btn-delete-khoahoc"
-                        style="border: none; background: none;"
-                        data-id="{{ $khoahoc->id }}"
-                        data-name="{{ $khoahoc->ten }}"
-                        title="Xóa khóa học">
-                        <i class="fas fa-trash text-danger" style="cursor: pointer;"></i>
-                    </button>
-
-
-                    <a href="{{ route('diem.xem', $khoahoc->id) }}" class="btn btn-success btn-sm ms-2" title="Xem điểm khóa học">
-                        <i class="fas fa-file-excel"></i> Điểm
-                    </a>
+                        <!-- Nút xem điểm - Nằm ngoài div con để xuống dòng -->
+                        <a href="{{ route('diem.xem', $khoahoc->id) }}" class="btn btn-success btn-sm" title="Xem điểm khóa học">
+                            <i class="fas fa-file-excel"></i> Điểm
+                        </a>
+                    </div>
                 </td>
             </tr>
             @endforeach
@@ -157,7 +152,7 @@
     </div>
   </div>
 </div>
-@endsection
+
 
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>

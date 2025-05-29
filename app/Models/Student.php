@@ -32,6 +32,10 @@ class Student extends Model
         return $this->hasOne(DiemThi::class);
     }
 
-
+    // Define the many-to-many relationship with KhoaHoc
+    public function khoaHocs()
+    {
+        return $this->belongsToMany(KhoaHoc::class, 'user_khoahoc', 'user_id', 'khoahoc_id');
+    }
 }
 

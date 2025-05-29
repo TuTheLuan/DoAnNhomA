@@ -10,7 +10,7 @@
         </h2>
 
         <!-- Nội dung biểu mẫu -->
-        <form action="{{ route('khoahoc.store') }}" method="POST" enctype="multipart/form-data" id="courseForm">
+        <form action="{{ route('teacher.khoahoc.luukhoahoc') }}" method="POST" enctype="multipart/form-data" id="courseForm">
             @csrf
             <div class="row">
                 <!-- Bên trái -->
@@ -116,7 +116,7 @@
 
             <!-- Nút thao tác -->
             <div class="d-flex justify-content-center mt-4">
-                <a href="{{ route('teacher.khoahoc.index') }}" class="btn btn-danger me-3 px-4">Hủy</a>
+                <a href="{{ route('teacher.khoahoc') }}" class="btn btn-danger me-3 px-4">Hủy</a>
                 <button type="submit" class="btn btn-success px-4">Thêm</button>
             </div>
         </form>
