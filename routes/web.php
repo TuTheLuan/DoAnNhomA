@@ -171,3 +171,17 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
+// Diễn đàn routes
+Route::prefix('diendan')->name('diendan.')->group(function () {
+    Route::get('/', [DiendanController::class, 'index'])->name('index');
+    Route::get('/students', [DiendanController::class, 'indexForStudents'])->name('index.students');
+    Route::get('/create', [DiendanController::class, 'create'])->name('create');
+    Route::post('/', [DiendanController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [DiendanController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [DiendanController::class, 'update'])->name('update');
+    Route::delete('/{id}', [DiendanController::class, 'destroy'])->name('destroy');
+    Route::get('/{id}', [DiendanController::class, 'show'])->name('show');
+    Route::get('/{id}/chat', [DiendanController::class, 'chat'])->name('chat');
+    Route::post('/{id}/chat', [DiendanController::class, 'chatSend'])->name('chat.store');
+});
+

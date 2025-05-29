@@ -5,18 +5,78 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Diendan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class DiendanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $diendans = Diendan::paginate(10);
+        $query = Diendan::query();
+
+        // Tìm kiếm theo tên diễn đàn
+        if ($request->has('ten_dien_dan') && !empty($request->ten_dien_dan)) {
+            $query->where('ten_dien_dan', 'like', '%' . trim($request->ten_dien_dan) . '%');
+        }
+
+        // Tìm kiếm theo tên giảng viên
+        if ($request->has('ten_giang_vien') && !empty($request->ten_giang_vien)) {
+            $query->where('ten_giang_vien', 'like', '%' . trim($request->ten_giang_vien) . '%');
+        }
+
+        // Tìm kiếm theo loại thảo luận
+        if ($request->has('loai_thao_luan') && !empty($request->loai_thao_luan)) {
+            $query->where('loai_thao_luan', $request->loai_thao_luan);
+        }
+
+        // Tìm kiếm theo ngày tạo
+        if ($request->has('ngay_tao_tu') && !empty($request->ngay_tao_tu)) {
+            $query->whereDate('ngay_tao', '>=', $request->ngay_tao_tu);
+        }
+        if ($request->has('ngay_tao_den') && !empty($request->ngay_tao_den)) {
+            $query->whereDate('ngay_tao', '<=', $request->ngay_tao_den);
+        }
+
+        $diendans = $query->paginate(10);
+        
+        // Thêm các tham số tìm kiếm vào URL phân trang
+        $diendans->appends($request->all());
+
         return view('teacher.diendan', compact('diendans'));
     }
 
-    public function indexForStudents()
+    public function indexForStudents(Request $request)
     {
-        $diendans = Diendan::paginate(5);
+        $query = Diendan::query();
+
+        // Tìm kiếm theo tên diễn đàn
+        if ($request->has('ten_dien_dan') && !empty($request->ten_dien_dan)) {
+            $query->where('ten_dien_dan', 'like', '%' . trim($request->ten_dien_dan) . '%');
+        }
+
+        // Tìm kiếm theo tên giảng viên
+        if ($request->has('ten_giang_vien') && !empty($request->ten_giang_vien)) {
+            $query->where('ten_giang_vien', 'like', '%' . trim($request->ten_giang_vien) . '%');
+        }
+
+        // Tìm kiếm theo loại thảo luận
+        if ($request->has('loai_thao_luan') && !empty($request->loai_thao_luan)) {
+            $query->where('loai_thao_luan', $request->loai_thao_luan);
+        }
+
+        // Tìm kiếm theo ngày tạo
+        if ($request->has('ngay_tao_tu') && !empty($request->ngay_tao_tu)) {
+            $query->whereDate('ngay_tao', '>=', $request->ngay_tao_tu);
+        }
+        if ($request->has('ngay_tao_den') && !empty($request->ngay_tao_den)) {
+            $query->whereDate('ngay_tao', '<=', $request->ngay_tao_den);
+        }
+
+        $diendans = $query->paginate(5);
+        
+        // Thêm các tham số tìm kiếm vào URL phân trang
+        $diendans->appends($request->all());
+
         return view('students.diendan', compact('diendans'));
     }
 
@@ -27,33 +87,59 @@ class DiendanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'ten_dien_dan' => 'required|string|max:255|unique:diendan,ten_dien_dan',
             'loai_thao_luan' => 'required|in:public,anonymous',
             'ten_giang_vien' => ['required', 'string', 'max:255', 'regex:/^[\pL\s]+$/u'],
             'background_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images' => 'nullable|array',
+            'images' => 'nullable|array|max:5',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ], [
+            'ten_dien_dan.required' => 'Tên diễn đàn là bắt buộc',
             'ten_dien_dan.unique' => 'Tên diễn đàn đã có, vui lòng nhập tên khác',
-            'background_image.required' => 'Ảnh diễn đàn là bắt buộc',
+            'ten_dien_dan.max' => 'Tên diễn đàn không được vượt quá 255 ký tự',
+            'loai_thao_luan.required' => 'Loại thảo luận là bắt buộc',
+            'loai_thao_luan.in' => 'Loại thảo luận không hợp lệ',
+            'ten_giang_vien.required' => 'Tên giảng viên là bắt buộc',
+            'ten_giang_vien.regex' => 'Tên giảng viên chỉ được chứa chữ cái và khoảng trắng',
+            'background_image.required' => 'Ảnh nền diễn đàn là bắt buộc',
+            'background_image.image' => 'File phải là ảnh',
+            'background_image.mimes' => 'Ảnh phải có định dạng: jpeg, png, jpg, gif',
+            'background_image.max' => 'Kích thước ảnh không được vượt quá 2MB',
+            'images.max' => 'Không được upload quá 5 ảnh',
+            'images.*.image' => 'Tất cả các file phải là ảnh',
+            'images.*.mimes' => 'Ảnh phải có định dạng: jpeg, png, jpg, gif',
+            'images.*.max' => 'Kích thước mỗi ảnh không được vượt quá 2MB'
         ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
         try {
             DB::beginTransaction();
 
-            // Xử lý ảnh nền
+            // Kiểm tra và xử lý ảnh nền
             $backgroundImagePath = null;
             if ($request->hasFile('background_image')) {
-                $backgroundImagePath = $request->file('background_image')->store('diendan_backgrounds', 'public');
+                $file = $request->file('background_image');
+                if ($file->isValid()) {
+                    $backgroundImagePath = $file->store('diendan_backgrounds', 'public');
+                } else {
+                    throw new \Exception('File ảnh nền không hợp lệ');
+                }
             }
 
             // Xử lý nhiều ảnh đính kèm
             $imagePaths = [];
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
-                    $path = $image->store('diendan_images', 'public');
-                    $imagePaths[] = $path;
+                    if ($image->isValid()) {
+                        $path = $image->store('diendan_images', 'public');
+                        $imagePaths[] = $path;
+                    } else {
+                        throw new \Exception('Một số ảnh đính kèm không hợp lệ');
+                    }
                 }
             }
 
@@ -64,131 +150,226 @@ class DiendanController extends Controller
             // Tạo diễn đàn mới
             Diendan::create([
                 'ma_dien_dan' => $newCode,
-                'ten_dien_dan' => $request->ten_dien_dan,
+                'ten_dien_dan' => trim($request->ten_dien_dan),
                 'loai_thao_luan' => $request->loai_thao_luan,
-                'ten_giang_vien' => $request->ten_giang_vien,
+                'ten_giang_vien' => trim($request->ten_giang_vien),
                 'background_image' => $backgroundImagePath,
                 'images' => !empty($imagePaths) ? json_encode($imagePaths) : null,
                 'ngay_tao' => now()
             ]);
 
             DB::commit();
-
             return redirect()->route('diendan.index')->with('success', 'Thêm diễn đàn thành công!');
         } catch (\Exception $e) {
             DB::rollBack();
+            // Xóa các file đã upload nếu có lỗi
+            if (isset($backgroundImagePath)) {
+                Storage::disk('public')->delete($backgroundImagePath);
+            }
+            if (!empty($imagePaths)) {
+                foreach ($imagePaths as $path) {
+                    Storage::disk('public')->delete($path);
+                }
+            }
             return back()->withInput()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
         }
     }
 
     public function edit($id)
     {
-        $diendan = Diendan::findOrFail($id);
-        return view('teacher.editdiendan', compact('diendan'));
+        try {
+            $diendan = Diendan::findOrFail($id);
+            return view('teacher.editdiendan', compact('diendan'));
+        } catch (\Exception $e) {
+            return redirect()->route('diendan.index')->with('error', 'Không tìm thấy diễn đàn');
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $diendan = Diendan::findOrFail($id);
+        try {
+            $diendan = Diendan::findOrFail($id);
+        } catch (\Exception $e) {
+            return redirect()->route('diendan.index')->with('error', 'Không tìm thấy diễn đàn');
+        }
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'ten_dien_dan' => 'required|string|max:255|unique:diendan,ten_dien_dan,' . $id,
             'loai_thao_luan' => 'required|in:public,anonymous',
             'ten_giang_vien' => ['required', 'string', 'max:255', 'regex:/^[\pL\s]+$/u'],
             'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images' => 'nullable|array',
+            'images' => 'nullable|array|max:5',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ], [
+            'ten_dien_dan.required' => 'Tên diễn đàn là bắt buộc',
             'ten_dien_dan.unique' => 'Tên diễn đàn đã có, vui lòng nhập tên khác',
+            'ten_dien_dan.max' => 'Tên diễn đàn không được vượt quá 255 ký tự',
+            'loai_thao_luan.required' => 'Loại thảo luận là bắt buộc',
+            'loai_thao_luan.in' => 'Loại thảo luận không hợp lệ',
+            'ten_giang_vien.required' => 'Tên giảng viên là bắt buộc',
+            'ten_giang_vien.regex' => 'Tên giảng viên chỉ được chứa chữ cái và khoảng trắng',
+            'background_image.image' => 'File phải là ảnh',
+            'background_image.mimes' => 'Ảnh phải có định dạng: jpeg, png, jpg, gif',
+            'background_image.max' => 'Kích thước ảnh không được vượt quá 2MB',
+            'images.max' => 'Không được upload quá 5 ảnh',
+            'images.*.image' => 'Tất cả các file phải là ảnh',
+            'images.*.mimes' => 'Ảnh phải có định dạng: jpeg, png, jpg, gif',
+            'images.*.max' => 'Kích thước mỗi ảnh không được vượt quá 2MB'
         ]);
 
-        // Cập nhật các trường text
-        $diendan->ten_dien_dan = $request->ten_dien_dan;
-        $diendan->loai_thao_luan = $request->loai_thao_luan;
-        $diendan->ten_giang_vien = $request->ten_giang_vien;
-
-        // Xử lý ảnh nền mới nếu có
-        if ($request->hasFile('background_image')) {
-            $backgroundImagePath = $request->file('background_image')->store('diendan_backgrounds', 'public');
-            $diendan->background_image = $backgroundImagePath;
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
         }
 
-        // Xử lý ảnh diễn đàn mới nếu có
-        if ($request->hasFile('images')) {
-            $imagePaths = [];
-            if (is_array($diendan->images)) {
-                $imagePaths = $diendan->images;
-            } elseif (is_string($diendan->images) && !empty($diendan->images)) {
-                $imagePaths = json_decode($diendan->images, true) ?: [];
+        try {
+            DB::beginTransaction();
+
+            // Cập nhật các trường text
+            $diendan->ten_dien_dan = trim($request->ten_dien_dan);
+            $diendan->loai_thao_luan = $request->loai_thao_luan;
+            $diendan->ten_giang_vien = trim($request->ten_giang_vien);
+
+            // Xử lý ảnh nền mới nếu có
+            if ($request->hasFile('background_image')) {
+                $file = $request->file('background_image');
+                if ($file->isValid()) {
+                    // Xóa ảnh nền cũ
+                    if ($diendan->background_image) {
+                        Storage::disk('public')->delete($diendan->background_image);
+                    }
+                    $backgroundImagePath = $file->store('diendan_backgrounds', 'public');
+                    $diendan->background_image = $backgroundImagePath;
+                } else {
+                    throw new \Exception('File ảnh nền không hợp lệ');
+                }
             }
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('diendan_images', 'public');
-                $imagePaths[] = $path;
+
+            // Xử lý ảnh đính kèm mới nếu có
+            if ($request->hasFile('images')) {
+                $currentImages = is_string($diendan->images) ? json_decode($diendan->images, true) : [];
+                $currentImages = is_array($currentImages) ? $currentImages : [];
+
+                foreach ($request->file('images') as $image) {
+                    if ($image->isValid()) {
+                        $path = $image->store('diendan_images', 'public');
+                        $currentImages[] = $path;
+                    } else {
+                        throw new \Exception('Một số ảnh đính kèm không hợp lệ');
+                    }
+                }
+
+                // Giới hạn số lượng ảnh
+                if (count($currentImages) > 5) {
+                    throw new \Exception('Không được có quá 5 ảnh đính kèm');
+                }
+
+                $diendan->images = json_encode($currentImages);
             }
-            $diendan->images = $imagePaths;
+
+            $diendan->save();
+            DB::commit();
+
+            return redirect()->route('diendan.index')->with('success', 'Cập nhật diễn đàn thành công!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
         }
-
-        $diendan->save();
-
-        return redirect()->route('diendan.index')->with('success', 'Cập nhật diễn đàn thành công!');
     }
 
     public function destroy($id)
     {
-        $diendan = Diendan::findOrFail($id);
-        $diendan->delete();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('diendan.index')->with('success', 'Xóa diễn đàn thành công!');
+            $diendan = Diendan::findOrFail($id);
+            
+            // Xóa ảnh nền
+            if ($diendan->background_image) {
+                Storage::disk('public')->delete($diendan->background_image);
+            }
+            
+            // Xóa các ảnh đính kèm
+            if ($diendan->images) {
+                $images = is_string($diendan->images) ? json_decode($diendan->images, true) : [];
+                if (is_array($images)) {
+                    foreach ($images as $image) {
+                        Storage::disk('public')->delete($image);
+                    }
+                }
+            }
+            
+            // Xóa các tin nhắn liên quan
+            \App\Models\DiendanMessage::where('diendan_id', $id)->delete();
+            
+            // Xóa diễn đàn
+            $diendan->delete();
+            
+            DB::commit();
+            return redirect()->route('diendan.index')->with('success', 'Xóa diễn đàn thành công!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Có lỗi xảy ra khi xóa diễn đàn: ' . $e->getMessage());
+        }
     }
+
     public function show($id)
     {
-        $diendan = Diendan::findOrFail($id);
-        return view('diendan_show', compact('diendan'));
+        try {
+            $diendan = Diendan::findOrFail($id);
+            return view('diendan_show', compact('diendan'));
+        } catch (\Exception $e) {
+            return redirect()->route('diendan.index')->with('error', 'Không tìm thấy diễn đàn');
+        }
     }
 
     public function chat($id)
     {
-        $diendan = Diendan::findOrFail($id);
+        try {
+            $diendan = Diendan::findOrFail($id);
 
-        if (is_string($diendan->images)) {
-            $decodedImages = json_decode($diendan->images, true);
-            $diendan->images = is_array($decodedImages) ? $decodedImages : [];
-        } elseif (is_null($diendan->images)) {
-            $diendan->images = [];
+            if (is_string($diendan->images)) {
+                $decodedImages = json_decode($diendan->images, true);
+                $diendan->images = is_array($decodedImages) ? $decodedImages : [];
+            } elseif (is_null($diendan->images)) {
+                $diendan->images = [];
+            }
+
+            $messages = \App\Models\DiendanMessage::where('diendan_id', $id)
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            $currentUser = auth()->user();
+            $isTeacher = $currentUser ? \DB::table('teachers')->where('email', $currentUser->email)->exists() : false;
+
+            return view('students.diendan_chat', compact('diendan', 'messages', 'currentUser', 'isTeacher'));
+        } catch (\Exception $e) {
+            return redirect()->route('diendan.index')->with('error', 'Không tìm thấy diễn đàn');
         }
-
-        $messages = \App\Models\DiendanMessage::where('diendan_id', $id)->orderBy('created_at', 'asc')->get();
-
-        $currentUser = auth()->user();
-
-        // Kiểm tra user null để tránh lỗi
-        if ($currentUser) {
-            $isTeacher = \DB::table('teachers')->where('email', $currentUser->email)->exists();
-        } else {
-            $isTeacher = false;
-        }
-
-        return view('students.diendan_chat', compact('diendan', 'messages', 'currentUser', 'isTeacher'));
     }
 
     public function chatSend(Request $request, $id)
     {
         $request->validate([
-            'message' => 'required|string|max:1000',
+            'content' => 'required|string|max:1000'
+        ], [
+            'content.required' => 'Nội dung tin nhắn không được để trống',
+            'content.max' => 'Nội dung tin nhắn không được vượt quá 1000 ký tự'
         ]);
 
-        $diendan = Diendan::findOrFail($id);
+        try {
+            $diendan = Diendan::findOrFail($id);
+            $user = auth()->user();
 
-        $user = auth()->user();
+            \App\Models\DiendanMessage::create([
+                'diendan_id' => $diendan->id,
+                'student_name' => $user->name,
+                'content' => trim($request->content),
+                'created_at' => now()
+            ]);
 
-        \App\Models\DiendanMessage::create([
-            'diendan_id' => $id,
-            'student_name' => $user->name ?? 'Học viên',
-            'user_id' => $user->id ?? null, // thêm trường user_id nếu có
-            'content' => $request->input('message'),
-        ]);
-
-        return redirect()->route('diendan.chat', ['id' => $id])->with('success', 'Tin nhắn đã được gửi.');
+            return back()->with('success', 'Gửi tin nhắn thành công!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Có lỗi xảy ra khi gửi tin nhắn.');
+        }
     }
-
 }

@@ -3,113 +3,83 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card shadow rounded">
-                <div class="card-header bg-primary text-white text-center fw-bold fs-4">
-                    Thêm Diễn Đàn
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Thêm diễn đàn mới</h5>
                 </div>
                 <div class="card-body">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <strong>Vui lòng kiểm tra lại dữ liệu nhập vào:</strong>
-                            <ul class="mb-0 mt-2">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('diendan.store') }}" enctype="multipart/form-data">
+                    <form action="{{ route('diendan.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
-                            {{-- Ảnh nền --}}
-                            <div class="col-md-4 text-center bg-light rounded p-4 mb-4 border">
-                                <i class="fas fa-image fa-3x mb-3 text-secondary"></i>
-                                <div>
-                                    <h3>Chọn ảnh nền</h3>
-                                    <input type="file" id="background_image" name="background_image" class="form-control @error('background_image') is-invalid @enderror">
-                                    @error('background_image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    <p class="mb-0 small text-muted">JPEG, PNG, JPG, GIF. Tối đa 2MB.</p>
-                                </div>
-                            </div>
-
-                            {{-- Thông tin diễn đàn --}}
-                            <div class="col-md-8">
-                                <div class="mb-3">
-                                    <label for="ma_dien_dan" class="form-label fw-bold">Mã diễn đàn:</label>
-                                    <input type="text" id="ma_dien_dan" name="ma_dien_dan" class="form-control bg-white" 
-                                           value="{{ old('ma_dien_dan') }}" placeholder="Mã sẽ được tạo tự động" readonly>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="ten-dien-dan" class="form-label fw-bold">Tên diễn đàn:</label>
-                                    <input type="text" id="ten-dien-dan" name="ten_dien_dan"
-                                           class="form-control bg-white @error('ten_dien_dan') is-invalid @enderror"
-                                           value="{{ old('ten_dien_dan') }}" placeholder="Nhập tên diễn đàn" required>
-                                    @error('ten_dien_dan')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="ten_giang_vien" class="form-label fw-bold">Tên giảng viên:</label>
-                                    <input type="text" id="ten_giang_vien" name="ten_giang_vien"
-                                           class="form-control bg-white @error('ten_giang_vien') is-invalid @enderror"
-                                           value="{{ old('ten_giang_vien') }}" placeholder="Nhập tên giảng viên" required
-                                           pattern="[A-Za-zÀ-ỹ\s]+"
-                                           title="Chỉ được nhập chữ cái và khoảng trắng">
-                                    @error('ten_giang_vien')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Loại thảo luận:</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input @error('loai_thao_luan') is-invalid @enderror"
-                                               type="radio" name="loai_thao_luan" id="public" value="public"
-                                               {{ old('loai_thao_luan', 'public') == 'public' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="public">Công khai</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input @error('loai_thao_luan') is-invalid @enderror"
-                                               type="radio" name="loai_thao_luan" id="anonymous" value="anonymous"
-                                               {{ old('loai_thao_luan') == 'anonymous' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="anonymous">Ẩn danh</label>
-                                    </div>
-                                    @error('loai_thao_luan')
-                                        <div class="text-danger mt-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="ngay_tao" class="form-label fw-bold">Ngày tạo:</label>
-                                    <input type="date" id="ngay_tao" name="ngay_tao" class="form-control bg-white" 
-                                           value="{{ date('Y-m-d') }}" required readonly>
-                                </div>
-                            </div>
-
-                            {{-- Ảnh diễn đàn --}}
-                            <div class="col-md-12 mt-4">
-                                <div class="bg-light border rounded p-4 text-center">
-                                    <i class="fas fa-image fa-2x mb-2 text-secondary"></i>
-                                    <h3>Chọn ảnh diễn đàn</h3>
-                                    <input type="file" id="images" name="images[]" class="form-control @error('images.*') is-invalid @enderror" multiple>
-                                    @error('images.*')
-                                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                                    @enderror
-                                    <p class="mb-0 small text-muted">Chọn nhiều ảnh (JPEG, PNG, JPG, GIF, max 2MB)</p>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label for="ten_dien_dan" class="form-label">Tên diễn đàn <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('ten_dien_dan') is-invalid @enderror" 
+                                id="ten_dien_dan" name="ten_dien_dan" value="{{ old('ten_dien_dan') }}" required>
+                            @error('ten_dien_dan')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        {{-- Nút điều hướng --}}
-                        <div class="text-center mt-4">
-                            <a href="{{ route('diendan.index') }}" class="btn btn-secondary me-3 px-4">Trở về</a>
-                            <button type="submit" class="btn btn-success px-4">Thêm diễn đàn</button>
+                        <div class="mb-3">
+                            <label for="ten_giang_vien" class="form-label">Tên giảng viên <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('ten_giang_vien') is-invalid @enderror" 
+                                id="ten_giang_vien" name="ten_giang_vien" value="{{ old('ten_giang_vien') }}" required>
+                            @error('ten_giang_vien')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="loai_thao_luan" class="form-label">Loại thảo luận <span class="text-danger">*</span></label>
+                            <select class="form-select @error('loai_thao_luan') is-invalid @enderror" 
+                                id="loai_thao_luan" name="loai_thao_luan" required>
+                                <option value="">Chọn loại thảo luận</option>
+                                <option value="public" {{ old('loai_thao_luan') == 'public' ? 'selected' : '' }}>Công khai</option>
+                                <option value="anonymous" {{ old('loai_thao_luan') == 'anonymous' ? 'selected' : '' }}>Ẩn danh</option>
+                            </select>
+                            @error('loai_thao_luan')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ngay_tao" class="form-label">Ngày tạo <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control @error('ngay_tao') is-invalid @enderror" 
+                                id="ngay_tao" name="ngay_tao" 
+                                value="{{ old('ngay_tao', date('Y-m-d')) }}"
+                                max="{{ date('Y-m-d') }}" 
+                                required>
+                            @error('ngay_tao')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="background_image" class="form-label">Ảnh nền <span class="text-danger">*</span></label>
+                            <input type="file" class="form-control @error('background_image') is-invalid @enderror" 
+                                id="background_image" name="background_image" accept="image/*" required>
+                            @error('background_image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="images" class="form-label">Ảnh đính kèm (tối đa 5 ảnh)</label>
+                            <input type="file" class="form-control @error('images') is-invalid @enderror" 
+                                id="images" name="images[]" accept="image/*" multiple>
+                            @error('images')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <small class="text-muted">Có thể chọn nhiều ảnh cùng lúc</small>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('diendan.index') }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Quay lại
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu diễn đàn
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -119,6 +89,17 @@
 </div>
 
 @push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Giới hạn số lượng file được chọn
+    document.getElementById('images').addEventListener('change', function() {
+        if (this.files.length > 5) {
+            alert('Chỉ được chọn tối đa 5 ảnh');
+            this.value = '';
+        }
+    });
+});
+</script>
 @endpush
+
 @endsection
