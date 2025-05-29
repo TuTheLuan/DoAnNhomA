@@ -33,22 +33,24 @@ class DiemSeeder extends Seeder
                     'user_id' => $student->id,
                     'khoahoc_id' => $khoaHoc->id,
                 ]);
-            }
 
-            // Tạo điểm bài tập (5 bài, điểm từ 0 đến 10)
-            for ($bai = 1; $bai <= 5; $bai++) {
-                DiemBaiTap::create([
+                // Tạo điểm bài tập (5 bài, điểm từ 0 đến 10)
+                for ($bai = 1; $bai <= 5; $bai++) {
+                    DiemBaiTap::create([
+                        'student_id' => $student->id,
+                        'khoahoc_id' => $khoaHoc->id,
+                        'bai_so' => $bai,
+                        'diem' => rand(0, 10),
+                    ]);
+                }
+
+                // Tạo điểm thi
+                DiemThi::create([
                     'student_id' => $student->id,
-                    'bai_so' => $bai,
+                    'khoahoc_id' => $khoaHoc->id,
                     'diem' => rand(0, 10),
                 ]);
             }
-
-            // Tạo điểm thi
-            DiemThi::create([
-                'student_id' => $student->id,
-                'diem' => rand(0, 10),
-            ]);
         }
     }
 }

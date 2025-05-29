@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('diem_bai_taps', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->foreignId('khoahoc_id')->constrained('khoahoctb')->onDelete('cascade');
             $table->unsignedTinyInteger('bai_so'); // bài số 1 -> 5
             $table->float('diem')->nullable();     // điểm có thể là null
             $table->timestamps();
