@@ -21,4 +21,10 @@ class DiendanMessage extends Model
     {
         return $this->belongsTo(Diendan::class, 'diendan_id');
     }
+
+    // Define the belongsTo relationship with User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

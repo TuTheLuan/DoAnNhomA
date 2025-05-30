@@ -20,7 +20,7 @@ class DiemController extends Controller
 
             // Query cơ bản để lấy học viên
             $query = Student::query()
-                ->join('user_khoahoc', 'students.id', '=', 'user_khoahoc.user_id')
+                ->join('user_khoahoc', 'students.user_id', '=', 'user_khoahoc.user_id')
                 ->where('user_khoahoc.khoahoc_id', $khoahocId)
                 ->where('students.trang_thai', true);
 
@@ -48,6 +48,8 @@ class DiemController extends Controller
 
             // Phân trang kết quả
             $students = $query->paginate(20);
+            // Thêm dòng debug để kiểm tra dữ liệu học viên
+            // dd($students);
             $studentIds = $students->pluck('id')->toArray();
 
             // Lấy điểm bài tập

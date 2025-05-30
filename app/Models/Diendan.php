@@ -77,4 +77,10 @@ class Diendan extends Model
             $this->attributes['images'] = $value;
         }
     }
+
+    // Define the hasMany relationship with DiendanMessage
+    public function messages()
+    {
+        return $this->hasMany(DiendanMessage::class);
+    }
 }

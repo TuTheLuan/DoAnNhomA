@@ -91,7 +91,7 @@
             <i class="fas fa-save"></i> Lưu thay đổi
         </button>
 
-        <a href="{{ route('teacher.khoahoc.index') }}" class="btn btn-secondary ms-2">
+        <a href="{{ route('teacher.khoahoc') }}" class="btn btn-secondary ms-2">
             <i class="fas fa-arrow-left"></i> Quay lại
         </a>
     </form>

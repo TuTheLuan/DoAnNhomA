@@ -142,7 +142,7 @@ class KhoaHocController extends Controller
 
         $khoaHoc->save();
 
-        return redirect()->route('teacher.khoahoc.index')->with('success', 'Cập nhật khóa học thành công!');
+        return redirect()->route('teacher.khoahoc')->with('success', 'Cập nhật khóa học thành công!');
     }
 
     public function destroy($id)

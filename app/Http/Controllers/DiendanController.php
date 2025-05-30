@@ -337,25 +337,23 @@ class DiendanController extends Controller
     public function chat($id)
     {
         try {
-            $diendan = Diendan::findOrFail($id);
+            $diendan = Diendan::with(['messages.user'])->find($id);
 
-            if (is_string($diendan->images)) {
-                $decodedImages = json_decode($diendan->images, true);
-                $diendan->images = is_array($decodedImages) ? $decodedImages : [];
-            } elseif (is_null($diendan->images)) {
-                $diendan->images = [];
+            if (!$diendan) {
+                return redirect()->route('diendan.index')->with('error', 'Không tìm thấy diễn đàn với ID này.');
             }
 
-            $messages = \App\Models\DiendanMessage::where('diendan_id', $id)
-                ->orderBy('created_at', 'asc')
-                ->get();
+            // Lấy danh sách tin nhắn, sắp xếp theo thời gian gửi tăng dần
+            $messages = $diendan->messages()->orderBy('created_at', 'asc')->get();
 
+            // Xác định xem người dùng hiện tại có phải là giảng viên hay không
             $currentUser = auth()->user();
-            $isTeacher = $currentUser ? \DB::table('teachers')->where('email', $currentUser->email)->exists() : false;
+            $isTeacher = ($currentUser && $currentUser->role === 'teacher');
 
-            return view('students.diendan_chat', compact('diendan', 'messages', 'currentUser', 'isTeacher'));
+            return view('user.diendan.diendan_chat', compact('diendan', 'messages', 'isTeacher'));
+
         } catch (\Exception $e) {
-            return redirect()->route('diendan.index')->with('error', 'Không tìm thấy diễn đàn');
+            return back()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
         }
     }
 

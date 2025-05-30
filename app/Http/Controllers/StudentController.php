@@ -54,7 +54,7 @@ class StudentController extends Controller
                 'ma_hoc_vien' => $student->id,
                 'ten' => $student->ho_ten,
                 'diem_bai_tap' => $diemBaiTap,
-                'diem_thi' => optional($student->diemThi)->diem,
+                'diem_thi' => optional($student->diemThi->first())->diem,
             ];
         });
 

@@ -113,7 +113,7 @@
 
                         <!-- Nút xem điểm - Nằm ngoài div con để xuống dòng -->
                         <a href="{{ route('diem.xem', $khoahoc->id) }}" class="btn btn-success btn-sm" title="Xem điểm khóa học">
-                            <i class="fas fa-file-excel"></i> Điểm
+                            <i class="fas fa-file-excel"></i> Danh sách
                         </a>
                     </div>
                 </td>

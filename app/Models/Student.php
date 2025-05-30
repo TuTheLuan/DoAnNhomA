@@ -29,7 +29,7 @@ class Student extends Model
 
     public function diemThi()
     {
-        return $this->hasOne(DiemThi::class);
+        return $this->hasMany(DiemThi::class);
     }
 
     // Define the many-to-many relationship with KhoaHoc

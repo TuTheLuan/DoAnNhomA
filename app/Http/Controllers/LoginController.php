@@ -31,25 +31,31 @@ class LoginController extends Controller
     {
         $request->validate([
             'username' => 'required|string|max:255',
-            'password' => 'required|min:6|max:20',
+            'password' => 'required|min:6',
         ], [
             'username.required' => 'Tên người dùng hoặc email không được để trống.',
             'username.max' => 'Tên người dùng hoặc email không được quá 255 ký tự.',
             'password.required' => 'Mật khẩu không được để trống.',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
-            'password.max' => 'Mật khẩu không được quá 20 ký tự.',
         ]);
-        //  Kiểm tra domain email hợp lệ 
-        if (filter_var($request->username, FILTER_VALIDATE_EMAIL)) {
-            $validDomains = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com', 'icloud.com', 'aol.com', 'protonmail.com', 'zoho.com', 'yandex.com'];
-            $domain = substr(strrchr($request->username, "@"), 1);
 
-            if (!in_array($domain, $validDomains)) {
-                return back()->withErrors(['username' => 'Email không hợp lệ, vui lòng nhập lại email!'])->withInput();
-            }
-        }
-        $field = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        $credentials = [$field => $request->input('username'), 'password' => $request->input('password')];
+        // Determine if the login attempt is using email or username
+        $login = $request->input('username');
+        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $credentials = [
+            $fieldType => $login,
+            'password' => $request->input('password')
+        ];
+
+        // Remove domain validation - you might want to add more sophisticated email validation if needed
+        // if ($fieldType === 'email') {
+        //     $validDomains = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com', 'icloud.com', 'aol.com', 'protonmail.com', 'zoho.com', 'yandex.com'];
+        //     $domain = substr(strrchr($login, "@"), 1);
+        //     if (!in_array($domain, $validDomains)) {
+        //         return back()->withErrors(['username' => 'Email không hợp lệ, vui lòng nhập lại email!'])->withInput();
+        //     }
+        // }
 
         Log::info('Đăng nhập với:', $credentials);
 
@@ -67,16 +73,12 @@ class LoginController extends Controller
                 return redirect()->route('students.home'); // Chuyển hướng admin đến students.home
             }
 
-            return redirect()->route('dashboard'); // Default
+            return redirect()->intended('/dashboard'); // Redirect to intended URL or default dashboard
         }
 
         Log::error('Đăng nhập thất bại:', $credentials);
         return back()->withErrors([
-            'username' => 'Tên người dùng hoặc mật khẩu không đúng.',
+            'username' => 'Thông tin đăng nhập không đúng.',
         ])->onlyInput('username');
-    }
-    protected function username()
-    {
-        return 'username'; // Sử dụng cột username để xác thực
     }
 }

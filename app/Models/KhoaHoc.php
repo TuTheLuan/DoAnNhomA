@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\DiemBaiTap;
+use App\Models\DiemThi;
 
 class KhoaHoc extends Model
 {
@@ -33,6 +35,16 @@ class KhoaHoc extends Model
     public function baiHocs()
     {
         return $this->hasMany(BaiHoc::class, 'khoahoc_id');
+    }
+
+    public function diemBaiTap()
+    {
+        return $this->hasMany(DiemBaiTap::class, 'khoahoc_id');
+    }
+
+    public function diemThi()
+    {
+        return $this->hasMany(DiemThi::class, 'khoahoc_id');
     }
 
 }

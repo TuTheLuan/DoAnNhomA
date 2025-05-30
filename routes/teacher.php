@@ -29,8 +29,8 @@ Route::delete('/teacher/studentmanagement/{id}', [TeacherController::class, 'del
 Route::get('/teacher/thongke', [App\Http\Controllers\StudentController::class, 'thongke'])->name('teacher.thongke');
 
 // Bài học
-Route::get('/teacher/baihoc', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
-Route::get('/teacher/baihoc/create', [BaiHocController::class, 'thembaihoc'])->name('baihoc.thembaihoc');
+Route::get('/teacher/baihoc/{id}', [BaiHocController::class, 'danhsach'])->name('baihoc.danhsach');
+Route::get('/teacher/baihoc/{id}/create', [BaiHocController::class, 'thembaihoc'])->name('baihoc.thembaihoc');
 Route::post('/lessons', [BaiHocController::class, 'store'])->name('lessons.store');
 Route::get('/teacher/baihoc/{id}/edit', [BaiHocController::class, 'edit'])->name('baihoc.edit');
 Route::put('/teacher/baihoc/{id}', [BaiHocController::class, 'update'])->name('baihoc.update');
