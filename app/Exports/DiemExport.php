@@ -22,8 +22,9 @@ class DiemExport implements FromCollection, WithHeadings, WithMapping, WithStyle
         
         // Tìm số bài tập lớn nhất
         $this->maxBaiTap = DB::table('diem_bai_taps')
+            ->select(DB::raw('MAX(bai_so) as max_bai'))
             ->where('khoahoc_id', $khoahocId)
-            ->max('bai_so') ?? 0;
+            ->value('max_bai') ?? 5; // Mặc định là 5 nếu không có dữ liệu
     }
 
     public function collection()
@@ -39,19 +40,18 @@ class DiemExport implements FromCollection, WithHeadings, WithMapping, WithStyle
     public function headings(): array
     {
         $headers = [
-            'ID',
+            'Mã học viên',
             'Họ và tên',
             'Email',
         ];
 
         // Thêm cột điểm cho từng bài tập
         for ($i = 1; $i <= $this->maxBaiTap; $i++) {
-            $headers[] = "Bài $i";
+            $headers[] = "Bài tập $i";
         }
 
-        // Thêm cột điểm thi và điểm tổng kết
+        // Thêm cột điểm thi
         $headers[] = 'Điểm thi';
-        $headers[] = 'Điểm tổng kết';
 
         return $headers;
     }
@@ -69,11 +69,11 @@ class DiemExport implements FromCollection, WithHeadings, WithMapping, WithStyle
         $diemThi = DB::table('diem_this')
             ->where('student_id', $student->id)
             ->where('khoahoc_id', $this->khoahocId)
-            ->value('diem') ?? 0;
+            ->value('diem') ?? '-';
 
         $row = [
-            $student->id,
-            $student->name,
+            $student->ma_hoc_vien ?? 'HV' . $student->id,
+            $student->ho_ten,
             $student->email,
         ];
 
@@ -84,11 +84,6 @@ class DiemExport implements FromCollection, WithHeadings, WithMapping, WithStyle
 
         // Thêm điểm thi
         $row[] = $diemThi;
-
-        // Tính và thêm điểm tổng kết
-        $diemBaiTapTrungBinh = !empty($diemBaiTap) ? array_sum($diemBaiTap) / count($diemBaiTap) : 0;
-        $diemTongKet = $diemBaiTapTrungBinh * 0.3 + $diemThi * 0.7;
-        $row[] = number_format($diemTongKet, 1);
 
         return $row;
     }

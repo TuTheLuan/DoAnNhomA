@@ -12,6 +12,9 @@ class DiendanController extends Controller
 {
     public function index(Request $request)
     {
+        // Lấy thông tin người dùng hiện tại
+        $user = auth()->user();
+
         $query = Diendan::query();
 
         // Tìm kiếm theo tên diễn đàn
@@ -42,7 +45,14 @@ class DiendanController extends Controller
         // Thêm các tham số tìm kiếm vào URL phân trang
         $diendans->appends($request->all());
 
-        return view('user.diendan.quanlydiendan', compact('diendans'));
+        // Kiểm tra vai trò người dùng để trả về view phù hợp
+        if ($user && $user->role === 'student') {
+            // Trả về view cho học viên
+            return view('students.diendan.index', compact('diendans'));
+        } else {
+            // Trả về view cho giảng viên hoặc các vai trò khác
+            return view('user.diendan.quanlydiendan', compact('diendans'));
+        }
     }
 
     public function indexForStudents(Request $request)

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('diem_this', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->foreignId('khoahoc_id')->constrained('khoahoctb')->onDelete('cascade');
             $table->float('diem')->nullable();
             $table->timestamps();
         });

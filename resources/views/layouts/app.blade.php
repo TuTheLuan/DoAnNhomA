@@ -44,16 +44,11 @@
 
 
                     {{-- Quản lý học viên (GV) --}}
-
-                    <li class="nav-item"><a href="{{ route('diendan.index') }}" class="nav-link">📰 Diễn đàn</a></li>
-
+                    @if ($user && $user->role === 'teacher')
                     <li class="nav-item">
-                        @if ($user && $user->role === 'teacher')
-                            <a href="{{ route('students.index') }}" class="nav-link">📚 Quản lý Học Viên</a>
-                        @else
-                            <a href="#" class="nav-link disabled" onclick="event.preventDefault();" title="Chỉ dành cho giảng viên">📚 Quản lý Học Viên</a>
-                        @endif
+                        <a href="{{ route('students.index') }}" class="nav-link">📚 Quản lý Học Viên</a>
                     </li>
+                    @endif
 
                     {{-- Khóa học --}}
                     <li class="nav-item">
